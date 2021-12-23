@@ -8,12 +8,12 @@
  * @author   agarwood
  */
 
-namespace App\Customer\Infrastructure\Repository;
+namespace App\Assign\Infrastructure\MySQL;
 
+use App\Assign\Domain\Aggregate\Repository\DepartmentRepository;
 use App\Customer\Domain\Aggregate\Entity\Customer;
 use App\Customer\Domain\Aggregate\Entity\CustomerCompetitiveDepartment;
 use App\Customer\Domain\Aggregate\Entity\CustomerGroup;
-use App\Customer\Domain\Aggregate\Repository\DepartmentRepository;
 use Godruoyi\Snowflake\Snowflake;
 use Swoft\Db\DB;
 use Swoft\Db\Exception\DbException;
@@ -28,11 +28,10 @@ class DepartmentRepositoryImpl implements DepartmentRepository
      *
      * @param int   $officialAccountId
      * @param array $filter
-     * @param bool  $isPagination
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter, bool $isPagination): array
+    public function index(int $officialAccountId, array $filter): array
     {
         return DB::table(CustomerCompetitiveDepartment::tableName())
             ->select(
@@ -40,7 +39,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
                 'department',
                 'status',
                 'leader',
-                'service_id as serviceUuid',
+                'service_id as serviceId',
                 'day_assign as dayAssign',
                 'month_assign as monthAssign',
                 'sort',
@@ -90,6 +89,20 @@ class DepartmentRepositoryImpl implements DepartmentRepository
         return DB::table(CustomerCompetitiveDepartment::tableName())
             ->where('id', '=', $id)
             ->update($attributes);
+    }
+
+    /**
+     * 预览
+     *
+     * @param int $id
+     *
+     * @return array
+     */
+    public function view(int $id): array
+    {
+        return DB::table(CustomerCompetitiveDepartment::tableName())
+            ->where('id', '=', $id)
+            ->firstArray();
     }
 
     /**

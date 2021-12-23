@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\Customer\Infrastructure\Repository;
+namespace App\Customer\Infrastructure\MySQL;
 
 use App\Customer\Domain\Aggregate\Entity\User;
 use App\Customer\Domain\Aggregate\Repository\FansRepository;

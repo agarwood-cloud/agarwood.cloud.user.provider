@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\Assign\Infrastructure\Repository;
+namespace App\Assign\Infrastructure\MySQL;
 
 use App\Assign\Domain\Aggregate\Entity\CustomerCompetitive;
 use App\Assign\Domain\Aggregate\Entity\CustomerObtainFans;

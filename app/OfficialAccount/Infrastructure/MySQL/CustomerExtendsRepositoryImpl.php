@@ -10,7 +10,7 @@
 
 namespace App\OfficialAccount\Infrastructure\MySQL;
 
-use App\Customer\Infrastructure\Repository\CustomerRepositoryImpl;
+use App\Customer\Infrastructure\MySQL\CustomerRepositoryImpl;
 
 /**
  *
