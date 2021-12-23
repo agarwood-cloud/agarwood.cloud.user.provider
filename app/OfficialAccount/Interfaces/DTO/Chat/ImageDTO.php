@@ -11,98 +11,115 @@
 namespace App\OfficialAccount\Interfaces\DTO\Chat;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\IsString;
-use Swoft\Validator\Annotation\Mapping\NotEmpty;
-use Swoft\Validator\Annotation\Mapping\Required;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
- *
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
 class ImageDTO extends AbstractBaseDTO
 {
     /**
-     * 发送人，uuid
+     * 发送人
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $fromUserId = '';
 
     /**
+     * 腾讯公众号平台的多媒体 MediaId
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $mediaId = '';
 
     /**
-     * 发送人，uuid
+     * 发送人昵称
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $fromUserName = '';
 
     /**
-     * 收件人，openid
+     * 收件人
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $toUserName = '';
 
     /**
+     * 时间
      *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
-     *
-     * @var string
-     */
-    public string $createAt = '';
-
-    /**
-     *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
-    public string $msgType = 'image';
+    public string $createdAt = '';
 
     /**
+     * 消息类型
      *
-     * @IsString()
-     * @Required()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     *
+     * @var string
+     */
+    public string $msgType = '';
+
+    /**
+     * 图片链接
+     *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $imageUrl = '';
 
     /**
-     * 兼容旧的接待端
-     * @IsString()
+     * 发送者
      *
-     * @var string|null
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     *
+     * @var string
      */
-    public ?string $url = null;
+    public string $sender = '';
+
+    /**
+     * @return string
+     */
+    public function getFromUserId(): string
+    {
+        return $this->fromUserId;
+    }
+
+    /**
+     * @param string $fromUserId
+     */
+    public function setFromUserId(string $fromUserId): void
+    {
+        $this->fromUserId = $fromUserId;
+    }
 
     /**
      * @return string
@@ -155,18 +172,20 @@ class ImageDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getCreateAt(): string
+    public function getCreatedAt(): string
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
     /**
-     * @param string $createAt
+     * @param string $createdAt
      */
-    public function setCreateAt(string $createAt): void
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->createAt = $createAt;
+        $this->createdAt = $createdAt;
     }
+
+
 
     /**
      * @return string
@@ -203,32 +222,16 @@ class ImageDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getFromUserId(): string
+    public function getSender(): string
     {
-        return $this->fromUserId;
+        return $this->sender;
     }
 
     /**
-     * @param string $fromUserId
+     * @param string $sender
      */
-    public function setFromUserId(string $fromUserId): void
+    public function setSender(string $sender): void
     {
-        $this->fromUserId = $fromUserId;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string|null $url
-     */
-    public function setUrl(?string $url): void
-    {
-        $this->url = $url;
+        $this->sender = $sender;
     }
 }

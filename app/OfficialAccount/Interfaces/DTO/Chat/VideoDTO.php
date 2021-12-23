@@ -11,124 +11,149 @@
 namespace App\OfficialAccount\Interfaces\DTO\Chat;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\IsString;
-use Swoft\Validator\Annotation\Mapping\NotEmpty;
-use Swoft\Validator\Annotation\Mapping\Required;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
  *
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
 class VideoDTO extends AbstractBaseDTO
 {
     /**
-     * 发送人，uuid
+     * 发送人
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $fromUserId = '';
 
     /**
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * 腾讯公众号平台媒体ID
+     *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $mediaId = '';
 
     /**
-     * 发送人，uuid
+     * 发送人
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $fromUserName = '';
 
     /**
-     * 收件人，openid
+     * 收件人
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $toUserName = '';
 
     /**
+     * 时间
      *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
-     *
-     * @var string
-     */
-    public string $createAt = '';
-
-    /**
-     *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
-    public string $msgType = 'video';
+    public string $createdAt = '';
 
     /**
+     * 消息类型
      *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @var string
+     */
+    public string $msgType = '';
+
+    /**
+     * 视频URL
+     *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $url = '';
 
     /**
+     * 视频标题
      *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $title = '';
 
     /**
+     * 视频描述
      *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $description = '';
 
     /**
+     *  视频缩略图URL
      *
-     *
-     * @IsString()
-     * @Required()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
      * @var string
      */
     public string $thumbMediaId = '';
+
+    /**
+     * 发送者
+     *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     *
+     * @var string
+     */
+    public string $sender = '';
+
+    /**
+     * @return string
+     */
+    public function getFromUserId(): string
+    {
+        return $this->fromUserId;
+    }
+
+    /**
+     * @param string $fromUserId
+     */
+    public function setFromUserId(string $fromUserId): void
+    {
+        $this->fromUserId = $fromUserId;
+    }
 
     /**
      * @return string
@@ -181,17 +206,17 @@ class VideoDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getCreateAt(): string
+    public function getCreatedAt(): string
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
     /**
-     * @param string $createAt
+     * @param string $createdAt
      */
-    public function setCreateAt(string $createAt): void
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->createAt = $createAt;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -277,16 +302,17 @@ class VideoDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getFromUserId(): string
+    public function getSender(): string
     {
-        return $this->fromUserId;
+        return $this->sender;
     }
 
     /**
-     * @param string $fromUserId
+     * @param string $sender
      */
-    public function setFromUserId(string $fromUserId): void
+    public function setSender(string $sender): void
     {
-        $this->fromUserId = $fromUserId;
+        $this->sender = $sender;
     }
+
 }

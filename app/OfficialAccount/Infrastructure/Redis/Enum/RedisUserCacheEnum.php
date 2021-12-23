@@ -15,5 +15,5 @@ class RedisUserCacheEnum
     /**
      * 粉丝的缓存信息 前缀
      */
-    public const REDIS_CACHE_PREFIX_KEY = 'OfficialAccount.user.info.';
+    public const REDIS_CACHE_PREFIX_KEY = 'official.account.user.info.';
 }
