@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\Repository;
+namespace App\OfficialAccount\Infrastructure\MySQL;
 
 use App\OfficialAccount\Domain\Aggregate\Repository\UserInfoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserOfficialAccountRepository;

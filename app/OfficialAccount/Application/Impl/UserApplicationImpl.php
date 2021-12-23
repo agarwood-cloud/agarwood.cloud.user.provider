@@ -13,7 +13,7 @@ namespace App\OfficialAccount\Application\Impl;
 use App\OfficialAccount\Application\UserApplication;
 use App\OfficialAccount\Domain\SendToNodeDomain;
 use App\OfficialAccount\Domain\UserDomainService;
-use App\OfficialAccount\Infrastructure\Cache\RedisUser;
+use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UserCreateDTO;

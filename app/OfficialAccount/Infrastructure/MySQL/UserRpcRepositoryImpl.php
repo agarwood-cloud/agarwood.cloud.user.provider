@@ -8,12 +8,12 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\Repository;
+namespace App\OfficialAccount\Infrastructure\MySQL;
 
 use App\OfficialAccount\Domain\Aggregate\Entity\Customer;
 use App\OfficialAccount\Domain\Aggregate\Entity\User;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserRpcRepository;
-use App\OfficialAccount\Infrastructure\Cache\RedisUser;
+use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use Swoft\Db\DB;
 use Swoft\Db\Exception\DbException;
 

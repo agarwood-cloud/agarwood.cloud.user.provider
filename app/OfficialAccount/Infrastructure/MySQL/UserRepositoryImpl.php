@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\Repository;
+namespace App\OfficialAccount\Infrastructure\MySQL;
 
 use Agarwood\Core\Constant\StringConstant;
 use App\OfficialAccount\Domain\Aggregate\Entity\User;

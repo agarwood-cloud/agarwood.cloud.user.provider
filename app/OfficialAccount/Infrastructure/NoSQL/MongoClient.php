@@ -31,7 +31,11 @@ class MongoClient
                     'mongodb://%s:%s',
                     env('MONGODB_HOST', '127.0.0.1'),
                     env('MONGODB_PORT', '27017')
-                )
+                ),
+                [
+                    'username' => env('MONGODB_USERNAME', 'root'),
+                    'password' => env('MONGODB_PASSWORD', ''),
+                ]
             );
         }
         return self::$singleton;

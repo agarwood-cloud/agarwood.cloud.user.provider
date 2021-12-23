@@ -20,7 +20,6 @@ composer install
 ### Configuration
 
 - Please see the .env file for detailed configuration of database link, RPC, Redis, etc.
-- JWT uses Sha256 encryption, please see app-private-key.pen and app-public-key.key for detailed configuration
 
 ### Start
 

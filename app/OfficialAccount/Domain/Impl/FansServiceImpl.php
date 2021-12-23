@@ -13,7 +13,7 @@ namespace App\OfficialAccount\Domain\Impl;
 use App\Customer\Domain\Aggregate\Repository\CustomerToDoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\FansRepository;
 use App\OfficialAccount\Domain\FansService;
-use App\OfficialAccount\Infrastructure\Cache\RedisUser;
+use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use App\OfficialAccount\Interfaces\DTO\Fans\GroupUserDTO;
 use App\OfficialAccount\Interfaces\DTO\Fans\MoveGroupDTO;
 use App\OfficialAccount\Interfaces\DTO\Fans\UpdateDTO;

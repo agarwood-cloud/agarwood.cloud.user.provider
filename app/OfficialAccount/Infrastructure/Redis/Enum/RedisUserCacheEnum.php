@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\Cache\Enum;
+namespace App\OfficialAccount\Infrastructure\Redis\Enum;
 
 class RedisUserCacheEnum
 {

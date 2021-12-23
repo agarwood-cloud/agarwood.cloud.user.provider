@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\Repository;
+namespace App\OfficialAccount\Infrastructure\MySQL;
 
 use App\Customer\Infrastructure\Repository\CustomerRepositoryImpl;
 
