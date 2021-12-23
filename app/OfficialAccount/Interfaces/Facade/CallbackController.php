@@ -37,10 +37,10 @@ class CallbackController
 
     /**
      * 微信的回调地址:
-     *      i.e:  http://www.xxx.com/user-center/officialAccount/token/eb6c374c1e91e.html
+     *      i.e:  http://www.xxx.com/user-center/official-account/token/eb6c374c1e91e.html
      *
      * @RequestMapping(
-     *     route="officialAccount/token/{officialAccountsId}.html",
+     *     route="official-account/token/{officialAccountsId}.html",
      *     method={ RequestMethod::POST }
      * )
      *
