@@ -1,0 +1,95 @@
+{
+  "name": "agarwood/user",
+  "type": "project",
+  "keywords": [
+    "php",
+    "swoole",
+    "swoft",
+    "agarwood",
+    "ddd",
+    "domain-driven-design"
+  ],
+  "description": "Each organization has its own private domain traffic",
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">=8.0",
+    "ext-pdo": "*",
+    "ext-redis": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "ext-libxml": "*",
+    "ext-mbstring": "*",
+    "ext-curl": "*",
+    "swoft/cache": "~2.0.0",
+    "swoft/db": "~2.0.0",
+    "swoft/i18n": "~2.0.0",
+    "swoft/task": "~2.0.0",
+    "swoft/redis": "~2.0.0",
+    "swoft/framework": "~2.0.0",
+    "swoft/http-server": "~2.0.0",
+    "swoft/rpc-client": "~2.0.0",
+    "swoft/rpc-server": "~2.0.0",
+    "swoft/process": "~2.0.0",
+    "swoft/limiter": "~2.0.0",
+    "swoft/breaker": "^2.0",
+    "swoft/crontab": "^2.0",
+    "agarwood/core": "dev-master",
+    "agarwood/rpc": "dev-master",
+    "agarwood-cloud/easy-wechat":"8.0.x-dev",
+    "yurunsoft/guzzle-swoole": "^2.2",
+    "lcobucci/jwt": "^4.0",
+    "nesbot/carbon": "^2.44",
+    "guzzlehttp/guzzle": "^7.3",
+    "mongodb/mongodb": "^1.8",
+    "godruoyi/php-snowflake": "^1.1"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "swoft/swlib": "~2.0.0",
+    "swoft/devtool": "~2.0.0",
+    "swoft/swoole-ide-helper": "dev-master",
+    "phpstan/phpstan": "^0.12.83",
+    "friendsofphp/php-cs-fixer": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AppTest\\Testing\\": "test/testing",
+      "AppTest\\Unit\\": "test/unit"
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "phpstan": "./vendor/bin/phpstan analyze",
+    "api-tests": "php test/run.php -c phpunit.xml --testsuite apiTests",
+    "unit-tests": "php test/run.php -c phpunit.xml --testsuite unitTests",
+    "check-cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff",
+    "cs-fix": "./vendor/bin/php-cs-fixer fix"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:agarwood-cloud/agarwood.cloud.core.provider.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:agarwood-cloud/agarwood.cloud.rpc.provider.git"
+    },
+    {
+      "type": "git",
+      "url": "git@gitee.com:agilawood-cloud/agarwood.cloud.easy.wechat.provider.git"
+    }
+  ]
+}
