@@ -14,9 +14,9 @@ use Agarwood\Core\Util\ArrayHelper;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceCreateDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceUpdateDTO;
+use App\Customer\Interfaces\DTO\Customer\CreateDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
+use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use Swoft\Stdlib\Helper\ObjectHelper;
 
@@ -69,26 +69,26 @@ class CustomerAssembler
     /**
      * @param array $attributes
      *
-     * @return \App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO
+     * @return \App\Customer\Interfaces\DTO\Customer\IndexDTO
      */
-    public static function attributesToIndexDTO(array $attributes): CustomerServiceIndexDTO
+    public static function attributesToIndexDTO(array $attributes): IndexDTO
     {
-        return ObjectHelper::init(new CustomerServiceIndexDTO(), ArrayHelper::numericToInt($attributes, ['page', 'perPage']));
+        return ObjectHelper::init(new IndexDTO(), ArrayHelper::numericToInt($attributes, ['page', 'perPage']));
     }
 
     /**
      * @param array $attributes
      *
-     * @return \App\Customer\Interfaces\DTO\Customer\CustomerServiceCreateDTO
+     * @return \App\Customer\Interfaces\DTO\Customer\CreateDTO
      */
-    public static function attributesToCreateDTO(array $attributes): CustomerServiceCreateDTO
+    public static function attributesToCreateDTO(array $attributes): CreateDTO
     {
-        return ObjectHelper::init(new CustomerServiceCreateDTO(), $attributes);
+        return ObjectHelper::init(new CreateDTO(), $attributes);
     }
 
-    public static function attributesToUpdateDTO(array $attributes): CustomerServiceUpdateDTO
+    public static function attributesToUpdateDTO(array $attributes): UpdateDTO
     {
-        return ObjectHelper::init(new CustomerServiceUpdateDTO(), $attributes);
+        return ObjectHelper::init(new UpdateDTO(), $attributes);
     }
 
     public static function attributesToChangeStatusDTO(array $attributes): ChangeStatusDTO

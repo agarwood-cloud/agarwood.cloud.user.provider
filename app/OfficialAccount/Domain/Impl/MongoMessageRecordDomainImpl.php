@@ -70,7 +70,6 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertVideoMessageRecord(CallbackVideoDTO|ChatVideoDTO $videoDTO): InsertOneResult
     {
-
     }
 
     /**
@@ -82,7 +81,6 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertVoiceMessageRecord(CallBackChatVoiceDTO|ChatVoiceDTO $voiceDTO): InsertOneResult
     {
-
     }
 
     /**

@@ -185,8 +185,6 @@ class ImageDTO extends AbstractBaseDTO
         $this->createdAt = $createdAt;
     }
 
-
-
     /**
      * @return string
      */

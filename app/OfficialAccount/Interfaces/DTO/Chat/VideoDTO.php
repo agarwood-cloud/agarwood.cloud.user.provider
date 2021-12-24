@@ -314,5 +314,4 @@ class VideoDTO extends AbstractBaseDTO
     {
         $this->sender = $sender;
     }
-
 }

@@ -13,13 +13,14 @@ namespace App\Customer\Domain\Impl;
 use App\Assign\Domain\Aggregate\Enum\AssignEnum;
 use App\Assign\Domain\Aggregate\Enum\BaseAssignStrategyEnum;
 use App\Customer\Domain\Aggregate\Repository\CustomerAssignRepository;
-use App\Customer\Domain\Aggregate\Repository\CustomerRepository;
+use App\Customer\Domain\Aggregate\Repository\CustomerCommandRepository;
+use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
 use App\Customer\Domain\Aggregate\Repository\DepartmentRepository;
-use App\Customer\Domain\CustomerDomainService;
+use App\Customer\Domain\CustomerDomain;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceUpdateDTO;
+use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use App\Customer\Interfaces\Rpc\Client\MallCenter\ServiceRpc;
 use App\OfficialAccount\Infrastructure\Enum\UserEnum;
@@ -34,7 +35,7 @@ use Agarwood\WeChat\Factory\WeChat;
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-class CustomerDomainServiceImpl implements CustomerDomainService
+class CustomerDomainImpl implements CustomerDomain
 {
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
@@ -53,9 +54,9 @@ class CustomerDomainServiceImpl implements CustomerDomainService
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerRepository $customerRepository
+     * @var CustomerQueryRepository $customerQueryRepository
      */
-    protected CustomerRepository $customerRepository;
+    protected CustomerQueryRepository $customerQueryRepository;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
@@ -72,6 +73,13 @@ class CustomerDomainServiceImpl implements CustomerDomainService
     protected DepartmentRepository $departmentRepository;
 
     /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\Customer\Domain\Aggregate\Repository\CustomerCommandRepository
+     */
+    public CustomerCommandRepository $customerCommandRepository;
+
+    /**
      * 列表
      *
      * @param int   $officialAccountId
@@ -81,40 +89,36 @@ class CustomerDomainServiceImpl implements CustomerDomainService
      */
     public function index(int $officialAccountId, array $filter): array
     {
-        return $this->customerRepository->index($officialAccountId, $filter);
+        return $this->customerQueryRepository->index($officialAccountId, $filter);
     }
 
     /**
+     * @param int   $officialAccountId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(array $attributes): bool
+    public function create(int $officialAccountId, array $attributes): bool
     {
-        return $this->customerRepository->create($attributes);
+        return $this->customerCommandRepository->create($officialAccountId, $attributes);
     }
 
     /**
      * 更新客服账号信息
      *
-     * @param int                      $id
-     * @param CustomerServiceUpdateDTO $DTO
+     * @param int       $id
+     * @param UpdateDTO $DTO
      *
      * @return array
      * @throws DbException
      */
-    public function update(int $id, CustomerServiceUpdateDTO $DTO): array
+    public function update(int $id, UpdateDTO $DTO): array
     {
         //如果请求参数中不存在，则恢复为默认值
-        $attributes = $DTO->toArrayNotNull();
-
-        // 如果有密码，可以加入密码修复的功能
-        $DTO->getPassword() && $attributes['password'] = password_hash($DTO->getPassword(), PASSWORD_DEFAULT);
-
-        $this->customerRepository->update($id, $attributes);
+        $this->customerCommandRepository->update($id, $DTO->toArrayNotNull());
 
         //重新查找并返回结果集
-        return $this->customerRepository->view($id);
+        return $this->customerQueryRepository->view($id);
     }
 
     /**
@@ -124,7 +128,7 @@ class CustomerDomainServiceImpl implements CustomerDomainService
      */
     public function view(int $id): array
     {
-        return $this->customerRepository->view($id);
+        return $this->customerQueryRepository->view($id);
     }
 
     /**
@@ -134,7 +138,7 @@ class CustomerDomainServiceImpl implements CustomerDomainService
      */
     public function delete(string $ids): int
     {
-        return $this->customerRepository->delete($ids);
+        return $this->customerCommandRepository->delete($ids);
     }
 
     /**
@@ -166,9 +170,9 @@ class CustomerDomainServiceImpl implements CustomerDomainService
      */
     public function changeStatus(int $id, ChangeStatusDTO $DTO): array
     {
-        $this->customerRepository->update($id, $DTO->toArrayLine());
+        $this->customerQueryRepository->update($id, $DTO->toArrayLine());
         //重新查找并返回结果集
-        return $this->customerRepository->view($id);
+        return $this->customerQueryRepository->view($id);
     }
 
     /**
@@ -210,7 +214,7 @@ class CustomerDomainServiceImpl implements CustomerDomainService
     public function login(LoginDTO $DTO): array
     {
         // 查找用户
-        $user = $this->customerRepository->login($DTO);
+        $user = $this->customerQueryRepository->login($DTO);
 
         // 验证密码是否正确
         if ($user && password_verify($DTO->getPassword(), $user['password'])) {

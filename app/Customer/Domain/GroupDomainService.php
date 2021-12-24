@@ -18,7 +18,7 @@ use App\Customer\Interfaces\DTO\Group\FansGroupUpdateDTO;
 interface GroupDomainService
 {
     /**
-     * agarwood.cloud.user.center.provider -  领域服务接口： 获取列表
+     *  获取列表
      *
      *  粉丝分组列表数据（最多支持三级分类）
      *
@@ -34,7 +34,7 @@ interface GroupDomainService
     public function customerIndex(int $officialAccountId, array $filter): array;
 
     /**
-     * agarwood.cloud.user.center.provider -  领域服务接口： 获取列表
+     *  获取列表
      *
      *  粉丝分组列表数据（最多支持三级分类）
      *

@@ -10,7 +10,7 @@
 
 namespace App\Customer\Application;
 
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -25,12 +25,12 @@ interface CustomerInspectApplication
      *      客服列表服务接口
      *
      *
-     * @param CustomerServiceIndexDTO $DTO
-     * @param bool                    $isPagination
+     * @param IndexDTO $DTO
+     * @param bool     $isPagination
      *
      * @return array
      */
-    public function indexProvider(CustomerServiceIndexDTO $DTO, bool $isPagination = true): array;
+    public function indexProvider(IndexDTO $DTO, bool $isPagination = true): array;
 
     /**
      * 应用层

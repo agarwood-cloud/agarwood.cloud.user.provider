@@ -19,7 +19,7 @@ use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 interface UserDomainService
 {
     /**
-     * agarwood.cloud.user.center.provider -  领域服务接口： 获取列表
+     *  获取列表
      *
      * @param int   $officialAccountId
      * @param array $filter 过滤条件

@@ -11,49 +11,40 @@
 namespace App\Customer\Interfaces\DTO\Customer;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\IsString;
-use Swoft\Validator\Annotation\Mapping\NotEmpty;
-use Swoft\Validator\Annotation\Mapping\Required;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
 class LoginDTO extends AbstractBaseDTO
 {
     /**
+     * UserName
      *
-     * @Required()
-     * @NotEmpty()
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var string
      */
     public string $username = '';
 
     /**
+     * OfficialAccount ID
      *
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
      *
-     * @var string
-     */
-    public string $token = '';
-
-    /**
-     *
-     * @Required()
-     * @NotEmpty()
-     * @IsString()
-     *
-     * @var string
+     * @var int
      */
     public int $officialAccountId = 0;
 
     /**
+     * Password
      *
-     * @Required()
-     * @NotEmpty()
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Required()
+     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var string
      */
@@ -76,6 +67,22 @@ class LoginDTO extends AbstractBaseDTO
     }
 
     /**
+     * @return int
+     */
+    public function getOfficialAccountId(): int
+    {
+        return $this->officialAccountId;
+    }
+
+    /**
+     * @param int $officialAccountId
+     */
+    public function setOfficialAccountId(int $officialAccountId): void
+    {
+        $this->officialAccountId = $officialAccountId;
+    }
+
+    /**
      * @return string
      */
     public function getPassword(): string
@@ -89,37 +96,5 @@ class LoginDTO extends AbstractBaseDTO
     public function setPassword(string $password): void
     {
         $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken(string $token): void
-    {
-        $this->token = $token;
-    }
-
-    /**
-     * @return string
-     */
-    public function getServiceUuid(): string
-    {
-        return $this->serviceUuid;
-    }
-
-    /**
-     * @param int $officialAccountId
-     */
-    public function setServiceUuid(int $officialAccountId): void
-    {
-        $this->serviceUuid = $officialAccountId;
     }
 }

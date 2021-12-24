@@ -130,7 +130,7 @@ class UserApplicationImpl implements UserApplication
 
         // 发送一条消息给相应的客服
         $this->callbackNodeDomainService->textMessage(
-            $DTO->customerUuid,
+            $DTO->customerId,
             $openid,
             $openid,
             '【系统消息】此粉丝转移给你，请你认真做好接待',

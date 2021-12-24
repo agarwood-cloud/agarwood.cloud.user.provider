@@ -10,7 +10,7 @@
 
 namespace App\OfficialAccount\Domain\Impl;
 
-use App\Customer\Domain\Aggregate\Repository\CustomerRepository;
+use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserInfoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserOfficialAccountRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserRepository;
@@ -47,9 +47,9 @@ class OAuthDomainServiceImpl implements OAuthDomainService
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerRepository
+     * @var CustomerQueryRepository
      */
-    protected CustomerRepository $customerRepository;
+    protected CustomerQueryRepository $customerRepository;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()

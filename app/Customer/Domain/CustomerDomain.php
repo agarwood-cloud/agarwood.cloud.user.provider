@@ -13,17 +13,17 @@ namespace App\Customer\Domain;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceUpdateDTO;
+use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use MongoDB\Client;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-interface CustomerDomainService
+interface CustomerDomain
 {
     /**
-     * agarwood.cloud.user.center.provider -  领域服务接口： 获取列表
+     *  获取列表
      *
      * @param array $filter 过滤条件
      * @param int   $officialAccountId
@@ -33,26 +33,27 @@ interface CustomerDomainService
     public function index(int $officialAccountId, array $filter): array;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 新建
+     *  新建
      *
+     * @param int   $officialAccountId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(array $attributes): bool;
+    public function create(int $officialAccountId, array $attributes): bool;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 更新
+     * 更新
      *
-     * @param int                      $id  模板uuid
-     * @param CustomerServiceUpdateDTO $DTO 更新字段
+     * @param int       $id  模板uuid
+     * @param UpdateDTO $DTO 更新字段
      *
      * @return array
      */
-    public function update(int $id, CustomerServiceUpdateDTO $DTO): array;
+    public function update(int $id, UpdateDTO $DTO): array;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 预览
+     * 预览
      *
      * @param int $id
      *
@@ -61,7 +62,7 @@ interface CustomerDomainService
     public function view(int $id): array;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 删除
+     * 删除
      *
      * @param string $ids
      *

@@ -15,7 +15,7 @@ use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-interface CustomerRepository
+interface CustomerQueryRepository
 {
     /**
      * 服务号管理列表数据
@@ -26,32 +26,6 @@ interface CustomerRepository
      * @return array
      */
     public function index(int $officialAccountId, array $filter): array;
-
-    /**
-     * 创建
-     *
-     * @param array $attributes
-     *
-     * @return bool
-     */
-    public function create(array $attributes): bool;
-
-    /**
-     * 删除
-     *
-     * @param string $ids
-     *
-     * @return int
-     */
-    public function delete(string $ids): int;
-
-    /**
-     * @param int   $id
-     * @param array $attributes
-     *
-     * @return int
-     */
-    public function update(int $id, array $attributes): int;
 
     /**
      * @param int $id

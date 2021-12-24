@@ -233,5 +233,4 @@ class VoiceDTO extends AbstractBaseDTO
     {
         $this->sender = $sender;
     }
-
 }

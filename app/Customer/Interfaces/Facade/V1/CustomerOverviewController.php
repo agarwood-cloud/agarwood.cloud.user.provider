@@ -49,7 +49,7 @@ class CustomerOverviewController extends AbstractBaseController
     public CustomerOverviewApplication $application;
 
     /**
-     * 客服列表
+     * 客服预览
      *
      * @RequestMapping(route="customer-overview", method={RequestMethod::GET})
      * @Validate(validator=IndexDTO::class, type=ValidateType::GET)

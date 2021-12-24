@@ -11,7 +11,7 @@
 namespace App\Customer\Application\Impl;
 
 use App\Customer\Application\CustomerInspectApplication;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -21,7 +21,7 @@ class CustomerInspectApplicationImpl implements CustomerInspectApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(CustomerServiceIndexDTO $DTO, bool $isPagination = true): array
+    public function indexProvider(IndexDTO $DTO, bool $isPagination = true): array
     {
         return [];
     }

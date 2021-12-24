@@ -35,7 +35,7 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
      *
      * @var WeChat
      */
-    protected WeChat $officialAccount;
+    protected WeChat $weChat;
 
     /**
      * @param int $officialAccountsId
@@ -74,8 +74,9 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
      */
     public function officialAccountApplication(int $officialAccountsId): Application
     {
+        // todo 优化: 可以使用缓存
         $config = $this->officialAccountsRpc->officialAccountsConfig($officialAccountsId);
 
-        return $this->officialAccount->officialAccount($config);
+        return $this->weChat->officialAccount($config);
     }
 }

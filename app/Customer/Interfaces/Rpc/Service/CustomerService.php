@@ -10,7 +10,7 @@
 
 namespace App\Customer\Interfaces\Rpc\Service;
 
-use App\Customer\Domain\Aggregate\Repository\CustomerRepository;
+use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
 use Agarwood\Rpc\UserCenter\UserCenterCustomerRpcInterface;
 use Swoft\Rpc\Server\Annotation\Mapping\Service;
 
@@ -22,9 +22,9 @@ class CustomerService implements UserCenterCustomerRpcInterface
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerRepository
+     * @var CustomerQueryRepository
      */
-    protected CustomerRepository $customer;
+    protected CustomerQueryRepository $customer;
 
     public function getCustomer(int $id): array
     {

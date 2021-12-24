@@ -23,7 +23,6 @@ use Swoft\Validator\Annotation\Mapping\ValidateType;
 /**
  * 微信回调控制器
  *
- *
  * @Controller(prefix="/official-account/callback")
  */
 class CallbackController

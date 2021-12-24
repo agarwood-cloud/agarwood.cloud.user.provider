@@ -15,11 +15,12 @@ use App\Customer\Application\CustomerApplication;
 use App\Customer\Interfaces\Assembler\CustomerAssembler;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceCreateDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceUpdateDTO;
+use App\Customer\Interfaces\DTO\Customer\CreateDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
+use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
+use App\Support\OfficialAccountQueryParams;
 use App\Support\ParsingToken;
 use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
@@ -54,10 +55,17 @@ class CustomerController extends AbstractBaseController
     protected CustomerApplication $application;
 
     /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\Support\OfficialAccountQueryParams
+     */
+    public OfficialAccountQueryParams $officialAccountQueryParams;
+
+    /**
      * 客服列表
      *
      * @RequestMapping(route="customer", method={RequestMethod::GET})
-     * @Validate(validator=CustomerServiceIndexDTO::class, type=ValidateType::GET)
+     * @Validate(validator=IndexDTO::class, type=ValidateType::GET)
      * @param Request $request
      *
      * @return Response|null
@@ -66,18 +74,21 @@ class CustomerController extends AbstractBaseController
     {
         $dto = CustomerAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->indexProvider((int)$this->parsingToken->getOfficialAccountId(), $dto)
+            $this->application->indexProvider(
+                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                $dto
+            )
         )->response();
     }
 
     /**
-     * 创建客服
+     * 创建客服账号
      *
      * @param Request  $request
      * @param Response $response
      *
-     * @RequestMapping(route="customer", method={ RequestMethod::POST})
-     * @Validate(validator=CustomerServiceCreateDTO::class, type=ValidateType::BODY)
+     * @RequestMapping(route="customer", method={ RequestMethod::POST })
+     * @Validate(validator=CreateDTO::class, type=ValidateType::BODY)
      *
      * @return Response|null
      */
@@ -85,7 +96,10 @@ class CustomerController extends AbstractBaseController
     {
         $dto = CustomerAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
-            $this->application->createProvider((int)$this->parsingToken->getOfficialAccountId(), $dto)
+            $this->application->createProvider(
+                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                $dto
+            )
         )->response($response->withStatus(201));
     }
 
@@ -96,7 +110,7 @@ class CustomerController extends AbstractBaseController
      * @param int     $id
      *
      * @return Response|null
-     * @Validate(validator=CustomerServiceUpdateDTO::class, type=ValidateType::BODY)
+     * @Validate(validator=UpdateDTO::class, type=ValidateType::BODY)
      * @RequestMapping(route="customer/{id}", method={RequestMethod::PUT, RequestMethod::PATCH})
      */
     public function actionUpdate(Request $request, int $id): ?Response
@@ -150,7 +164,7 @@ class CustomerController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->scanSubscribeProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
                 (int)$this->parsingToken->getCustomerId(),
             )
         )->response();
@@ -179,7 +193,7 @@ class CustomerController extends AbstractBaseController
      * 客服后台登陆
      *
      * @Validate(validator=LoginDTO::class, type=ValidateType::BODY)
-     * @RequestMapping(route="customer/login", method={RequestMethod::POST })
+     * @RequestMapping(route="customer/login", method={ RequestMethod::POST })
      *
      * @param Request $request
      *
@@ -206,7 +220,10 @@ class CustomerController extends AbstractBaseController
     public function actionObtainOffline(string $ids, Response $response): ?Response
     {
         return $this->wrapper()->setData(
-            $this->application->obtainOfflineProvider((int)$this->parsingToken->getOfficialAccountId(), $ids)
+            $this->application->obtainOfflineProvider(
+                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                $ids
+            )
         )->response($response->withStatus(204));
     }
 
@@ -239,7 +256,9 @@ class CustomerController extends AbstractBaseController
     public function actionObtainFansOffline(): ?Response
     {
         return $this->wrapper()->setData(
-            $this->application->obtainFansOfflineProvider((int)$this->parsingToken->getOfficialAccountId())
+            $this->application->obtainFansOfflineProvider(
+                (int)$this->officialAccountQueryParams->getOfficialAccountId()
+            )
         )->response();
     }
 }

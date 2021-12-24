@@ -91,5 +91,12 @@
       "type": "git",
       "url": "git@gitee.com:agilawood-cloud/agarwood.cloud.easy.wechat.provider.git"
     }
-  ]
+  ],
+  "config": {
+    "allow-plugins": {
+      "yurunsoft/composer-include-files": true,
+      "yurunsoft/guzzle-swoole": true,
+      "easywechat-composer/easywechat-composer": true
+    }
+  }
 }

@@ -11,22 +11,17 @@
 namespace App\Customer\Interfaces\DTO\Customer;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\Enum;
-use Swoft\Validator\Annotation\Mapping\IsInt;
-use Swoft\Validator\Annotation\Mapping\IsString;
-use Swoft\Validator\Annotation\Mapping\Min;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
-class CustomerServiceIndexDTO extends AbstractBaseDTO
+class IndexDTO extends AbstractBaseDTO
 {
     /**
      * 第 ${page} 页
      *
-     * @IsInt(message="页码必须为整数")
-     * @Min(value=1, message="页码最小值为1")
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
+     * @\Swoft\Validator\Annotation\Mapping\Min(value=1)
      *
      * @var int
      */
@@ -35,24 +30,25 @@ class CustomerServiceIndexDTO extends AbstractBaseDTO
     /**
      * 每页共 ${perPage} 条记录
      *
-     * 每页条数
-     * @IsInt(message="每页条数必须为整数")
-     * @Min(value=1, message="每页条数最小值为1")
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
+     * @\Swoft\Validator\Annotation\Mapping\Min(value=1)
      *
      * @var int
      */
     public int $perPage = 10;
 
     /**
-     * @IsString()
-     * @Enum(values={"","usable","disabled"})
+     * 可用状态
+     *
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Enum(values={"","usable","disabled"})
      *
      * @var string|null
      */
     public ?string $status = '';
 
     /**
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      *
      * @var string|null
@@ -60,22 +56,20 @@ class CustomerServiceIndexDTO extends AbstractBaseDTO
     public ?string $name = '';
 
     /**
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var string|null
      */
     public ?string $account = '';
 
     /**
-     * @IsString()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var string|null
      */
     public ?string $groupName = null;
 
     /**
-     * 第 ${page} 页
-     *
      * @return int
      */
     public function getPage(): int
@@ -84,8 +78,6 @@ class CustomerServiceIndexDTO extends AbstractBaseDTO
     }
 
     /**
-     * 第 ${page} 页
-     *
      * @param int $page
      */
     public function setPage(int $page): void
@@ -94,8 +86,6 @@ class CustomerServiceIndexDTO extends AbstractBaseDTO
     }
 
     /**
-     * 每页 ${page} 条记录
-     *
      * @return int
      */
     public function getPerPage(): int
@@ -104,8 +94,6 @@ class CustomerServiceIndexDTO extends AbstractBaseDTO
     }
 
     /**
-     * 每页 ${page} 条记录
-     *
      * @param int $perPage
      */
     public function setPerPage(int $perPage): void

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
- *
  */
 interface CallbackApplication
 {

@@ -8,14 +8,15 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Infrastructure\MySQL;
-
-use App\Customer\Infrastructure\MySQL\CustomerQueryRepositoryImpl;
+namespace App\Support;
 
 /**
- *
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-class CustomerExtendsRepositoryImpl extends CustomerQueryRepositoryImpl
+interface OfficialAccountQueryParams
 {
+    /**
+     * @return int|null
+     */
+    public function getOfficialAccountId(): int|null;
 }

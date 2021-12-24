@@ -10,21 +10,19 @@
 
 namespace App\Customer\Infrastructure\MySQL;
 
-use App\Customer\Domain\Aggregate\Entity\Customer;
-use App\Customer\Domain\Aggregate\Repository\CustomerRepository;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
-use Carbon\Carbon;
 use Agarwood\Core\Constant\StringConstant;
-use Godruoyi\Snowflake\Snowflake;
+use App\Customer\Domain\Aggregate\Entity\Customer;
+use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
+use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use Swoft\Db\DB;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-class CustomerRepositoryImpl implements CustomerRepository
+class CustomerQueryRepositoryImpl implements CustomerQueryRepository
 {
     /**
-     * 服务号管理列表数据
+     * 公众号管理列表数据
      *
      * @param array $filter
      * @param int   $officialAccountId
@@ -39,14 +37,15 @@ class CustomerRepositoryImpl implements CustomerRepository
                 'account',
                 'name',
                 'status',
-                'service_id as serviceUuid',
+                'oa_id as officialAccountId',
                 'phone',
-                'group_id as groupUuid',
+                'group_id as groupId',
                 'group_name as groupName',
                 'created_at as createdAt',
                 'updated_at as updatedAt'
-            )->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
-            ->where('service_id', '=', $officialAccountId)
+            )
+            ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
+            ->where('oa_id', '=', $officialAccountId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })
@@ -62,52 +61,6 @@ class CustomerRepositoryImpl implements CustomerRepository
             ->paginate($filter['page'], $filter['per_page']);
     }
 
-    /**
-     * 创建
-     *
-     * @param array $attributes
-     *
-     * @return bool
-     */
-    public function create(array $attributes): bool
-    {
-        $snowflake        = new Snowflake;
-        $attributes['id'] = (int)$snowflake->id();
-
-        return DB::table(Customer::tableName())
-            ->insert($attributes);
-    }
-
-    /**
-     * 删除
-     *
-     * @param string $ids
-     *
-     * @return int
-     */
-    public function delete(string $ids): int
-    {
-        return DB::table(Customer::tableName())
-            ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->whereIn('id', explode(',', $ids))
-            ->update(['deleted_at' => Carbon::now()->toDateTimeString()]);
-    }
-
-    /**
-     * 更新
-     *
-     * @param int   $id
-     * @param array $attributes
-     *
-     * @return int
-     */
-    public function update(int $id, array $attributes): int
-    {
-        return DB::table(Customer::tableName())
-            ->where('id', '=', $id)
-            ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->update($attributes);
-    }
 
     /**
      * 预览
@@ -119,6 +72,18 @@ class CustomerRepositoryImpl implements CustomerRepository
     public function view(int $id): array
     {
         return DB::table(Customer::tableName())
+            ->select(
+                'id',
+                'account',
+                'name',
+                'status',
+                'oa_id as officialAccountId',
+                'phone',
+                'group_id as groupId',
+                'group_name as groupName',
+                'created_at as createdAt',
+                'updated_at as updatedAt'
+            )
             ->where('id', '=', $id)
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
             ->firstArray();
@@ -141,11 +106,10 @@ class CustomerRepositoryImpl implements CustomerRepository
                 'group_id as groupId',
                 'phone',
                 'status',
-                'service_id as serviceId',
                 'group_name as groupName',
                 'password'
             )
-            ->where('service_id', '=', $DTO->getServiceUuid())
+            ->where('oa_id', '=', $DTO->getOfficialAccountId())
             ->where('account', '=', $DTO->getUsername())
             ->where('status', '=', 'usable')
             ->firstArray();

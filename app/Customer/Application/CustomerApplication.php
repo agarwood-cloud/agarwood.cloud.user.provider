@@ -13,9 +13,9 @@ namespace App\Customer\Application;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceCreateDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceUpdateDTO;
+use App\Customer\Interfaces\DTO\Customer\CreateDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
+use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use Swoft\Stdlib\Collection;
 
@@ -28,24 +28,23 @@ interface CustomerApplication
      * 应用层
      *      客服列表服务接口
      *
-     *
-     * @param int                     $officialAccountId
-     * @param CustomerServiceIndexDTO $DTO
+     * @param int                                            $officialAccountId
+     * @param \App\Customer\Interfaces\DTO\Customer\IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, CustomerServiceIndexDTO $DTO): array;
+    public function indexProvider(int $officialAccountId, IndexDTO $DTO): array;
 
     /**
      * 应用层
      *      新建客服服务接口
      *
-     * @param int                      $officialAccountId
-     * @param CustomerServiceCreateDTO $DTO
+     * @param int                                             $officialAccountId
+     * @param \App\Customer\Interfaces\DTO\Customer\CreateDTO $DTO
      *
-     * @return Collection
+     * @return \Swoft\Stdlib\Collection
      */
-    public function createProvider(int $officialAccountId, CustomerServiceCreateDTO $DTO): Collection;
+    public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection;
 
     /**
      *  应用层
@@ -61,12 +60,12 @@ interface CustomerApplication
      *  应用层
      *      更新客服服务接口
      *
-     * @param int                      $id
-     * @param CustomerServiceUpdateDTO $DTO
+     * @param int                                             $id
+     * @param \App\Customer\Interfaces\DTO\Customer\UpdateDTO $DTO
      *
-     * @return Collection
+     * @return \Swoft\Stdlib\Collection
      */
-    public function updateProvider(int $id, CustomerServiceUpdateDTO $DTO): Collection;
+    public function updateProvider(int $id, UpdateDTO $DTO): Collection;
 
     /**
      * 应用层

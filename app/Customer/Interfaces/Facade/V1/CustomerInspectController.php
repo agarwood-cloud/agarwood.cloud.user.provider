@@ -13,7 +13,7 @@ namespace App\Customer\Interfaces\Facade\V1;
 use Agarwood\Core\Support\Impl\AbstractBaseController;
 use App\Customer\Application\CustomerInspectApplication;
 use App\Customer\Interfaces\Assembler\CustomerServiceAssembler;
-use App\Customer\Interfaces\DTO\Customer\CustomerServiceIndexDTO;
+use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
 use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
@@ -45,7 +45,7 @@ class CustomerInspectController extends AbstractBaseController
      * 粉丝列表
      *
      * @RequestMapping(route="customer-inspect", method={RequestMethod::GET})
-     * @Validate(validator=CustomerServiceIndexDTO::class, type=ValidateType::GET)
+     * @Validate(validator=IndexDTO::class, type=ValidateType::GET)
      * @param Request $request
      *
      * @return Response|null
@@ -61,15 +61,15 @@ class CustomerInspectController extends AbstractBaseController
     /**
      * 查看粉丝详情
      *
-     * @RequestMapping(route="customer-inspect/{uuid}", method={RequestMethod::GET},params={"uuid"="[A-Za-z0-9_-]+"})
-     * @param string $uuid
+     * @RequestMapping(route="customer-inspect/{id}", method={RequestMethod::GET})
+     * @param string $id
      *
      * @return Response|null
      */
-    public function actionView(string $uuid): ?Response
+    public function actionView(string $id): ?Response
     {
         return $this->wrapper()->setData(
-            $this->application->viewProvider($uuid)
+            $this->application->viewProvider($id)
         )->response();
     }
 }
