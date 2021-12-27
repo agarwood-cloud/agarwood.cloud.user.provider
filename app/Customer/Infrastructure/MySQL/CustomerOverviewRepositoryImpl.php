@@ -36,8 +36,9 @@ class CustomerOverviewRepositoryImpl implements CustomerOverviewRepository
                 'name',
                 'account',
                 'phone'
-            )->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
-            ->where('service_id', '=', $officialAccountId)
+            )
+            ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
+            ->where('oa_id', '=', $officialAccountId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })

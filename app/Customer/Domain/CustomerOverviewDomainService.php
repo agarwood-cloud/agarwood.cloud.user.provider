@@ -11,12 +11,7 @@
 namespace App\Customer\Domain;
 
 /**
- * 领域服务层
- *
- * ObserveInterface CustomerOverviewDomainService
- *
  * @\Swoft\Bean\Annotation\Mapping\Bean()
- * @package App\Http\Domain
  */
 interface CustomerOverviewDomainService
 {

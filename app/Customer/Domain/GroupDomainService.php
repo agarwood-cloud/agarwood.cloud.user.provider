@@ -108,7 +108,7 @@ interface GroupDomainService
     /**
      * agarwood.cloud.user.center.provider - 领域服务接口： 删除
      *
-     * @param int $uuid
+     * @param int $id
      *
      * @return bool|null
      */

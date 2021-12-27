@@ -18,12 +18,8 @@ use App\Customer\Interfaces\DTO\CustomerOverview\IndexDTO;
 interface CustomerOverviewApplication
 {
     /**
-     * 应用层
-     *      客服数据统计列表服务接口
-     *
-     *
-     * @param int      $officialAccountId
-     * @param IndexDTO $DTO
+     * @param int                                                    $officialAccountId
+     * @param \App\Customer\Interfaces\DTO\CustomerOverview\IndexDTO $DTO
      *
      * @return array
      */

@@ -15,6 +15,7 @@ use App\Customer\Application\CustomerOverviewApplication;
 use App\Customer\Interfaces\Assembler\CustomerOverviewAssembler;
 use App\Customer\Interfaces\DTO\CustomerOverview\IndexDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
+use App\Support\OfficialAccountQueryParams;
 use App\Support\ParsingToken;
 use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
@@ -48,6 +49,14 @@ class CustomerOverviewController extends AbstractBaseController
      */
     public CustomerOverviewApplication $application;
 
+
+    /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\Support\OfficialAccountQueryParams
+     */
+    public OfficialAccountQueryParams $officialAccountQueryParams;
+
     /**
      * 客服预览
      *
@@ -61,7 +70,10 @@ class CustomerOverviewController extends AbstractBaseController
     {
         $dto = CustomerOverviewAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->indexProvider((int)$this->parsingToken->getOfficialAccountId(), $dto)
+            $this->application->indexProvider(
+                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                $dto
+            )
         )->response();
     }
 }

@@ -27,9 +27,9 @@ class CustomerGroupApplicationImpl implements CustomerGroupApplication
      *
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var GroupDomainService
+     * @var \App\Customer\Domain\GroupDomainService
      */
-    protected GroupDomainService $domain;
+    public GroupDomainService $domain;
 
     /**
      * @inheritDoc

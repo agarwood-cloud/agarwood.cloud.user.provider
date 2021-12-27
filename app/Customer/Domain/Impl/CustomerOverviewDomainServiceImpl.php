@@ -21,9 +21,9 @@ class CustomerOverviewDomainServiceImpl implements CustomerOverviewDomainService
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerOverviewRepository $customerOverviewRepository
+     * @var \App\Customer\Domain\Aggregate\Repository\CustomerOverviewRepository
      */
-    protected CustomerOverviewRepository $customerOverviewRepository;
+    public CustomerOverviewRepository $customerOverviewRepository;
 
     /**
      * @param int $officialAccountId

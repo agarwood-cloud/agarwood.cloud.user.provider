@@ -24,15 +24,16 @@ class CustomerOverviewApplicationImpl implements CustomerOverviewApplication
      *
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerOverviewDomainService
+     * @var \App\Customer\Domain\CustomerOverviewDomainService
      */
-    protected CustomerOverviewDomainService $domain;
+    public CustomerOverviewDomainService $domain;
 
     /**
      * @inheritDoc
      */
     public function indexProvider(int $officialAccountId, IndexDTO $DTO): array
     {
+        // todo: 待加入其它的数据统计信息
         return $this->domain->index($officialAccountId, $DTO->toArrayLine());
     }
 }
