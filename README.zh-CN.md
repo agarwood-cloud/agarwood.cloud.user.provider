@@ -24,7 +24,7 @@ composer install
 ### 运行
 
 ```shell
-php bin/swoft http:start
+php bin/agarwood http:start
 ```
 
 ### 开源许可

@@ -15,6 +15,7 @@ use App\OfficialAccount\Application\UserApplication;
 use App\OfficialAccount\Interfaces\Assembler\UserAssembler;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
+use App\Support\SocketIOClient;
 use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Annotation\Mapping\Controller;

@@ -24,7 +24,7 @@ composer install
 ### Start
 
 ```shell
-php bin/swoft http:start
+php bin/agarwood http:start
 ```
 ### Contributors
 
