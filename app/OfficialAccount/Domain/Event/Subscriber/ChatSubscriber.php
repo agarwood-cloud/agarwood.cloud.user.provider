@@ -49,7 +49,7 @@ class ChatSubscriber extends UserProcess
                 $message = json_decode($msg, true, 512, JSON_THROW_ON_ERROR);
 
                 // EasyWeChat Application
-                $app = $this->officialAccountsRpc->officialAccountApplication($message['p']);
+                $app = $this->officialAccountsRpc->officialAccountApplication($message['officialAccountId']);
 
                 // Send message to tencent
                 switch ($message['msgType']) {
