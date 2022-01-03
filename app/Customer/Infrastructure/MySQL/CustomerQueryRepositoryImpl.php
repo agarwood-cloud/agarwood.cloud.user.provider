@@ -61,7 +61,6 @@ class CustomerQueryRepositoryImpl implements CustomerQueryRepository
             ->paginate($filter['page'], $filter['per_page']);
     }
 
-
     /**
      * 预览
      *

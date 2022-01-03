@@ -46,4 +46,34 @@ class WebSocketMessage
      * 错误提示消息
      */
     public const SERVER_ERROR_MESSAGE = 'server.error.message';
+
+    /**
+     * 文本消息
+     */
+    public const TEXT_MESSAGE = 'text.message';
+
+    /**
+     * 视频消息
+     */
+    public const VIDEO_MESSAGE = 'video.message';
+
+    /**
+     * 声音消息
+     */
+    public const VOICE_MESSAGE = 'voice.message';
+
+    /**
+     * 图片消息
+     */
+    public const IMAGE_MESSAGE = 'image.message';
+
+    /**
+     * 图文消息
+     */
+    public const NEWS_ITEM_MESSAGE = 'news.item.message';
+
+    /**
+     * 错误提示消息
+     */
+    public const ERROR_MESSAGE = 'error.message';
 }

@@ -49,7 +49,6 @@ class CustomerOverviewController extends AbstractBaseController
      */
     public CustomerOverviewApplication $application;
 
-
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *

@@ -24,7 +24,9 @@ class Application extends SwoftApplication
     {
         parent::beforeInit();
 
-        // you can init php setting.
+        ini_set('default_socket_timeout', '0');
+
+        // you can php setting.
         date_default_timezone_set('Asia/Shanghai');
     }
 

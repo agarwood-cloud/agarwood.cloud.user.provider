@@ -10,20 +10,15 @@
 
 namespace App\OfficialAccount\Domain\Aggregate\Enum;
 
-class ReplyEnum
+class SubscriberEnum
 {
     /**
-     * 自动回复
+     * Send message to Tencent
      */
-    public const AUTO_REPLY_TYPE = 'auto';
+    public const REDIS_PUBLISH_WECHAT_CHAT_CHANNEL = 'chat.wechat.to.tencent';
 
     /**
-     * 快捷回复
+     * Handle messages sent by Tencent
      */
-    public const QUICK_REPLY_TYPE = 'quick';
-
-    /**
-     * 自动回复的 event_key
-     */
-    public const EVENT_KEY = 'LOOKING_FOR_HELP';
+    public const REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL = 'chat.wechat.from.tencent';
 }
