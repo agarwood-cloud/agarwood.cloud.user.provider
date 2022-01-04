@@ -5,9 +5,9 @@
 # @link https://hub.docker.com/_/debian/      alpine image
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
-# @see https://github.com/docker-library/php/tree/master/8.0/stretch/cli/Dockerfile
+# @see https://github.com/docker-library/php/blob/master/8.0/alpine3.15/cli/Dockerfile
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f Dockerfile -t agarwood/user
+# @build-example docker build . -f Dockerfile -t agarwood/user:2.0
 #
 FROM php:8.0-cli
 
