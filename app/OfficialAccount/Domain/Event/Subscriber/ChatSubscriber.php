@@ -13,6 +13,7 @@ namespace App\OfficialAccount\Domain\Event\Subscriber;
 use App\OfficialAccount\Domain\Aggregate\Enum\SubscriberEnum;
 use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\ChatSendToTencentDomain;
+use App\OfficialAccount\Interfaces\Assembler\ChatAssembler;
 use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use Swoft\Process\Process;
 use Swoft\Process\UserProcess;
@@ -44,36 +45,47 @@ class ChatSubscriber extends UserProcess
      */
     public function run(Process $process): void
     {
-        $subscriber = function (\Redis $redis, string $chan, string $msg) {
-            if ($chan === SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL) {
-                $message = json_decode($msg, true, 512, JSON_THROW_ON_ERROR);
+        while (true) {
+            $subscriber = function (\Redis $redis, string $chan, string $msg) {
+                // set socket timeout
+                $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
+                if ($chan === SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL) {
+                    $message = json_decode($msg, true, 512, JSON_THROW_ON_ERROR);
 
-                // EasyWeChat Application
-                $app = $this->officialAccountsRpc->officialAccountApplication($message['officialAccountId']);
+                    // EasyWeChat Application
+                    if (isset($message['officialAccountId'])) {
+                        $app = $this->officialAccountsRpc->officialAccountApplication($message['officialAccountId']);
 
-                // Send message to tencent
-                switch ($message['msgType']) {
-                    case WebSocketMessage::TEXT_MESSAGE:
-                        $this->chatSendToTencentDomain->textMessage($app, $message);
-                        break;
-                    case WebSocketMessage::IMAGE_MESSAGE:
-                        $this->chatSendToTencentDomain->imageMessage($app, $message);
-                        break;
-                    case WebSocketMessage::VIDEO_MESSAGE:
-                        $this->chatSendToTencentDomain->videoMessage($app, $message);
-                        break;
-                    case WebSocketMessage::VOICE_MESSAGE:
-                        $this->chatSendToTencentDomain->voiceMessage($app, $message);
-                        break;
-                    case WebSocketMessage::NEWS_ITEM_MESSAGE:
-                        $this->chatSendToTencentDomain->newsItemMessage($app, $message);
-                        break;
-                    default:
-                        break;
+                        // Send message to tencent
+                        switch ($message['msgType']) {
+                            case WebSocketMessage::TEXT_MESSAGE:
+                                $DTO = ChatAssembler::attributesToTextMessageDTO($message);
+                                $this->chatSendToTencentDomain->textMessage($app, $DTO);
+                                break;
+                            case WebSocketMessage::IMAGE_MESSAGE:
+                                $DTO = ChatAssembler::attributesToImageMessageDTO($message);
+                                $this->chatSendToTencentDomain->imageMessage($app, $DTO);
+                                break;
+                            case WebSocketMessage::VIDEO_MESSAGE:
+                                $DTO = ChatAssembler::attributesToVideoMessageDTO($message);
+                                $this->chatSendToTencentDomain->videoMessage($app, $DTO);
+                                break;
+                            case WebSocketMessage::VOICE_MESSAGE:
+                                $DTO = ChatAssembler::attributesToVoiceMessageDTO($message);
+                                $this->chatSendToTencentDomain->voiceMessage($app, $DTO);
+                                break;
+                            case WebSocketMessage::NEWS_ITEM_MESSAGE:
+                                $DTO = ChatAssembler::attributesToNewsItemMessageDTO($message);
+                                $this->chatSendToTencentDomain->newsItemMessage($app, $DTO);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
-            }
-        };
+            };
 
-        Redis::subscribe([SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL], $subscriber);
+            Redis::subscribe([SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL], $subscriber);
+        }
     }
 }

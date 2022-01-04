@@ -173,12 +173,15 @@ return [
     // +------------------------------------------------------
     'redis'                => [
         'class'    => RedisDb::class,
+        'driver'   => 'phpredis',
         'host'     => env('MASTER_REDIS_HOST', '127.0.0.1'),
         'port'     => env('MASTER_REDIS_PORT', 6379),
         'database' => env('MASTER_REDIS_DATABASE', 1),
         'option'   => [
-            'prefix'     => env('MASTER_REDIS_PREFIX'),
-            'serializer' => Redis::SERIALIZER_NONE,
+            'prefix'                => env('MASTER_REDIS_PREFIX'),
+            'serializer'            => Redis::SERIALIZER_NONE,
+            // set socket timeout
+            // Redis::OPT_READ_TIMEOUT => -1
         ],
     ],
 
