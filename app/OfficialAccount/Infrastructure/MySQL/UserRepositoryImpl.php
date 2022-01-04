@@ -23,50 +23,6 @@ use Swoft\Db\DB;
 class UserRepositoryImpl implements UserRepository
 {
     /**
-     * 服务号管理列表数据
-     *
-     * @param int   $officialAccountId
-     * @param array $filter
-     *
-     * @return array
-     */
-    public function index(int $officialAccountId, array $filter): array
-    {
-        return DB::table(User::tableName())
-            ->selectRaw(
-                '`id`,
-                `openid`,
-                `union_id` as `unionId`,
-                `customer_id` as `customerId`,
-                `customer`,
-                `nickname`,
-                `head_img_url` as `headImgUrl`,
-                `subscribe_at` as `subscribeAt`,
-                `unsubscribed_at` as `unsubscribedAt`,
-                `subscribe`,
-                `subscribe_scene` as `subscribeScene`,
-                `created_at` as `createdAt`,
-                `updated_at` as `updatedAt`'
-            )
-            ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->where('oa_id', '=', $officialAccountId)
-            ->orderByDesc('id')
-            ->when($filter['openid'], function ($query, $param) {
-                return $query->where('openid', '=', $param);
-            })
-            ->when($filter['subscribe'], function ($query, $param) {
-                return $query->where('subscribe', '=', $param);
-            })
-            ->when($filter['customer'], function ($query, $param) {
-                return $query->where('customer', 'like', '%' . $param . '%');
-            })
-            ->when($filter['nickname'], function ($query, $param) {
-                return $query->where('subscribe', '=', '%' . $param . '%');
-            })
-            ->paginate($filter['page'], $filter['per_page']);
-    }
-
-    /**
      * 创建
      *
      * @param array $attributes

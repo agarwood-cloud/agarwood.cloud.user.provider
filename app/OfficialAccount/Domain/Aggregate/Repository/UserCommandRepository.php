@@ -35,7 +35,7 @@ interface UserCommandRepository
     public function updateByOpenidFromWeChat(string $openid, array $attributes): int;
 
     /**
-     * 更新用户信息
+     * Update User Info By Openid
      *
      * @param string $openid
      * @param array  $attributes
@@ -43,4 +43,11 @@ interface UserCommandRepository
      * @return int
      */
     public function updateByOpenid(string $openid, array $attributes): int;
+
+    /**
+     * @param string $openid
+     *
+     * @return int
+     */
+    public function delete(string $openid): int;
 }

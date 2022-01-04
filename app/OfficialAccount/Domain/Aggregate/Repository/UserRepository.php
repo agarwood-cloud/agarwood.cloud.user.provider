@@ -16,16 +16,6 @@ namespace App\OfficialAccount\Domain\Aggregate\Repository;
 interface UserRepository
 {
     /**
-     * 列表数据
-     *
-     * @param int   $officialAccountId
-     * @param array $filter
-     *
-     * @return array
-     */
-    public function index(int $officialAccountId, array $filter): array;
-
-    /**
      * 创建
      *
      * @param array $attributes

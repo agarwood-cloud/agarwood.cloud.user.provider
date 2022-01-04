@@ -15,7 +15,6 @@ use App\OfficialAccount\Interfaces\DTO\User\CreateDTO;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserIndexDTO;
 use Swoft\Stdlib\Helper\ObjectHelper;
 
 /**
@@ -29,12 +28,12 @@ class UserAssembler
      *
      * @param array $attributes
      *
-     * @return UserIndexDTO
+     * @return IndexDTO
      */
-    public static function attributesToIndexDTO(array $attributes): UserIndexDto
+    public static function attributesToIndexDTO(array $attributes): IndexDTO
     {
         $attributes = ArrayHelper::numericToInt($attributes);
-        return ObjectHelper::init(new UserIndexDTO(), $attributes);
+        return ObjectHelper::init(new IndexDTO(), $attributes);
     }
 
     /**

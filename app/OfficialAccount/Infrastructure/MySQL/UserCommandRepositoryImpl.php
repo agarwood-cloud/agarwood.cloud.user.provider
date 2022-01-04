@@ -14,6 +14,7 @@ use App\OfficialAccount\Domain\Aggregate\Entity\User;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Interfaces\Assembler\UserAssembler;
 use Carbon\Carbon;
+use Swoft\Db\DB;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -101,5 +102,20 @@ class UserCommandRepositoryImpl implements UserCommandRepository
     public function updateByOpenid(string $openid, array $attributes): int
     {
         return User::where('openid', '=', $openid)->update($attributes);
+    }
+
+    /**
+     * Delete User By Openid
+     *
+     * @param string $openid
+     *
+     * @return int
+     */
+    public function delete(string $openid): int
+    {
+        return DB::table(User::tableName())
+            ->where('openid', '=', $openid)
+            ->where('deleted_at', '=', Carbon::createFromTimestamp(0, 'UTC')->toDateTimeString())
+            ->update(['deleted_at' => Carbon::now()->toDateTimeString()]);
     }
 }

@@ -21,4 +21,14 @@ interface UserQueryRepository
      * @return array
      */
     public function findByOpenid(string $openid): array;
+
+    /**
+     * User List Query Builder
+     *
+     * @param int   $officialAccountId
+     * @param array $filter
+     *
+     * @return array
+     */
+    public function index(int $officialAccountId, array $filter): array;
 }

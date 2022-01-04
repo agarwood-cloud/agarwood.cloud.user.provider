@@ -12,14 +12,11 @@ namespace App\OfficialAccount\Application\Impl;
 
 use App\OfficialAccount\Application\UserApplication;
 use App\OfficialAccount\Domain\SendToNodeDomain;
-use App\OfficialAccount\Domain\UserDomainService;
+use App\OfficialAccount\Domain\UserDomain;
 use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
+use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserCreateDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserIndexDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserUpdateDTO;
-use Ramsey\Uuid\Uuid;
 use Swoft\Stdlib\Collection;
 
 /**
@@ -30,9 +27,9 @@ class UserApplicationImpl implements UserApplication
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var UserDomainService $domain
+     * @var UserDomain $userDomain
      */
-    protected UserDomainService $domain;
+    protected UserDomain $userDomain;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
@@ -51,92 +48,49 @@ class UserApplicationImpl implements UserApplication
     /**
      * 列表数据
      *
-     * @param int|null     $officialAccountId
-     * @param UserIndexDTO $DTO
+     * @param int|null $officialAccountId
+     * @param IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(?int $officialAccountId, UserIndexDTO $DTO): array
+    public function indexProvider(?int $officialAccountId, IndexDTO $DTO): array
     {
-        // $officialAccountId = 0;
         if (null === $officialAccountId) {
             return [];
         }
-        return $this->domain->index($officialAccountId, $DTO->toArrayLine());
+        return $this->userDomain->index($officialAccountId, $DTO->toArrayLine());
     }
 
     /**
-     * @param \App\OfficialAccount\Interfaces\DTO\User\UserCreateDTO $DTO
-     *
-     * @return \Swoft\Stdlib\Collection
-     */
-    public function createProvider(UserCreateDTO $DTO): Collection
-    {
-        //增加部分系统自己添加的参数 i.e: uuid
-        $attributes = $DTO->setAfter();
-        $this->domain->create($attributes->toArrayLine());
-        //这里可以设置更多的返回值
-        return Collection::make($DTO);
-    }
-
-    /**
-     * @param string $uuids
-     *
-     * @return bool|null
-     */
-    public function deleteProvider(string $uuids): ?bool
-    {
-        return $this->domain->delete($uuids);
-    }
-
-    /**
-     * @param string                                                 $openid
-     * @param UserUpdateDTO $DTO
-     *
-     * @return \Swoft\Stdlib\Collection
-     */
-    public function updateProvider(string $openid, UserUpdateDTO $DTO): Collection
-    {
-        $attributes = $DTO->deleteAfter($DTO->toArrayLine());
-        $this->domain->update($openid, $attributes);
-        return Collection::make($DTO);
-    }
-
-    /**
-     * @param string $uuid
+     * @param string $openid
      *
      * @return array
      */
-    public function viewProvider(string $uuid): array
+    public function viewProvider(string $openid): array
     {
-        return $this->domain->view($uuid);
+        return $this->userDomain->view($openid);
     }
 
     /**
-     * 移动粉丝
+     * @param string $openid
      *
-     * @param string         $openid
-     * @param UpdateGroupDTO $DTO
+     * @return int
+     */
+    public function deleteProvider(string $openid): int
+    {
+        return $this->userDomain->delete($openid);
+    }
+
+    /**
+     * @param string    $openid
+     * @param UpdateDTO $DTO
      *
      * @return \Swoft\Stdlib\Collection
      */
-    public function assignCustomerProvider(string $openid, UpdateGroupDTO $DTO): Collection
+    public function updateProvider(string $openid, UpdateDTO $DTO): Collection
     {
-        $attributes = $DTO->toArrayLine();
-        $this->domain->update($openid, $attributes);
-
-        // 这删除用户的缓存信息
-        $this->redisUser->deleteCacheFromRedis($openid);
-
-        // 发送一条消息给相应的客服
-        $this->callbackNodeDomainService->textMessage(
-            $DTO->customerId,
-            $openid,
-            $openid,
-            '【系统消息】此粉丝转移给你，请你认真做好接待',
-            Uuid::uuid4()->toString()
-        );
-
+        $attributes = $DTO->toArrayNotNull([], true);
+        $this->userDomain->update($openid, $attributes);
         return Collection::make($DTO);
     }
 
@@ -150,6 +104,6 @@ class UserApplicationImpl implements UserApplication
      */
     public function indexV3Provider(IndexDTO $DTO, bool $isPagination = true): array
     {
-        return $this->domain->indexV3($DTO, $isPagination);
+        return $this->userDomain->indexV3($DTO, $isPagination);
     }
 }

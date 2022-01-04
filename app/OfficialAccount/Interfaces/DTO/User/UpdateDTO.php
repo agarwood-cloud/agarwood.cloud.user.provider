@@ -18,45 +18,46 @@ use Agarwood\Core\Support\Impl\AbstractBaseDTO;
 class UpdateDTO extends AbstractBaseDTO
 {
     /**
-     * 客服ID
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
      *
-     * @var ?int
+     * @var int|null
      */
-    protected ?int $customerId = null;
+    public ?int $customerId = null;
 
     /**
-     * 客服
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $customer = null;
+    public ?string $customer = null;
 
     /**
-     * 头像链接
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $headImgUrl = null;
+    public ?string $headImgUrl = null;
 
     /**
-     * 昵称
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $nickname = null;
+    public ?string $nickname = null;
 
     /**
+     *@\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $openid = null;
+    public ?string $openid = null;
 
     /**
-     * 是否关注
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?int
+     * @var string|null
      */
-    protected ?int $subscribe = null;
+    public ?string $subscribe = null;
 
     /**
      * 返回用户关注的渠道来源，
@@ -71,30 +72,34 @@ class UpdateDTO extends AbstractBaseDTO
      * ADD_SCENE_OTHERS 其他
      * VISITOR 游客
      *
-     * @var ?string
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     *
+     * @var string|null
      */
-    protected ?string $subscribeScene = null;
+    public ?string $subscribeScene = null;
 
     /**
      * 关注时间
      *
-     * @var ?int
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     *
+     * @var string|null
      */
-    protected ?int $subscribeTime = null;
+    public ?string $subscribeAt = null;
 
     /**
-     * UNION_ID
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var ?string
      */
-    protected ?string $unionId = null;
+    public ?string $unionId = null;
 
     /**
-     * 取关时间
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $unsubscribedAt = null;
+    public ?string $unsubscribeAt = null;
 
     /**
      * @return int|null
@@ -177,17 +182,17 @@ class UpdateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getSubscribe(): ?int
+    public function getSubscribe(): ?string
     {
         return $this->subscribe;
     }
 
     /**
-     * @param int|null $subscribe
+     * @param string|null $subscribe
      */
-    public function setSubscribe(?int $subscribe): void
+    public function setSubscribe(?string $subscribe): void
     {
         $this->subscribe = $subscribe;
     }
@@ -209,19 +214,19 @@ class UpdateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getSubscribeTime(): ?int
+    public function getSubscribeAt(): ?string
     {
-        return $this->subscribeTime;
+        return $this->subscribeAt;
     }
 
     /**
-     * @param int|null $subscribeTime
+     * @param string|null $subscribeAt
      */
-    public function setSubscribeTime(?int $subscribeTime): void
+    public function setSubscribeAt(?string $subscribeAt): void
     {
-        $this->subscribeTime = $subscribeTime;
+        $this->subscribeAt = $subscribeAt;
     }
 
     /**
@@ -243,16 +248,16 @@ class UpdateDTO extends AbstractBaseDTO
     /**
      * @return string|null
      */
-    public function getUnsubscribedAt(): ?string
+    public function getUnsubscribeAt(): ?string
     {
-        return $this->unsubscribedAt;
+        return $this->unsubscribeAt;
     }
 
     /**
-     * @param string|null $unsubscribedAt
+     * @param string|null $unsubscribeAt
      */
-    public function setUnsubscribedAt(?string $unsubscribedAt): void
+    public function setUnsubscribeAt(?string $unsubscribeAt): void
     {
-        $this->unsubscribedAt = $unsubscribedAt;
+        $this->unsubscribeAt = $unsubscribeAt;
     }
 }

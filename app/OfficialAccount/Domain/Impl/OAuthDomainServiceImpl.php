@@ -13,7 +13,7 @@ namespace App\OfficialAccount\Domain\Impl;
 use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserInfoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserOfficialAccountRepository;
-use App\OfficialAccount\Domain\Aggregate\Repository\UserRepository;
+use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
 use App\OfficialAccount\Domain\OAuthDomainService;
 use App\OfficialAccount\Interfaces\DTO\Oauth\FrontEndJWTDTO;
 use App\OfficialAccount\Interfaces\DTO\Oauth\WeChatDTO;
@@ -33,9 +33,9 @@ class OAuthDomainServiceImpl implements OAuthDomainService
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var UserRepository
+     * @var UserQueryRepository
      */
-    protected UserRepository $userRepository;
+    protected UserQueryRepository $userRepository;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()

@@ -16,36 +16,25 @@ use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
-interface UserDomainService
+interface UserDomain
 {
     /**
-     *  获取列表
+     * Get user list for Query Builder
      *
      * @param int   $officialAccountId
-     * @param array $filter 过滤条件
+     * @param array $filter
      *
      * @return array
      */
     public function index(int $officialAccountId, array $filter): array;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 新建
+     * @param string $openid
+     * @param array  $attributes
      *
-     * @param array $attributes
-     *
-     * @return User
+     * @return int
      */
-    public function create(array $attributes): User;
-
-    /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 更新
-     *
-     * @param string $openid     模板uuid
-     * @param array  $attributes 更新字段
-     *
-     * @return int|null
-     */
-    public function update(string $openid, array $attributes): ?int;
+    public function update(string $openid, array $attributes): int;
 
     /**
      * agarwood.cloud.user.center.provider - 领域服务接口： 预览
@@ -57,13 +46,13 @@ interface UserDomainService
     public function view(string $openid): array;
 
     /**
-     * agarwood.cloud.user.center.provider - 领域服务接口： 删除
+     * Delete user by openid
      *
      * @param string $openid
      *
-     * @return bool|null
+     * @return int
      */
-    public function delete(string $openid): ?bool;
+    public function delete(string $openid): int;
 
     /**
      * 领域服务接口： 登陆

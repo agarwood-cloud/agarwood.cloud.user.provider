@@ -25,7 +25,7 @@ interface FansApplication
      * 应用层
      *      分组应用层列表服务接口
      *
-     * @param string   $customerId
+     * @param int   $customerId
      * @param IndexDTO $DTO
      * @param bool     $isPagination
      *

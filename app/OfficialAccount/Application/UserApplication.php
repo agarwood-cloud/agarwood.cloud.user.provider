@@ -11,38 +11,46 @@
 namespace App\OfficialAccount\Application;
 
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
+use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserCreateDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserIndexDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UserUpdateDTO;
 use Swoft\Stdlib\Collection;
 
 /**
- * 应用层
- *
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
 interface UserApplication
 {
     /**
-     * 客户列表
+     * User List
      *
-     * @param int|null                                              $officialAccountId
-     * @param \App\OfficialAccount\Interfaces\DTO\User\UserIndexDTO $DTO
+     * @param int|null                                          $officialAccountId
+     * @param \App\OfficialAccount\Interfaces\DTO\User\IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(?int $officialAccountId, UserIndexDTO $DTO): array;
+    public function indexProvider(?int $officialAccountId, IndexDTO $DTO): array;
 
-    public function createProvider(UserCreateDTO $DTO): Collection;
+    /**
+     * @param string $openid
+     *
+     * @return array
+     */
+    public function viewProvider(string $openid): array;
 
-    public function deleteProvider(string $uuids): ?bool;
+    /**
+     * @param string $openid
+     *
+     * @return int
+     */
+    public function deleteProvider(string $openid): int;
 
-    public function updateProvider(string $openid, UserUpdateDTO $DTO): Collection;
-
-    public function viewProvider(string $uuid): array;
-
-    public function assignCustomerProvider(string $openid, UpdateGroupDTO $DTO): Collection;
+    /**
+     * @param string                                             $openid
+     * @param \App\OfficialAccount\Interfaces\DTO\User\UpdateDTO $DTO
+     *
+     * @return \Swoft\Stdlib\Collection
+     */
+    public function updateProvider(string $openid, UpdateDTO $DTO): Collection;
 
     /**
      * 应用层

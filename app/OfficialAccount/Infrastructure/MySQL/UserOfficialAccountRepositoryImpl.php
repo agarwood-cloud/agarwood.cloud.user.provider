@@ -12,7 +12,7 @@ namespace App\OfficialAccount\Infrastructure\MySQL;
 
 use App\OfficialAccount\Domain\Aggregate\Repository\UserInfoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserOfficialAccountRepository;
-use App\OfficialAccount\Domain\Aggregate\Repository\UserRepository;
+use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
 use App\OfficialAccount\Interfaces\DTO\User\UserCreateDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UserUpdateDTO;
 use App\OfficialAccount\Interfaces\DTO\UserInfo\UserInfoCreateDTO;
@@ -30,9 +30,9 @@ class UserOfficialAccountRepositoryImpl implements UserOfficialAccountRepository
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var UserRepository
+     * @var UserQueryRepository
      */
-    protected UserRepository $userDao;
+    protected UserQueryRepository $userDao;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()

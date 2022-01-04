@@ -11,46 +11,56 @@
 namespace App\OfficialAccount\Interfaces\DTO\User;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\IsArray;
-use Swoft\Validator\Annotation\Mapping\IsInt;
-use Swoft\Validator\Annotation\Mapping\Min;
-use Swoft\Validator\Annotation\Mapping\NotEmpty;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
- *
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
 class IndexDTO extends AbstractBaseDTO
 {
     /**
-     * 第 ${page} 页
-     *
-     * @IsInt(message="页码必须为整数")
-     * @Min(value=1, message="页码最小值为1")
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
+     * @\Swoft\Validator\Annotation\Mapping\Min(value=1)
      *
      * @var int
      */
     public int $page = 1;
 
     /**
-     * 每页共 ${perPage} 条记录
-     *
-     * 每页条数
-     * @IsInt(message="每页条数必须为整数")
-     * @Min(value=1, message="每页条数最小值为1")
+     * @\Swoft\Validator\Annotation\Mapping\IsInt()
+     * @\Swoft\Validator\Annotation\Mapping\Min(value=1)
      *
      * @var int
      */
-    public int $perPage = 20;
+    public int $perPage = 10;
 
     /**
-     * @IsArray()
-     * @NotEmpty()
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var array
+     * @var string|null
      */
-    public array $openid = [];
+    public ?string $openid = null;
+
+    /**
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     *
+     * @var string|null
+     */
+    public ?string $nickname = null;
+
+    /**
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\Enum(values={"","subscribe","unsubscribed","unsubscribe"})
+     *
+     * @var string|null
+     */
+    public ?string $subscribe = null;
+
+    /**
+     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     *
+     * @var string|null
+     */
+    public ?string $customer = null;
 
     /**
      * @return int
@@ -62,13 +72,10 @@ class IndexDTO extends AbstractBaseDTO
 
     /**
      * @param int $page
-     *
-     * @return IndexDTO
      */
-    public function setPage(int $page): IndexDTO
+    public function setPage(int $page): void
     {
         $this->page = $page;
-        return $this;
     }
 
     /**
@@ -81,31 +88,73 @@ class IndexDTO extends AbstractBaseDTO
 
     /**
      * @param int $perPage
-     *
-     * @return IndexDTO
      */
-    public function setPerPage(int $perPage): IndexDTO
+    public function setPerPage(int $perPage): void
     {
         $this->perPage = $perPage;
-        return $this;
     }
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getOpenid(): array
+    public function getOpenid(): ?string
     {
         return $this->openid;
     }
 
     /**
-     * @param array $openid
-     *
-     * @return IndexDTO
+     * @param string|null $openid
      */
-    public function setOpenid(array $openid): IndexDTO
+    public function setOpenid(?string $openid): void
     {
         $this->openid = $openid;
-        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @param string|null $nickname
+     */
+    public function setNickname(?string $nickname): void
+    {
+        $this->nickname = $nickname;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubscribe(): ?string
+    {
+        return $this->subscribe;
+    }
+
+    /**
+     * @param string|null $subscribe
+     */
+    public function setSubscribe(?string $subscribe): void
+    {
+        $this->subscribe = $subscribe;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomer(): ?string
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param string|null $customer
+     */
+    public function setCustomer(?string $customer): void
+    {
+        $this->customer = $customer;
     }
 }
