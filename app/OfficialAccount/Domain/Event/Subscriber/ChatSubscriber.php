@@ -85,6 +85,7 @@ class ChatSubscriber extends UserProcess
                 }
             };
 
+            /** @var string $subscriber \Closure */
             Redis::subscribe([SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL], $subscriber);
         }
     }
