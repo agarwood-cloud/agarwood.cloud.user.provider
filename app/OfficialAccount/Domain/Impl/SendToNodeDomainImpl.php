@@ -52,7 +52,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'content'      => $content,
             'id'           => $snowflake->id(),
             'sender'       => $sender,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_TEXT_MESSAGE,
         ];
 
@@ -89,7 +89,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'imageUrl'     => $imageUrl,
             'id'           => $snowflake->id(),
             'sender'       => $sender,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_IMAGE_MESSAGE,
         ];
 
@@ -140,7 +140,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'thumbMediaId' => $thumbMediaId,
             'id'           => $snowflake->id(),
             'sender'       => $sender,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_VIDEO_MESSAGE,
             'videoUrl'     => $videoUrl
         ];
@@ -178,7 +178,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'voiceUrl'     => $voiceUrl,
             'id'           => $snowflake->id(),
             'sender'       => $sender,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_VOICE_MESSAGE,
         ];
 
@@ -219,7 +219,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'url'          => $url,
             'id'           => $snowflake->id(),
             'sender'       => $sender,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_NEWS_ITEM_MESSAGE,
         ];
         try {
@@ -251,7 +251,7 @@ class SendToNodeDomainImpl implements SendToNodeDomain
             'content'      => $content,
             'sender'       => $sender,
             'errorCode'    => $errorCode,
-            'createTime'   => Carbon::now()->toDateTimeString(),
+            'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::SERVER_ERROR_MESSAGE,
         ];
 

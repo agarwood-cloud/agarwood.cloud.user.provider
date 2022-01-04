@@ -12,6 +12,7 @@ namespace App\OfficialAccount\Domain\Impl;
 
 use App\Assign\Domain\Aggregate\Repository\AssignSettingRepository;
 use App\Assign\Domain\AssignQueue;
+use App\OfficialAccount\Domain\Aggregate\Enum\SubscriberEnum;
 use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\Aggregate\Enum\WeChatCallbackEvent;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
@@ -27,6 +28,8 @@ use EasyWeChat\Kernel\Messages\Message;
 use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
 use ReflectionException;
+use Swoft\Redis\Redis;
+use JsonException;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -142,27 +145,24 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $this->userCommandRepository->updateByOpenidFromWeChat($DTO->getFromUserName(), $attributes);
                 }
 
-                $content = 'The user has subscribed to the official account!';
+                // message will be sending to customer service
+                $content = 'User has subscribed to the official account!';
 
-                // 转发给客服, todo $user['customerId'] 可能不存在
-                $message = $this->buildTextMessage(
-                    $user['customerId'],
-                    $message['FromUserName'],
-                    $message['FromUserName'],
-                    $content
-                );
-                $this->customerServiceHttpClient
-                    ->httpClient()
-                    ->post('wechat/message', [
-                        'json' => $message
-                    ]);
+                // 转发给客服
+                if (isset($user['customerId'])) {
+                    $this->publishTextMessage(
+                        $user['customerId'],
+                        $message['FromUserName'],
+                        $content
+                    );
+                }
 
                 // 记录消息
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'],
+                    $user['customerId'] ?? 0,
                     'user',
-                    WebSocketMessage::SERVER_TEXT_MESSAGE,
+                    WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
                     Carbon::now()->toDateTimeString(),
                     false
@@ -197,29 +197,23 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // todo 获取用户信息
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
 
-                $content = 'The user has unsubscribed from the official account!';
+                $content = 'User has unsubscribed from the official account!';
 
                 // 转发给客服
-                if ($user) {
-                    $message = $this->buildTextMessage(
+                if (isset($user['customerId'])) {
+                    $this->publishTextMessage(
                         $user['customerId'],
-                        $message['FromUserName'],
                         $message['FromUserName'],
                         $content
                     );
-                    $this->customerServiceHttpClient
-                        ->httpClient()
-                        ->post('wechat/message', [
-                            'json' => $message
-                        ]);
                 }
 
                 // 消息记录
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'],
+                    $user['customerId'] ?? 0,
                     'user',
-                    WebSocketMessage::SERVER_TEXT_MESSAGE,
+                    WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
                     Carbon::now()->toDateTimeString(),
                     false
@@ -268,27 +262,22 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $this->userCommandRepository->addUserFromWeChat($attributes);
                 }
 
-                $content = 'The user subscribes to the official account by scanning the code!';
+                $content = 'User subscribes to the official account by scanning the code!';
 
                 // 转发给客服
-                $message = $this->buildTextMessage(
-                    $user['customerId'],
-                    $message['FromUserName'],
-                    $message['FromUserName'],
-                    $content
-                );
-                $this->customerServiceHttpClient
-                    ->httpClient()
-                    ->post('wechat/message', [
-                        'json' => $message
-                    ]);
-
+                if (isset($user['customerId'])) {
+                    $this->publishTextMessage(
+                        $user['customerId'],
+                        $message['FromUserName'],
+                        $content
+                    );
+                }
                 // 消息记录
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'],
+                    $user['customerId'] ?? 0,
                     'user',
-                    WebSocketMessage::SERVER_TEXT_MESSAGE,
+                    WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
                     Carbon::now()->toDateTimeString(),
                     false
@@ -338,27 +327,23 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $this->userCommandRepository->addUserFromWeChat($attributes);
                 }
 
-                $content = 'The user clicks on the official account menu!';
+                $content = 'User clicks on the official account menu!';
 
                 // 转发给客服
-                $message = $this->buildTextMessage(
-                    $user['customerId'],
-                    $message['FromUserName'],
-                    $message['FromUserName'],
-                    $content
-                );
-                $this->customerServiceHttpClient
-                    ->httpClient()
-                    ->post('wechat/message', [
-                        'json' => $message
-                    ]);
+                if (isset($user['customerId'])) {
+                    $this->publishTextMessage(
+                        $user['customerId'],
+                        $message['FromUserName'],
+                        $content
+                    );
+                }
 
                 // 消息记录
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'],
+                    $user['customerId'] ?? 0,
                     'user',
-                    WebSocketMessage::SERVER_TEXT_MESSAGE,
+                    WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
                     Carbon::now()->toDateTimeString(),
                     false
@@ -410,27 +395,23 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $this->userCommandRepository->addUserFromWeChat($attributes);
                 }
 
-                $content = 'Use the view to click the official account menu!';
+                $content = 'User browses the contents of the official account menu!';
 
-                // 转发给客服
-                $message = $this->buildTextMessage(
-                    $user['customerId'],
-                    $message['FromUserName'],
-                    $message['FromUserName'],
-                    $content
-                );
-                $this->customerServiceHttpClient
-                    ->httpClient()
-                    ->post('wechat/message', [
-                        'json' => $message
-                    ]);
+                // 转发给客服，写入到 redis的channel里面去
+                if (isset($user['customerId'])) {
+                    $this->publishTextMessage(
+                        $user['customerId'],
+                        $message['FromUserName'],
+                        $content
+                    );
+                }
 
                 // 消息记录
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'],
+                    $user['customerId'] ?? 0,
                     'user',
-                    WebSocketMessage::SERVER_TEXT_MESSAGE,
+                    WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
                     Carbon::now()->toDateTimeString(),
                     false
@@ -440,27 +421,28 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     }
 
     /**
-     * 构建文本消息的格式
+     * 构建文本消息的格式，推送到redis channel
      *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $content      转发的消息
+     * @param string $toUserName 客服的uuid
+     * @param string $fromUserId 粉丝的openid
+     * @param string $content    转发的消息
      *
-     * @return array
+     * @return int
+     * @throws JsonException
      */
-    public function buildTextMessage(string $toUserName, string $fromUserId, string $fromUserName, string $content): array
+    public function publishTextMessage(string $toUserName, string $fromUserId, string $content): int
     {
         $snowflake = new Snowflake;
-        return [
-            'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
-            'fromUserName' => $fromUserName,
-            'content'      => $content,
-            'id'           => $snowflake->id(),
-            'sender'       => 'user',
-            'createTime'   => Carbon::now()->toDateTimeString(),
-            'msgType'      => WebSocketMessage::SERVER_TEXT_MESSAGE,
+        $message   = [
+            'toUserName' => $toUserName,
+            'fromUserId' => $fromUserId,
+            'content'    => $content,
+            'id'         => (int)$snowflake->id(),
+            'sender'     => 'user',
+            'createdAt'  => Carbon::now()->toDateTimeString(),
+            'msgType'    => WebSocketMessage::TEXT_MESSAGE,
         ];
+
+        return Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
     }
 }
