@@ -5,13 +5,13 @@
 # @link https://hub.docker.com/_/debian/      alpine image
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
-# @see https://github.com/docker-library/php/tree/master/7.2/stretch/cli/Dockerfile
+# @see https://github.com/docker-library/php/tree/master/8.0/stretch/cli/Dockerfile
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f Dockerfile -t swoft/swoft
+# @build-example docker build . -f Dockerfile -t agarwood/user
 #
-FROM php:7.4
+FROM php:8.0-cli
 
-LABEL maintainer="wumahoo221@gmail.com>" version="2.0"
+LABEL maintainer="676786620@qq.com>" version="2.0"
 
 # --build-arg timezone=Asia/Shanghai
 ARG timezone
@@ -23,8 +23,8 @@ ARG work_user=www
 # default APP_ENV = test
 ENV APP_ENV=${app_env:-"test"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"} \
-    PHPREDIS_VERSION=5.1.0 \
-    SWOOLE_VERSION=4.5.10 \
+    PHPREDIS_VERSION=5.3.5 \
+    SWOOLE_VERSION=4.8.5 \
     COMPOSER_ALLOW_SUPERUSER=1
 
 # Libs -y --no-install-recommends
@@ -38,7 +38,6 @@ RUN apt-get update \
         libjpeg-dev \
         libpng-dev \
         libfreetype6-dev \
-#        uuid-dev \
         libonig-dev \
         libzip-dev \
 # Install PHP extensions
@@ -54,15 +53,10 @@ RUN wget https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/local/bin/composer \
     && composer self-update --clean-backups \
 # Install redis extension
-    && wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
+    && wget https://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
     && pecl install /tmp/redis.tar.tgz \
     && rm -rf /tmp/redis.tar.tgz \
     && docker-php-ext-enable redis \
-# Install uuid extension
-#    && wget https://pecl.php.net/get/uuid-1.2.0.tgz -O /tmp/uuid.tar.tgz \
-#    && pecl install /tmp/uuid.tar.tgz \
-#    && rm -rf /tmp/uuid.tar.tgz \
-#    && docker-php-ext-enable uuid \
 # Install swoole extension
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
     && mkdir -p swoole \
@@ -83,25 +77,13 @@ RUN wget https://mirrors.aliyun.com/composer/composer.phar \
 # Timezone
     && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
-    && echo "[Date]\ndate.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
-
-## add credentials on build
-# ARG SSH_PRIVATE_KEY
-# RUN mkdir -p /root/.ssh/
-# RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
-#
-# # make sure your domain is accepted
-# RUN touch /root/.ssh/known_hosts
-# RUN ssh-keyscan gitee.com >> /root/.ssh/known_hosts
-
+    && echo "[Date]\date.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
 # Install composer deps
-# ADD . /var/www/swoft
-# RUN  cd /var/www/swoft \
-#    && composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader \
-#    && composer clearcache
 
-WORKDIR /var/www/swoft
+ADD . /var/www/agarwood
+# COPY . /var/www/agarwood
+WORKDIR /var/www/agarwood
+
 EXPOSE 18306 18307 18308
 
-# ENTRYPOINT ["php", "/var/www/swoft/bin/swoft", "http:start"]
-# CMD ["php", "/var/www/swoft/bin/swoft", "http:start"]
+CMD ["php", "/var/www/agarwood/bin/agarwood", "http:start"]
