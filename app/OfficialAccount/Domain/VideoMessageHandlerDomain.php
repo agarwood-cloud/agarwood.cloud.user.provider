@@ -22,29 +22,4 @@ interface VideoMessageHandlerDomain
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
     public function videoMessage(int $officialAccountId, Application $application): void;
-
-    /**
-     * 构建音频消息，转发文本消息到 node
-     *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $title
-     * @param string $mediaId
-     * @param string $description
-     * @param string $thumbMediaId
-     * @param string $videoUrl
-     *
-     * @return array
-     */
-    public function buildVideoMessage(
-        string $toUserName,
-        string $fromUserId,
-        string $fromUserName,
-        string $title,
-        string $mediaId,
-        string $description,
-        string $thumbMediaId,
-        string $videoUrl
-    ): array;
 }

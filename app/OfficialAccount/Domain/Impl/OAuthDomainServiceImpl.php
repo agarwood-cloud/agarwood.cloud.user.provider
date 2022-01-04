@@ -176,7 +176,7 @@ class OAuthDomainServiceImpl implements OAuthDomainService
             'serviceUuid'  => $dto->getServiceUuid(),
             'state'        => $dto->getState(),
         ];
-        $callback = config('OfficialAccount.callback') . '?' . http_build_query($query);
+        $callback = config('wechat.callback') . '?' . http_build_query($query);
 
         //跳转到授权页面
         return $app->oauth->scopes(['snsapi_userinfo'])->redirect($callback);

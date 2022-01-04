@@ -10,6 +10,7 @@
 
 namespace App\OfficialAccount\Domain\Impl;
 
+use App\OfficialAccount\Domain\Aggregate\Enum\SubscriberEnum;
 use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
@@ -23,6 +24,7 @@ use EasyWeChat\Kernel\Messages\Message;
 use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
 use ReflectionException;
+use Swoft\Redis\Redis;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -84,66 +86,27 @@ class VideoMessageHandlerDomainImpl implements VideoMessageHandlerDomain
             $videoUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/media/video/' . $filename;
 
             // 转发给客服
-            $message = $this->buildVideoMessage(
-                $user['customerId'],
-                $message['FromUserName'],
-                $message['FromUserName'],
-                $message['Title'],
-                $message['MediaId'],
-                $message['Description'],
-                $message['ThumbMediaId'],
-                $videoUrl
-            );
-            $this->customerServiceHttpClient
-                ->httpClient()
-                ->post('wechat/message', [
-                    'json' => $message
-                ]);
+            if ($user['customerId']) {
+                $snowflake = new Snowflake;
+                $message = [
+                    'toUserName'     => $user['customerId'],
+                    'fromUserId'     => $message['FromUserName'],
+                    'title'          => $message['Title'],
+                    'description'    => $message['Description'],
+                    'mediaId'        => $message['MediaId'],
+                    'thumbMediaId'   => $message['ThumbMediaId'],
+                    'videoUrl'       => $videoUrl,
+                    'id'             => (int)$snowflake->id(),
+                    'sender'         => 'user',
+                    'createdAt'      => Carbon::now()->toDateTimeString(),
+                    'msgType'        => WebSocketMessage::SERVER_VIDEO_MESSAGE,
+                ];
+                Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
+            }
 
             // todo 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToVideoDTO($message);
             $this->mongoMessageRecordDomain->insertVideoMessageRecord($DTO);
         }, Message::VIDEO);
-    }
-
-    /**
-     * 构建文本消息的格式
-     *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $title
-     * @param string $mediaId
-     * @param string $description
-     * @param string $thumbMediaId
-     * @param string $videoUrl
-     *
-     * @return array
-     */
-    public function buildVideoMessage(
-        string $toUserName,
-        string $fromUserId,
-        string $fromUserName,
-        string $title,
-        string $mediaId,
-        string $description,
-        string $thumbMediaId,
-        string $videoUrl
-    ): array {
-        $snowflake = new Snowflake;
-        return [
-            'toUserName'     => $toUserName,
-            'fromUserId'     => $fromUserId,
-            'fromUserName'   => $fromUserName,
-            'title'          => $title,
-            'description'    => $description,
-            'mediaId'        => $mediaId,
-            'thumbMediaId'   => $thumbMediaId,
-            'videoUrl'       => $videoUrl,
-            'id'             => $snowflake->id(),
-            'sender'         => 'user',
-            'createTime'     => Carbon::now()->toDateTimeString(),
-            'msgType'        => WebSocketMessage::SERVER_VIDEO_MESSAGE,
-        ];
     }
 }

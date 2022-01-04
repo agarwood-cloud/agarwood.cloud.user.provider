@@ -10,6 +10,7 @@
 
 namespace App\OfficialAccount\Domain\Impl;
 
+use App\OfficialAccount\Domain\Aggregate\Enum\SubscriberEnum;
 use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
@@ -22,6 +23,7 @@ use EasyWeChat\Kernel\Messages\Message;
 use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
 use ReflectionException;
+use Swoft\Redis\Redis;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -72,41 +74,24 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
             $user = $this->userQueryRepository->findByOpenid($payload['FromUserName']);
 
             // 转发给客服
-            $message = $this->buildTextMessage($user['customerId'], $payload['FromUserName'], $payload['FromUserName'], $payload['Content']);
-            $this->customerServiceHttpClient
-                ->httpClient()
-                ->post('wechat/message', [
-                    'json' => $message
-                ]);
+            if (isset($user['customerId'])) {
+                $snowflake = new Snowflake;
+                $message   = [
+                    'toUserName' => $user['customerId'],
+                    'fromUserId' => $payload['FromUserName'],
+                    'content'    => $payload['Content'],
+                    'id'         => $snowflake->id(),
+                    'sender'     => 'user',
+                    'createdAt'  => Carbon::now()->toDateTimeString(),
+                    'msgType'    => WebSocketMessage::TEXT_MESSAGE,
+                ];
+
+                Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
+            }
 
             // 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToTextDTO((array)$payload);
             $this->mongoMessageRecordDomain->insertTextMessageRecord($DTO);
         }, Message::TEXT);
-    }
-
-    /**
-     * 构建文本消息的格式
-     *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $content      转发的消息
-     *
-     * @return array
-     */
-    public function buildTextMessage(string $toUserName, string $fromUserId, string $fromUserName, string $content): array
-    {
-        $snowflake = new Snowflake;
-        return [
-            'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
-            'fromUserName' => $fromUserName,
-            'content'      => $content,
-            'id'           => $snowflake->id(),
-            'sender'       => 'user',
-            'createTime'   => Carbon::now()->toDateTimeString(),
-            'msgType'      => WebSocketMessage::SERVER_TEXT_MESSAGE,
-        ];
     }
 }

@@ -51,6 +51,6 @@ class WelcomeSubscribeDomainImpl implements WelcomeSubscribeDomain
                 return '欢迎关注 Agarwood Cloud!';
             }
             return '';
-        }, Message::TEXT);
+        }, Message::EVENT);
     }
 }

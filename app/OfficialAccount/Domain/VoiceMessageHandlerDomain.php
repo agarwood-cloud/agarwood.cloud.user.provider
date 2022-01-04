@@ -22,17 +22,4 @@ interface VoiceMessageHandlerDomain
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
     public function voiceMessage(int $officialAccountId, Application $application): void;
-
-    /**
-     * 构建音频消息，转发文本消息到 node
-     *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $mediaId
-     * @param string $voiceUrl
-     *
-     * @return array
-     */
-    public function buildAudioMessage(string $toUserName, string $fromUserId, string $fromUserName, string $mediaId, string $voiceUrl): array;
 }

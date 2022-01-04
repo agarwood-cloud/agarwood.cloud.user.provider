@@ -10,6 +10,7 @@
 
 namespace App\OfficialAccount\Domain\Impl;
 
+use App\OfficialAccount\Domain\Aggregate\Enum\SubscriberEnum;
 use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
@@ -23,6 +24,7 @@ use EasyWeChat\Kernel\Messages\Message;
 use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
 use ReflectionException;
+use Swoft\Redis\Redis;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -84,43 +86,24 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
             $imageUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/media/image/' . $filename;
 
             // 转发给客服
-            $message = $this->buildImageMessage($user['customerId'], $message['FromUserName'], $message['FromUserName'], $message['MediaId'], $imageUrl);
-            $this->customerServiceHttpClient
-                ->httpClient()
-                ->post('wechat/message', [
-                    'json' => $message
-                ]);
+            if ($user['customerId']) {
+                $snowflake = new Snowflake;
+                $message = [
+                    'toUserName'   => $user['customerId'],
+                    'fromUserId'   => $message['FromUserName'],
+                    'mediaId'      => $message['MediaId'],
+                    'imageUrl'     => $imageUrl,
+                    'id'           => (int)$snowflake->id(),
+                    'send'         => 'customer',
+                    'createdAt'    => Carbon::now()->toDateTimeString(),
+                    'msgType'      => WebSocketMessage::SERVER_VOICE_MESSAGE,
+                ];
+                Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
+            }
 
             // todo 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToImageDTO($message);
             $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO);
         }, Message::IMAGE);
-    }
-
-    /**
-     * 构建文本消息的格式
-     *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $mediaId
-     * @param string $imageUrl
-     *
-     * @return array
-     */
-    public function buildImageMessage(string $toUserName, string $fromUserId, string $fromUserName, string $mediaId, string $imageUrl): array
-    {
-        $snowflake = new Snowflake;
-        return [
-            'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
-            'fromUserName' => $fromUserName,
-            'mediaId'      => $mediaId,
-            'imageUrl'     => $imageUrl,
-            'id'           => $snowflake->id(),
-            'send'         => 'customer',
-            'createTime'   => Carbon::now()->toDateTimeString(),
-            'msgType'      => WebSocketMessage::SERVER_VOICE_MESSAGE,
-        ];
     }
 }
