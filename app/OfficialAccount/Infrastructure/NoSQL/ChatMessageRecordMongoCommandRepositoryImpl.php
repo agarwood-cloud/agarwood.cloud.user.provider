@@ -21,7 +21,7 @@ use MongoDB\UpdateResult;
 class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMongoCommandRepository
 {
     /**
-     * 消息记录的数据库名称
+     * The name of the database for the message record
      *
      * @\Swoft\Config\Annotation\Mapping\Config("mongo.chat.database")
      *
@@ -30,7 +30,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     public string $database;
 
     /**
-     * 消息记录的集合名称
+     * Collection name of the message record
      *
      * @\Swoft\Config\Annotation\Mapping\Config("mongo.chat.collection")
      *
@@ -39,15 +39,15 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     public string $collection;
 
     /**
-     * 插入一条聊天记录
+     * Insert a message history
      *
-     * @param string $openid     微信用户openid
-     * @param string $customerId 客服id
-     * @param string $sender     发送者
-     * @param string $msgType    消息类型
-     * @param array  $data       消息内容
-     * @param string $createdAt  创建时间
-     * @param bool   $isRead     是否已读
+     * @param string $openid     openid
+     * @param string $customerId customer service id
+     * @param string $sender     send by user
+     * @param string $msgType    message type
+     * @param array  $data       message
+     * @param string $createdAt  create time
+     * @param bool   $isRead     is read
      *
      * @return \MongoDB\InsertOneResult
      */
@@ -66,10 +66,10 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     }
 
     /**
-     * 插入多条聊天记录
+     * Insert multiple message records
      *
-     * @param array $document 消息内容
-     * @param array $options
+     * @param array $document message records
+     * @param array $options mongodb insert options
      *
      * @return \MongoDB\InsertManyResult
      */
@@ -80,11 +80,11 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     }
 
     /**
-     * 更新一条聊天记录
+     * Update a message history
      *
-     * @param string $openid  微信用户openid
-     * @param bool   $isRead  是否已读
-     * @param array  $options 选项
+     * @param string $openid  openid
+     * @param bool   $isRead  is read
+     * @param array  $options mongodb options
      *
      * @return \MongoDB\UpdateResult
      */
@@ -99,7 +99,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     }
 
     /**
-     * 更新多条聊天记录
+     * Update multiple message records
      *
      * @param string $openid
      * @param bool   $isRead
