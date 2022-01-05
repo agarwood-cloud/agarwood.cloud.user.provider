@@ -51,16 +51,4 @@ interface UserApplication
      * @return \Swoft\Stdlib\Collection
      */
     public function updateProvider(string $openid, UpdateDTO $DTO): Collection;
-
-    /**
-     * 应用层
-     *      粉丝列表服务接口
-     *
-     *
-     * @param IndexDTO $DTO
-     * @param bool     $isPagination
-     *
-     * @return array
-     */
-    public function indexV3Provider(IndexDTO $DTO, bool $isPagination = true): array;
 }

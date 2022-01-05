@@ -16,7 +16,6 @@ use App\OfficialAccount\Domain\UserDomain;
 use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
 use Swoft\Stdlib\Collection;
 
 /**
@@ -29,14 +28,14 @@ class UserApplicationImpl implements UserApplication
      *
      * @var UserDomain $userDomain
      */
-    protected UserDomain $userDomain;
+    public UserDomain $userDomain;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
      * @var RedisUser
      */
-    protected RedisUser $redisUser;
+    public RedisUser $redisUser;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
@@ -92,18 +91,5 @@ class UserApplicationImpl implements UserApplication
         $attributes = $DTO->toArrayNotNull([], true);
         $this->userDomain->update($openid, $attributes);
         return Collection::make($DTO);
-    }
-
-    /**
-     * 粉丝列表
-     *
-     * @param IndexDTO $DTO
-     * @param bool     $isPagination
-     *
-     * @return array
-     */
-    public function indexV3Provider(IndexDTO $DTO, bool $isPagination = true): array
-    {
-        return $this->userDomain->indexV3($DTO, $isPagination);
     }
 }

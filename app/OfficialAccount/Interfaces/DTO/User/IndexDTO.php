@@ -34,11 +34,11 @@ class IndexDTO extends AbstractBaseDTO
     public int $perPage = 10;
 
     /**
-     * @\Swoft\Validator\Annotation\Mapping\IsString()
+     * @\Swoft\Validator\Annotation\Mapping\IsArray()
      *
-     * @var string|null
+     * @var array|null
      */
-    public ?string $openid = null;
+    public ?array $openid = null;
 
     /**
      * @\Swoft\Validator\Annotation\Mapping\IsString()
@@ -95,17 +95,17 @@ class IndexDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getOpenid(): ?string
+    public function getOpenid(): ?array
     {
         return $this->openid;
     }
 
     /**
-     * @param string|null $openid
+     * @param array|null $openid
      */
-    public function setOpenid(?string $openid): void
+    public function setOpenid(?array $openid): void
     {
         $this->openid = $openid;
     }

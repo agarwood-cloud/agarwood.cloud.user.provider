@@ -15,6 +15,7 @@ use App\OfficialAccount\Application\UserApplication;
 use App\OfficialAccount\Interfaces\Assembler\UserAssembler;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
+use App\Support\OfficialAccountQueryParams;
 use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Annotation\Mapping\Controller;
@@ -40,7 +41,14 @@ class UserController extends AbstractBaseController
      *
      * @var \App\OfficialAccount\Application\UserApplication
      */
-    protected UserApplication $application;
+    public UserApplication $application;
+
+    /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\Support\OfficialAccountQueryParams
+     */
+    public OfficialAccountQueryParams $officialAccountQueryParams;
 
     /**
      * 粉丝列表
@@ -55,7 +63,10 @@ class UserController extends AbstractBaseController
     {
         $dto = UserAssembler::attributesToIndexV3DTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->indexV3Provider($dto)
+            $this->application->indexProvider(
+                $this->officialAccountQueryParams->getOfficialAccountId(),
+                $dto
+            )
         )->response();
     }
 }

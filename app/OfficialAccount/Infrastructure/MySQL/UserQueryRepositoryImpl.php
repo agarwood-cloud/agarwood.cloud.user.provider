@@ -77,7 +77,7 @@ class UserQueryRepositoryImpl implements UserQueryRepository
             ->where('oa_id', '=', $officialAccountId)
             ->orderByDesc('id')
             ->when($filter['openid'], function ($query, $param) {
-                return $query->where('openid', '=', $param);
+                return $query->whereIn('openid', $param);
             })
             ->when($filter['subscribe'], function ($query, $param) {
                 return $query->where('subscribe', '=', $param);

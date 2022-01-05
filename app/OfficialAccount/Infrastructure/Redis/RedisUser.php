@@ -16,7 +16,7 @@ namespace App\OfficialAccount\Infrastructure\Redis;
 interface RedisUser
 {
     /**
-     * 把粉丝的数据缓存到redis
+     * Set cache to redis
      *
      * @param string $openid
      * @param array  $attributes
@@ -26,7 +26,7 @@ interface RedisUser
     public function setCacheToRedis(string $openid, array $attributes): bool;
 
     /**
-     * 读取redis的粉丝缓存数据
+     * Get a User Cache from Redis
      *
      * @param string $openid
      *
@@ -35,7 +35,7 @@ interface RedisUser
     public function getCacheFromRedis(string $openid): array;
 
     /**
-     * 读取redis的粉丝缓存数据
+     * Get Users Cache from Redis
      *
      * @param array $openid
      *
@@ -44,7 +44,7 @@ interface RedisUser
     public function getUsersCacheFromRedis(array $openid): array;
 
     /**
-     * 删除redis的缓存信息
+     * delete user cache from redis
      *
      * @param string $openid
      *
