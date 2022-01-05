@@ -55,13 +55,13 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
     {
         return MongoClient::getInstance()->{$this->database}->{$this->collection}
             ->insertOne([
-                'openid'     => $openid,
-                'customerId' => $customerId,
-                'sender'     => $sender,
-                'msgType'    => $msgType,
-                'data'       => $data,
-                'createdAt'  => $createdAt,
-                'isRead'     => $isRead,
+                'openid'      => $openid,
+                'customer_id' => $customerId,
+                'sender'      => $sender,
+                'msg_type'    => $msgType,
+                'data'        => $data,
+                'created_at'  => $createdAt,
+                'is_read'     => $isRead,
             ]);
     }
 
@@ -93,7 +93,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
         return MongoClient::getInstance()->{$this->database}->{$this->collection}
             ->updateOne(
                 ['openid' => $openid],
-                ['$set' => ['isRead' => $isRead]],
+                ['$set' => ['is_read' => $isRead]],
                 $options
             );
     }
@@ -112,7 +112,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
         return MongoClient::getInstance()->{$this->database}->{$this->collection}
             ->updateMany(
                 ['openid' => $openid],
-                ['$set' => ['isRead' => $isRead]],
+                ['$set' => ['is_read' => $isRead]],
                 $options
             );
     }
