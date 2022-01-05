@@ -18,6 +18,7 @@ use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use Swoft\Process\Process;
 use Swoft\Process\UserProcess;
 use Swoft\Redis\Redis;
+use Swoole\Timer;
 
 /**
  * @\Swoft\Process\Annotation\Mapping\Process()
@@ -45,6 +46,10 @@ class ChatSubscriber extends UserProcess
      */
     public function run(Process $process): void
     {
+        // Don't delete this line, init: set socket timeout
+        Timer::after(2000, static function () {
+            Redis::publish(SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL, 'hello world!');
+        });
         while (true) {
             $subscriber = function (\Redis $redis, string $chan, string $msg) {
                 // set socket timeout
