@@ -50,6 +50,7 @@ class ChatSubscriber extends UserProcess
         Timer::after(2000, static function () {
             Redis::publish(SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL, 'hello world!');
         });
+        // always true
         while (true) {
             $subscriber = function (\Redis $redis, string $chan, string $msg) {
                 // set socket timeout

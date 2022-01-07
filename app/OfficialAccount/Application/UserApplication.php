@@ -12,7 +12,6 @@ namespace App\OfficialAccount\Application;
 
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
 use Swoft\Stdlib\Collection;
 
 /**
@@ -51,4 +50,12 @@ interface UserApplication
      * @return \Swoft\Stdlib\Collection
      */
     public function updateProvider(string $openid, UpdateDTO $DTO): Collection;
+
+
+    /**
+     * @param string $openid
+     *
+     * @return array
+     */
+    public function timelineProvider(string $openid): array;
 }

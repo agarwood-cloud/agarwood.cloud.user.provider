@@ -27,8 +27,6 @@ use Swoft\Validator\Annotation\Mapping\Validate;
 use Swoft\Validator\Annotation\Mapping\ValidateType;
 
 /**
- * 用户头像信息
- *
  * @Middlewares({
  *     @Middleware(OAuthJWTMiddleware::class)
  * })
@@ -67,6 +65,21 @@ class UserController extends AbstractBaseController
                 $this->officialAccountQueryParams->getOfficialAccountId(),
                 $dto
             )
+        )->response();
+    }
+
+    /**
+     * User activity records based on time
+     *
+     * @RequestMapping(route="user/timeline/{openid}", method={ RequestMethod::GET })
+     * @param string $openid
+     *
+     * @return Response|null
+     */
+    public function actionTimeline(string $openid): ?Response
+    {
+        return $this->wrapper()->setData(
+            $this->application->timelineProvider($openid)
         )->response();
     }
 }

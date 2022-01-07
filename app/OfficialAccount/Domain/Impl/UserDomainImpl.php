@@ -13,7 +13,6 @@ namespace App\OfficialAccount\Domain\Impl;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
 use App\OfficialAccount\Domain\UserDomain;
-use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use Swoft\Db\Exception\DbException;
 
 /**
@@ -76,18 +75,5 @@ class UserDomainImpl implements UserDomain
     public function delete(string $openid): int
     {
         return $this->userCommandRepository->delete($openid);
-    }
-
-    /**
-     * 粉丝列表数据
-     *
-     * @param IndexDTO $DTO
-     * @param bool     $isPagination
-     *
-     * @return array
-     */
-    public function indexV3(IndexDTO $DTO, bool $isPagination): array
-    {
-        return $this->userQueryRepository->indexV3($DTO->toArrayLine(), $isPagination);
     }
 }

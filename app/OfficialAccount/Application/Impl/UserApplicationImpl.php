@@ -11,11 +11,10 @@
 namespace App\OfficialAccount\Application\Impl;
 
 use App\OfficialAccount\Application\UserApplication;
-use App\OfficialAccount\Domain\SendToNodeDomain;
 use App\OfficialAccount\Domain\UserDomain;
-use App\OfficialAccount\Infrastructure\Redis\RedisUser;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
+use App\OfficialAccount\Interfaces\Rpc\Client\OrderCenter\FansTimelineOrderRpc;
 use Swoft\Stdlib\Collection;
 
 /**
@@ -33,19 +32,12 @@ class UserApplicationImpl implements UserApplication
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var RedisUser
+     * @var \App\OfficialAccount\Interfaces\Rpc\Client\OrderCenter\FansTimelineOrderRpc
      */
-    public RedisUser $redisUser;
+    public FansTimelineOrderRpc $fansTimelineOrderRpc;
 
     /**
-     * @\Swoft\Bean\Annotation\Mapping\Inject()
-     *
-     * @var \App\OfficialAccount\Domain\SendToNodeDomain
-     */
-    protected SendToNodeDomain $callbackNodeDomainService;
-
-    /**
-     * 列表数据
+     * User list data
      *
      * @param int|null $officialAccountId
      * @param IndexDTO $DTO
@@ -91,5 +83,28 @@ class UserApplicationImpl implements UserApplication
         $attributes = $DTO->toArrayNotNull([], true);
         $this->userDomain->update($openid, $attributes);
         return Collection::make($DTO);
+    }
+
+    /**
+     * todo: View fans' records， such as subscribe status, create order, todo list,  and so on!
+     *
+     * @param string $openid
+     *
+     * @return array
+     */
+    public function timelineProvider(string $openid): array
+    {
+        // 关注时间 & 取关时间 & 再次关注时间
+        $subscribe = $this->userDomain->subscribe($openid);
+
+        // 购买商品，包含所有的订单
+        $order = $this->fansTimelineOrderRpc->timelineOrderByOpenid($openid);
+
+        // 跟进事项
+        $event = $this->userDomain->toDoListEvent($openid);
+
+        // todo 加入排序
+
+        return array_merge($subscribe, $order, $event);
     }
 }

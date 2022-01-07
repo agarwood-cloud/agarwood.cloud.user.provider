@@ -34,6 +34,7 @@ use Swoft\Validator\Annotation\Mapping\ValidateType;
  * @Middlewares({
  *     @Middleware(OAuthJWTMiddleware::class)
  * })
+ * @deprecated Archived, please do not use!
  */
 class FansController extends AbstractBaseController
 {
