@@ -20,10 +20,11 @@ interface RedisUser
      *
      * @param string $openid
      * @param array  $attributes
+     * @param int    $ttl
      *
-     * @return bool
+     * @return void
      */
-    public function setCacheToRedis(string $openid, array $attributes): bool;
+    public function setCacheToRedis(string $openid, array $attributes, int $ttl = 0): void;
 
     /**
      * Get a User Cache from Redis

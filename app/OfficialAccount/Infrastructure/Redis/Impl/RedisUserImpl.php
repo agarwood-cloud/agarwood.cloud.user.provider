@@ -20,20 +20,25 @@ use Swoft\Redis\Redis;
 class RedisUserImpl implements RedisUser
 {
     /**
-     * 把粉丝的数据缓存到redis
+     * set user info to redis
      *
      * @param string $openid
      * @param array  $attributes
+     * @param int    $ttl seconds
      *
-     * @return bool
+     * @return void
      */
-    public function setCacheToRedis(string $openid, array $attributes): bool
+    public function setCacheToRedis(string $openid, array $attributes, int $ttl = 0): void
     {
-        return Redis::hMSet(RedisUserCacheEnum::REDIS_CACHE_PREFIX_KEY . $openid, $attributes);
+        Redis::hMSet(RedisUserCacheEnum::REDIS_CACHE_PREFIX_KEY . $openid, $attributes);
+
+        if ($ttl > 0) {
+            Redis::expire(RedisUserCacheEnum::REDIS_CACHE_PREFIX_KEY . $openid, $ttl);
+        }
     }
 
     /**
-     * 读取redis的粉丝缓存数据
+     * get user info from redis
      *
      * @param string $openid
      *
@@ -45,7 +50,7 @@ class RedisUserImpl implements RedisUser
     }
 
     /**
-     * 获取用户的缓存信息
+     * get users info from redis
      *
      * @param array $openid
      *
@@ -64,7 +69,7 @@ class RedisUserImpl implements RedisUser
     }
 
     /**
-     * 删除redis的缓存信息
+     * delete user info from redis
      *
      * @param string $openid
      *
