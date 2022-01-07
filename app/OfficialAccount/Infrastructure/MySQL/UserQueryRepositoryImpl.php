@@ -21,6 +21,8 @@ use Swoft\Db\DB;
 class UserQueryRepositoryImpl implements UserQueryRepository
 {
     /**
+     * find user info by openid.
+     *
      * @param string $openid
      *
      * @return array

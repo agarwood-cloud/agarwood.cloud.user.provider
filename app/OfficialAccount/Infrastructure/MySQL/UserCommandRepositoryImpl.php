@@ -22,7 +22,7 @@ use Swoft\Db\DB;
 class UserCommandRepositoryImpl implements UserCommandRepository
 {
     /**
-     * 新建用户
+     * create user info
      *
      * @param array $attributes
      *
@@ -62,7 +62,7 @@ class UserCommandRepositoryImpl implements UserCommandRepository
     }
 
     /**
-     * 更新用户信息
+     * update user info
      *
      * @param string $openid
      * @param array  $attributes
@@ -94,6 +94,8 @@ class UserCommandRepositoryImpl implements UserCommandRepository
     }
 
     /**
+     * update info by openid
+     *
      * @param string $openid
      * @param array  $attributes
      *
