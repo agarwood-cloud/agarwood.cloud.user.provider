@@ -11,6 +11,7 @@
 namespace App\Customer\Infrastructure\MySQL;
 
 use App\Customer\Domain\Aggregate\Entity\Customer;
+use App\Customer\Domain\Aggregate\Enum\CustomerStatusEnum;
 use App\Customer\Domain\Aggregate\Repository\CustomerRpcRepository;
 use Swoft\Db\DB;
 
@@ -29,7 +30,7 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
         return DB::table(Customer::tableName())
             ->select()
             ->where('account', '=', $username)
-            // ->where('password', '=', $password)
+            ->where('status', '=', CustomerStatusEnum::USABLE)
             ->firstArray();
     }
 }

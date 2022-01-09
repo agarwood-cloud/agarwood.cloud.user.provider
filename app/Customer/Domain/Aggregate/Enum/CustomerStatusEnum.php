@@ -1,0 +1,26 @@
+<?php declare(strict_types=1);
+/**
+ * This file is part of Agarwood Cloud.
+ *
+ * @link     https://www.agarwood-cloud.com
+ * @document https://www.agarwood-cloud.com/docs
+ * @contact  676786620@qq.com
+ * @author   agarwood
+ */
+
+namespace App\Customer\Domain\Aggregate\Enum;
+
+class CustomerStatusEnum
+{
+    // usable:可用,disabled:不可用
+
+    /**
+     * 可用
+     */
+    public const USABLE = 'usable';
+
+    /**
+     * disabled
+     */
+    public const DISABLED = 'disabled';
+}
