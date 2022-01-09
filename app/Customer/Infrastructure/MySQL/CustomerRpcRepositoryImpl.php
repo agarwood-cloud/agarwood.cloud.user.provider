@@ -28,7 +28,18 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
     public function login(string $username): array
     {
         return DB::table(Customer::tableName())
-            ->select()
+            ->select(
+                'id',
+                'oa_id as officialAccountId',
+                'name',
+                'account',
+                'phone',
+                'group_name as groupName',
+                'group_id as groupId',
+                'created_at as createdAt',
+                'password',
+                'status'
+            )
             ->where('account', '=', $username)
             ->where('status', '=', CustomerStatusEnum::USABLE)
             ->firstArray();
