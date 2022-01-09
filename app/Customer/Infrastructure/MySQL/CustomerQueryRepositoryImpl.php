@@ -13,7 +13,6 @@ namespace App\Customer\Infrastructure\MySQL;
 use Agarwood\Core\Constant\StringConstant;
 use App\Customer\Domain\Aggregate\Entity\Customer;
 use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use Swoft\Db\DB;
 
 /**
@@ -85,32 +84,6 @@ class CustomerQueryRepositoryImpl implements CustomerQueryRepository
             )
             ->where('id', '=', $id)
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->firstArray();
-    }
-
-    /**
-     * 登陆
-     *
-     * @param LoginDTO $DTO
-     *
-     * @return array
-     */
-    public function login(LoginDTO $DTO): array
-    {
-        return DB::table(Customer::tableName())
-            ->select(
-                'id',
-                'account',
-                'name',
-                'group_id as groupId',
-                'phone',
-                'status',
-                'group_name as groupName',
-                'password'
-            )
-            ->where('oa_id', '=', $DTO->getOfficialAccountId())
-            ->where('account', '=', $DTO->getUsername())
-            ->where('status', '=', 'usable')
             ->firstArray();
     }
 }

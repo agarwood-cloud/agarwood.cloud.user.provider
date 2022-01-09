@@ -10,8 +10,6 @@
 
 namespace App\Customer\Domain\Aggregate\Repository;
 
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
-
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
  */
@@ -33,11 +31,4 @@ interface CustomerQueryRepository
      * @return array
      */
     public function view(int $id): array;
-
-    /**
-     * @param LoginDTO $DTO
-     *
-     * @return array|null
-     */
-    public function login(LoginDTO $DTO): ?array;
 }

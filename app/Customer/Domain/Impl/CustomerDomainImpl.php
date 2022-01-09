@@ -21,11 +21,9 @@ use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use App\OfficialAccount\Infrastructure\Enum\UserEnum;
 use App\OfficialAccount\Infrastructure\NoSQL\Enum\MongoDBEnum;
-use Agarwood\Core\Exception\ForbiddenException;
 use JsonException;
 use MongoDB\Client;
 use Swoft\Db\Exception\DbException;
@@ -198,41 +196,6 @@ class CustomerDomainImpl implements CustomerDomain
             }
         }
         return ['删除成功'];
-    }
-
-    /**
-     * 领域服务接口： 登陆
-     *
-     * @param LoginDTO $DTO
-     *
-     * @return array
-     */
-    public function login(LoginDTO $DTO): array
-    {
-        // 查找用户
-        $user = $this->customerQueryRepository->login($DTO);
-
-        // 验证密码是否正确
-        if ($user && password_verify($DTO->getPassword(), $user['password'])) {
-            // 生成对应的jwt-token值
-            $token = $this->jwt->builder($user['id'])
-                ->extendBuilder('id', $user['id'])
-                ->extendBuilder('account', $user['account'])
-                ->extendBuilder('name', $user['name'])
-                ->extendBuilder('serviceId', $user['serviceId'])
-                ->token();
-
-            // 删除密码，不返回给前端
-            unset($user['password']);
-
-            return array_merge(
-                $user,
-                ['token' => $token]
-            );
-        }
-
-        // 这里是验证不通过的
-        throw new ForbiddenException('账号密码不正确...');
     }
 
     /**

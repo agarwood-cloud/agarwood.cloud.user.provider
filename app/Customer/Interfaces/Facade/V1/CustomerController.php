@@ -18,7 +18,6 @@ use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\CreateDTO;
 use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
 use App\Support\OfficialAccountQueryParams;
 use App\Support\ParsingToken;
@@ -187,24 +186,6 @@ class CustomerController extends AbstractBaseController
         $dto = CustomerAssembler::attributesToChangeStatusDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->changeStatusProvider($id, $dto)
-        )->response();
-    }
-
-    /**
-     * customer service login
-     *
-     * @Validate(validator=LoginDTO::class, type=ValidateType::BODY)
-     * @RequestMapping(route="customer/login", method={ RequestMethod::POST })
-     *
-     * @param Request $request
-     *
-     * @return Response|null
-     */
-    public function actionLogin(Request $request): ?Response
-    {
-        $dto = CustomerAssembler::attributesToLoginDTO((array)$request->getParsedBody());
-        return $this->wrapper()->setData(
-            $this->application->loginProvider($dto)
         )->response();
     }
 

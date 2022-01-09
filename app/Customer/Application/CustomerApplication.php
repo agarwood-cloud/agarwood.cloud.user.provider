@@ -16,7 +16,6 @@ use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\CreateDTO;
 use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use Swoft\Stdlib\Collection;
 
 /**
@@ -101,15 +100,6 @@ interface CustomerApplication
      * @return array
      */
     public function obtainOfflineProvider(int $officialAccountId, string $ids): array;
-
-    /**
-     * Customer Service Login
-     *
-     * @param LoginDTO $DTO
-     *
-     * @return array
-     */
-    public function loginProvider(LoginDTO $DTO): array;
 
     /**
      * Chat Record List

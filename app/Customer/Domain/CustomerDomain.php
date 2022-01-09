@@ -14,7 +14,6 @@ use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use MongoDB\Client;
 
 /**
@@ -95,13 +94,6 @@ interface CustomerDomain
      * @return array
      */
     public function obtainOffline(int $officialAccountId, string $ids): array;
-
-    /**
-     * @param LoginDTO $DTO
-     *
-     * @return array
-     */
-    public function login(LoginDTO $DTO): array;
 
     /**
      *  chat list data

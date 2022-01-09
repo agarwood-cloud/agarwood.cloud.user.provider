@@ -20,7 +20,6 @@ use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\CreateDTO;
 use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
-use App\Customer\Interfaces\DTO\Customer\LoginDTO;
 use App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use Carbon\Carbon;
 use JsonException;
@@ -129,18 +128,6 @@ class CustomerApplicationImpl implements CustomerApplication
     public function obtainOfflineProvider(int $officialAccountId, string $ids): array
     {
         return $this->customerDomain->obtainOffline($officialAccountId, $ids);
-    }
-
-    /**
-     * login
-     *
-     * @param LoginDTO $DTO
-     *
-     * @return array
-     */
-    public function loginProvider(LoginDTO $DTO): array
-    {
-        return $this->customerDomain->login($DTO);
     }
 
     /**
