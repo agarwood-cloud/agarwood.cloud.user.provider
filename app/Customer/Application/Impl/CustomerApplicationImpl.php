@@ -21,7 +21,7 @@ use App\Customer\Interfaces\DTO\Customer\CreateDTO;
 use App\Customer\Interfaces\DTO\Customer\IndexDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
-use App\Customer\Interfaces\Rpc\Client\MallCenter\ServiceRpc;
+use App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use Carbon\Carbon;
 use JsonException;
 use Swoft\Stdlib\Collection;
@@ -32,34 +32,32 @@ use Swoft\Stdlib\Collection;
 class CustomerApplicationImpl implements CustomerApplication
 {
     /**
-     * 分组领域服务
-     *
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerDomain
+     * @var \App\Customer\Domain\CustomerDomain
      */
-    protected CustomerDomain $customerDomain;
+    public CustomerDomain $customerDomain;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var ChatRecordBo
+     * @var \App\Customer\Interfaces\Bo\Customer\ChatRecordBo
      */
-    protected ChatRecordBo $bo;
+    public ChatRecordBo $bo;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var RedisUser
+     * @var \App\Customer\Infrastructure\Cache\RedisUser
      */
-    protected RedisUser $user;
+    public RedisUser $user;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var ServiceRpc
+     * @var \App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc
      */
-    protected ServiceRpc $mallCenterServiceRpcClient;
+    public OfficialAccountsRpc $officialAccountsRpc;
 
     /**
      * @inheritDoc
@@ -108,9 +106,9 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @inheritDoc
      */
-    public function scanSubscribeProvider(int $token, int $customerId): array
+    public function scanSubscribeProvider(int $officialAccountId, int $customerId): array
     {
-        return $this->customerDomain->scanSubscribe($token, $customerId);
+        return $this->customerDomain->scanSubscribe($officialAccountId, $customerId);
     }
 
     /**
@@ -134,7 +132,7 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * 登陆
+     * login
      *
      * @param LoginDTO $DTO
      *
@@ -146,7 +144,7 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * 获取聊天记录的列表
+     * Chat Record List
      *
      * @param int     $officialAccountId
      * @param int     $customerId
@@ -168,7 +166,7 @@ class CustomerApplicationImpl implements CustomerApplication
 
         // 获取腾讯接口的openid信息
         if (count($userInfo) !== count($openid)) {
-            $app   = $this->mallCenterServiceRpcClient->officialAccountApplication($officialAccountId);
+            $app   = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
             $users = $app->user->select($openid);
 
             if (is_array($users) && isset($users['user_info_list'])) {
@@ -185,7 +183,7 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * 查找聊天记录
+     * Chat Record
      *
      * @param int           $customerId
      * @param ChatRecordDTO $DTO
@@ -216,7 +214,7 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * 一键下线功能
+     * offline
      *
      * @param int $officialAccountId
      *
@@ -228,7 +226,7 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * 查看抢粉状态
+     * online status
      *
      * @param int $officialAccountId
      * @param int $id

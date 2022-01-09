@@ -23,9 +23,9 @@ use MongoDB\Client;
 interface CustomerDomain
 {
     /**
-     *  获取列表
+     * customer list data
      *
-     * @param array $filter 过滤条件
+     * @param array $filter condition
      * @param int   $officialAccountId
      *
      * @return array
@@ -33,7 +33,7 @@ interface CustomerDomain
     public function index(int $officialAccountId, array $filter): array;
 
     /**
-     *  新建
+     *  create
      *
      * @param int   $officialAccountId
      * @param array $attributes
@@ -43,7 +43,7 @@ interface CustomerDomain
     public function create(int $officialAccountId, array $attributes): bool;
 
     /**
-     * 更新
+     * update
      *
      * @param int       $id  模板uuid
      * @param UpdateDTO $DTO 更新字段
@@ -53,7 +53,7 @@ interface CustomerDomain
     public function update(int $id, UpdateDTO $DTO): array;
 
     /**
-     * 预览
+     * view
      *
      * @param int $id
      *
@@ -62,7 +62,7 @@ interface CustomerDomain
     public function view(int $id): array;
 
     /**
-     * 删除
+     * delete
      *
      * @param string $ids
      *
@@ -71,14 +71,14 @@ interface CustomerDomain
     public function delete(string $ids): int;
 
     /**
-     * user.center 领域服务的接口： 生成客服专属的二维码
+     * scan QR code
      *
-     * @param int $token
+     * @param int $officialAccountId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribe(int $token, int $customerId): array;
+    public function scanSubscribe(int $officialAccountId, int $customerId): array;
 
     /**
      * @param int             $id
@@ -97,8 +97,6 @@ interface CustomerDomain
     public function obtainOffline(int $officialAccountId, string $ids): array;
 
     /**
-     * 领域服务接口： 登陆
-     *
      * @param LoginDTO $DTO
      *
      * @return array
@@ -106,7 +104,7 @@ interface CustomerDomain
     public function login(LoginDTO $DTO): array;
 
     /**
-     *  获取列表
+     *  chat list data
      *
      * @param int     $customerId
      * @param Client  $client
@@ -117,7 +115,7 @@ interface CustomerDomain
     public function chat(int $customerId, Client $client, ChatDTO $DTO): array;
 
     /**
-     * 获取聊天记录
+     * chat record data
      *
      * @param int           $customerId
      * @param Client        $client
@@ -129,8 +127,6 @@ interface CustomerDomain
     public function chatRecord(int $customerId, Client $client, ChatRecordDTO $DTO, array $month): array;
 
     /**
-     * 清除redis的抢粉信息
-     *
      * @param int $officialAccountId
      *
      * @return array
@@ -138,8 +134,6 @@ interface CustomerDomain
     public function obtainFansOffline(int $officialAccountId): array;
 
     /**
-     * 抢粉状态
-     *
      * @param int $officialAccountId
      * @param int $id
      *

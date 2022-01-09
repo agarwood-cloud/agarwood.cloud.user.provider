@@ -51,7 +51,6 @@ interface UserApplication
      */
     public function updateProvider(string $openid, UpdateDTO $DTO): Collection;
 
-
     /**
      * @param string $openid
      *

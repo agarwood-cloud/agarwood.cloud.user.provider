@@ -25,8 +25,7 @@ use Swoft\Stdlib\Collection;
 interface CustomerApplication
 {
     /**
-     * 应用层
-     *      客服列表服务接口
+     * Customer Service List Data
      *
      * @param int                                            $officialAccountId
      * @param \App\Customer\Interfaces\DTO\Customer\IndexDTO $DTO
@@ -36,8 +35,7 @@ interface CustomerApplication
     public function indexProvider(int $officialAccountId, IndexDTO $DTO): array;
 
     /**
-     * 应用层
-     *      新建客服服务接口
+     * Create Customer Service Account
      *
      * @param int                                             $officialAccountId
      * @param \App\Customer\Interfaces\DTO\Customer\CreateDTO $DTO
@@ -47,8 +45,7 @@ interface CustomerApplication
     public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection;
 
     /**
-     *  应用层
-     *      删除客服服务接口
+     * Delete Customer Service Account
      *
      * @param string $ids
      *
@@ -57,8 +54,7 @@ interface CustomerApplication
     public function deleteProvider(string $ids): int;
 
     /**
-     *  应用层
-     *      更新客服服务接口
+     * Update Customer Service Account
      *
      * @param int                                             $id
      * @param \App\Customer\Interfaces\DTO\Customer\UpdateDTO $DTO
@@ -68,8 +64,7 @@ interface CustomerApplication
     public function updateProvider(int $id, UpdateDTO $DTO): Collection;
 
     /**
-     * 应用层
-     *      查看列表服务接口
+     * View Customer Service Account Info
      *
      * @param int $id
      *
@@ -78,19 +73,17 @@ interface CustomerApplication
     public function viewProvider(int $id): array;
 
     /**
-     * 应用层
-     *      生成专属二维码接口
+     *  Generate QR code
      *
-     * @param int $token
+     * @param int $officialAccountId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribeProvider(int $token, int $customerId): array;
+    public function scanSubscribeProvider(int $officialAccountId, int $customerId): array;
 
     /**
-     *  应用层
-     *      更新客服服务接口
+     * Change Status
      *
      * @param int             $id
      * @param ChangeStatusDTO $DTO
@@ -100,8 +93,7 @@ interface CustomerApplication
     public function changeStatusProvider(int $id, ChangeStatusDTO $DTO): Collection;
 
     /**
-     *  应用层
-     *      删除客服抢粉的接口
+     * Clear queue
      *
      * @param int    $officialAccountId
      * @param string $ids
@@ -111,9 +103,7 @@ interface CustomerApplication
     public function obtainOfflineProvider(int $officialAccountId, string $ids): array;
 
     /**
-     * 应用层
-     *      客服列表服务接口
-     *
+     * Customer Service Login
      *
      * @param LoginDTO $DTO
      *
@@ -122,7 +112,7 @@ interface CustomerApplication
     public function loginProvider(LoginDTO $DTO): array;
 
     /**
-     * 获取最近的聊天列表
+     * Chat Record List
      *
      * @param int     $officialAccountId
      * @param int     $customerId
@@ -133,7 +123,7 @@ interface CustomerApplication
     public function chatProvider(int $officialAccountId, int $customerId, ChatDTO $DTO): array;
 
     /**
-     * 查找粉丝的聊天记录
+     * Chat Record
      *
      * @param int           $customerId
      * @param ChatRecordDTO $DTO
@@ -143,7 +133,7 @@ interface CustomerApplication
     public function chatRecordProvider(int $customerId, ChatRecordDTO $DTO): array;
 
     /**
-     * 一键下线功能
+     * All Customer Service Quit Queue
      *
      * @param int $officialAccountId
      *
@@ -152,7 +142,7 @@ interface CustomerApplication
     public function obtainFansOfflineProvider(int $officialAccountId): array;
 
     /**
-     * 查看抢粉状态
+     * Customer Service Status
      *
      * @param int $officialAccountId
      * @param int $id

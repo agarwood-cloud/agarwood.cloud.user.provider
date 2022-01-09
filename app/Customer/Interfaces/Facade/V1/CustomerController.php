@@ -50,9 +50,9 @@ class CustomerController extends AbstractBaseController
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerApplication
+     * @var \App\Customer\Application\CustomerApplication
      */
-    protected CustomerApplication $application;
+    public CustomerApplication $application;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
@@ -62,7 +62,7 @@ class CustomerController extends AbstractBaseController
     public OfficialAccountQueryParams $officialAccountQueryParams;
 
     /**
-     * 客服列表
+     * Customer service list data.
      *
      * @RequestMapping(route="customer", method={RequestMethod::GET})
      * @Validate(validator=IndexDTO::class, type=ValidateType::GET)
@@ -82,7 +82,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 创建客服账号
+     * Create customer service.
      *
      * @param Request  $request
      * @param Response $response
@@ -104,7 +104,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 更新客服信息
+     * Update customer service.
      *
      * @param Request $request
      * @param int     $id
@@ -122,7 +122,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 删除客服信息
+     * Delete customer service.
      *
      * @RequestMapping(route="customer/{ids}", method={ RequestMethod::DELETE })
      * @param string   $ids
@@ -138,7 +138,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 查看客服详情
+     * View customer service.
      *
      * @RequestMapping(route="customer/{id}", method={ RequestMethod::GET })
      * @param int $id
@@ -153,7 +153,8 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 生成对应客服的专属二维码，扫码后可直接分配给该客服
+     * Generate a QR code corresponding to the customer,
+     * which can be directly assigned to the customer service after scanning the code
      *
      * @RequestMapping(route="customer-scan-subscribe", method={ RequestMethod::GET })
      * @param Request $request
@@ -171,7 +172,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 更新客服可用状态信息
+     * Update customer service status.
      *
      * @param Request $request
      * @param int     $id
@@ -190,7 +191,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 客服后台登陆
+     * customer service login
      *
      * @Validate(validator=LoginDTO::class, type=ValidateType::BODY)
      * @RequestMapping(route="customer/login", method={ RequestMethod::POST })
@@ -208,7 +209,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 剔除客服抢粉的功能
+     * Clear fans queue
      *
      * @RequestMapping(route="customer/obtain-offline/{ids}", method={RequestMethod::DELETE })
      *
@@ -228,7 +229,7 @@ class CustomerController extends AbstractBaseController
     }
 
     /**
-     * 获取聊天记录
+     * Get Chat Record
      *
      * @RequestMapping(route="customer/chat-record", method={ RequestMethod::GET })
      * @Validate(validator=ChatRecordDTO::class, type=ValidateType::GET)
@@ -241,12 +242,15 @@ class CustomerController extends AbstractBaseController
     {
         $dto = CustomerAssembler::attributesToChatRecordDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->chatRecordProvider((int)$this->parsingToken->getCustomerId(), $dto)
+            $this->application->chatRecordProvider(
+                (int)$this->parsingToken->getCustomerId(),
+                $dto
+            )
         )->response();
     }
 
     /**
-     * 一键清除正在抢粉的客服
+     * Clear all queue for customer service
      *
      * @RequestMapping(route="customer/obtain-fans-offline", method={ RequestMethod::POST })
      *

@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\OfficialAccount\Interfaces\Rpc\Client\MallCenter;
+namespace App\Customer\Interfaces\Rpc\Client\MallCenter;
 
 use EasyWeChat\OfficialAccount\Application;
 

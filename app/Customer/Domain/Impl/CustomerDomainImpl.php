@@ -22,7 +22,7 @@ use App\Customer\Interfaces\DTO\Customer\ChatDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\Customer\Interfaces\DTO\Customer\UpdateDTO;
 use App\Customer\Interfaces\DTO\Customer\LoginDTO;
-use App\Customer\Interfaces\Rpc\Client\MallCenter\ServiceRpc;
+use App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use App\OfficialAccount\Infrastructure\Enum\UserEnum;
 use App\OfficialAccount\Infrastructure\NoSQL\Enum\MongoDBEnum;
 use Agarwood\Core\Exception\ForbiddenException;
@@ -40,35 +40,35 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var ServiceRpc
+     * @var \App\Customer\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc
      */
-    protected ServiceRpc $serviceRpc;
+    protected OfficialAccountsRpc $officialAccountsRpc;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var WeChat
+     * @var \Agarwood\WeChat\Factory\WeChat
      */
     protected WeChat $wechat;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerQueryRepository $customerQueryRepository
+     * @var \App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository
      */
     protected CustomerQueryRepository $customerQueryRepository;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerAssignRepository
+     * @var \App\Customer\Domain\Aggregate\Repository\CustomerAssignRepository
      */
     protected CustomerAssignRepository $customerAssignRepository;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var DepartmentRepository
+     * @var \App\Customer\Domain\Aggregate\Repository\DepartmentRepository
      */
     protected DepartmentRepository $departmentRepository;
 
@@ -80,8 +80,6 @@ class CustomerDomainImpl implements CustomerDomain
     public CustomerCommandRepository $customerCommandRepository;
 
     /**
-     * 列表
-     *
      * @param int   $officialAccountId
      * @param array $filter
      *
@@ -104,8 +102,6 @@ class CustomerDomainImpl implements CustomerDomain
     }
 
     /**
-     * 更新客服账号信息
-     *
      * @param int       $id
      * @param UpdateDTO $DTO
      *
@@ -142,22 +138,22 @@ class CustomerDomainImpl implements CustomerDomain
     }
 
     /**
-     * 生成客服专属的二维码
-     *
-     * @param int $token
+     * @param int $officialAccountId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribe(int $token, int $customerId): array
+    public function scanSubscribe(int $officialAccountId, int $customerId): array
     {
         // 这里获取实例
-        $config = $this->serviceRpc->officialAccountConfig($token);
-        $app    = $this->wechat->officialAccount($config);
+        $app    = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
 
         //生成临时图片
         $result = $app->qrcode->temporary(UserEnum::SCAN_FROM_CUSTOMER_SUBSCRIBE . $customerId, 7 * 24 * 3600);
-        return ['url' => $app->qrcode->url($result['ticket'])];
+        if (is_array($result) && isset($result['ticket']) && is_string($result['ticket'])) {
+            return ['url' => $app->qrcode->url($result['ticket'])];
+        }
+        return ['url' => ''];
     }
 
     /**
@@ -170,7 +166,7 @@ class CustomerDomainImpl implements CustomerDomain
      */
     public function changeStatus(int $id, ChangeStatusDTO $DTO): array
     {
-        $this->customerQueryRepository->update($id, $DTO->toArrayLine());
+        $this->customerCommandRepository->update($id, $DTO->toArrayLine());
         //重新查找并返回结果集
         return $this->customerQueryRepository->view($id);
     }

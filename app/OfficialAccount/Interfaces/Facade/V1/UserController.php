@@ -15,7 +15,6 @@ use App\OfficialAccount\Application\UserApplication;
 use App\OfficialAccount\Interfaces\Assembler\UserAssembler;
 use App\OfficialAccount\Interfaces\DTO\User\IndexDTO;
 use App\OfficialAccount\Interfaces\DTO\User\UpdateDTO;
-use App\OfficialAccount\Interfaces\DTO\User\UpdateGroupDTO;
 use App\Support\Middleware\OAuthJWTMiddleware;
 use App\Support\OfficialAccountQueryParams;
 use App\Support\ParsingToken;
