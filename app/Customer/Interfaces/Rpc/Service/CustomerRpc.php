@@ -67,12 +67,13 @@ class CustomerRpc implements UserCenterCustomerRpcInterface
     /**
      * login
      *
+     * @param int    $officialAccountId
      * @param string $username
      *
      * @return array
      */
-    public function login(string $username): array
+    public function login(int $officialAccountId, string $username): array
     {
-        return $this->customerRpcRepository->login($username);
+        return $this->customerRpcRepository->login($officialAccountId, $username);
     }
 }

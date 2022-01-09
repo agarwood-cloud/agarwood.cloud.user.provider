@@ -21,11 +21,12 @@ use Swoft\Db\DB;
 class CustomerRpcRepositoryImpl implements CustomerRpcRepository
 {
     /**
+     * @param int    $officialAccountId
      * @param string $username
      *
      * @return array
      */
-    public function login(string $username): array
+    public function login(int $officialAccountId, string $username): array
     {
         return DB::table(Customer::tableName())
             ->select(
@@ -41,6 +42,7 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
                 'status'
             )
             ->where('account', '=', $username)
+            ->where('oa_id', '=', $officialAccountId)
             ->where('status', '=', CustomerStatusEnum::USABLE)
             ->firstArray();
     }
