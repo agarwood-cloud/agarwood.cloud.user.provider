@@ -60,7 +60,7 @@ class ChatSubscriber extends UserProcess
 
                     // EasyWeChat Application
                     if (isset($message['officialAccountId'])) {
-                        $app = $this->officialAccountsRpc->officialAccountApplication($message['officialAccountId']);
+                        $app = $this->officialAccountsRpc->officialAccountApplication((int)$message['officialAccountId']);
 
                         // Send message to tencent
                         switch ($message['msgType']) {

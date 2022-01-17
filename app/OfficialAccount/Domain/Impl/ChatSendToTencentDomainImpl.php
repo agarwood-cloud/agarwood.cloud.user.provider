@@ -201,17 +201,15 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      *
      * @param int         $officialAccountId
      * @param Application $app
-     * @param Request     $request
+     * @param array     $uploadedFiles
      *
      * @return array
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function uploadImage(int $officialAccountId, Application $app, Request $request): array
+    public function uploadImage(int $officialAccountId, Application $app, array $uploadedFiles): array
     {
-        $uploadedFiles = $request->getUploadedFiles();
-
         $result = [];
         foreach ($uploadedFiles as $file) {
             /** @var $file UploadedFile */
@@ -245,17 +243,11 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             //上传到微信服务器
             $mediaInfo = $app->media->uploadImage($imageUrl);
             $result[]  = [
-                'img_url'    => str_replace(
+                'imageUrl'     => str_replace(
                     env('MEDIA_SERVER_PATH'),
                     rtrim(env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com/'), '/') . '/',
                     $imageUrl
                 ),
-                'imgUrl'     => str_replace(
-                    env('MEDIA_SERVER_PATH'),
-                    rtrim(env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com/'), '/') . '/',
-                    $imageUrl
-                ),
-                'media_info' => $mediaInfo,
                 'mediaInfo'  => $mediaInfo,
             ];
         }

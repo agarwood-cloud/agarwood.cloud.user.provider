@@ -79,11 +79,11 @@ interface ChatSendToTencentDomain
      *
      * @param int         $officialAccountId
      * @param Application $app
-     * @param Request     $request
+     * @param array     $uploadedFiles
      *
      * @return array
      */
-    public function uploadImage(int $officialAccountId, Application $app, Request $request): array;
+    public function uploadImage(int $officialAccountId, Application $app, array $uploadedFiles): array;
 
     /**
      * 上传视频

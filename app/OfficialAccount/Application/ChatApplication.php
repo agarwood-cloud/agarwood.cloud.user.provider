@@ -76,19 +76,19 @@ interface ChatApplication
      * 上传图片
      *
      * @param int     $officialAccountId
-     * @param Request $request
+     * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadImageProvider(int $officialAccountId, Request $request): array;
+    public function uploadImageProvider(int $officialAccountId, array $uploadedFiles): array;
 
     /**
      * 上传视频
      *
-     * @param int $officialAccountId
-     * @param array  $getUploadedFiles
+     * @param int   $officialAccountId
+     * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadVideoProvider(int $officialAccountId, array $getUploadedFiles): array;
+    public function uploadVideoProvider(int $officialAccountId, array $uploadedFiles): array;
 }

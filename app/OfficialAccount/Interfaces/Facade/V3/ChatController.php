@@ -168,7 +168,7 @@ class ChatController extends AbstractBaseController
         return $this->wrapper()->setData(
             $this->application->uploadImageProvider(
                 (int)$this->parsingToken->getOfficialAccountId(),
-                $request
+                $request->getUploadedFiles()
             )
         )->response();
     }

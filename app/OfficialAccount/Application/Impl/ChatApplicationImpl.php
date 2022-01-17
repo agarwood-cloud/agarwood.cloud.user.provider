@@ -21,7 +21,6 @@ use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
 use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
-use Swoft\Http\Message\Request;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -124,7 +123,7 @@ class ChatApplicationImpl implements ChatApplication
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getMediaId(),
-                    $DTO->getUrl() ?? $DTO->getImageUrl(),
+                    $DTO->getImageUrl(),
                     'customer'
                 );
 
@@ -284,30 +283,30 @@ class ChatApplicationImpl implements ChatApplication
     }
 
     /**
-     * @param int     $officialAccountId
-     * @param Request $request
+     * @param int   $officialAccountId
+     * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadImageProvider(int $officialAccountId, Request $request): array
+    public function uploadImageProvider(int $officialAccountId, array $uploadedFiles): array
     {
         $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
 
-        return $this->chatSendToTencentDomain->uploadImage($officialAccountId, $app, $request);
+        return $this->chatSendToTencentDomain->uploadImage($officialAccountId, $app, $uploadedFiles);
     }
 
     /**
      * 上传视频
      *
      * @param int   $officialAccountId
-     * @param array $getUploadedFiles
+     * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadVideoProvider(int $officialAccountId, array $getUploadedFiles): array
+    public function uploadVideoProvider(int $officialAccountId, array $uploadedFiles): array
     {
         $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
 
-        return $this->chatSendToTencentDomain->uploadVideo($officialAccountId, $app, $getUploadedFiles);
+        return $this->chatSendToTencentDomain->uploadVideo($officialAccountId, $app, $uploadedFiles);
     }
 }
