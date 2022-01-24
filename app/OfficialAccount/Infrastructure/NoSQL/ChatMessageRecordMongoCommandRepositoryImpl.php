@@ -11,6 +11,7 @@
 namespace App\OfficialAccount\Infrastructure\NoSQL;
 
 use App\OfficialAccount\Domain\Aggregate\Repository\ChatMessageRecordMongoCommandRepository;
+use Carbon\Carbon;
 use MongoDB\InsertManyResult;
 use MongoDB\InsertOneResult;
 use MongoDB\UpdateResult;
@@ -42,16 +43,15 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      * Insert a message history
      *
      * @param string $openid     openid
-     * @param string $customerId customer service id
+     * @param int    $customerId customer service id
      * @param string $sender     send by user
      * @param string $msgType    message type
      * @param array  $data       message
-     * @param string $createdAt  create time
      * @param bool   $isRead     is read
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, string $createdAt, bool $isRead = false): InsertOneResult
+    public function insertOneMessage(string $openid, int $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult
     {
         return MongoClient::getInstance()->{$this->database}->{$this->collection}
             ->insertOne([
@@ -60,7 +60,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
                 'sender'      => $sender,
                 'msg_type'    => $msgType,
                 'data'        => $data,
-                'created_at'  => $createdAt,
+                'created_at'  => Carbon::now()->toDateTimeString(),
                 'is_read'     => $isRead,
             ]);
     }
@@ -69,7 +69,7 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      * Insert multiple message records
      *
      * @param array $document message records
-     * @param array $options mongodb insert options
+     * @param array $options  mongodb insert options
      *
      * @return \MongoDB\InsertManyResult
      */
@@ -115,5 +115,78 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
                 ['$set' => ['is_read' => $isRead]],
                 $options
             );
+    }
+
+    /**
+     * 获取粉丝的聊天记录
+     *
+     * @param string $openid
+     * @param string $startAt
+     * @param string $endAt
+     * @param int    $page
+     * @param int    $pageSize
+     *
+     * @return array
+     */
+    public function getMessageRecordByOpenid(string $openid, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array
+    {
+        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+            ->find(
+                [
+                    'openid'     => $openid,
+                    'created_at' => ['$gte' => $startAt, '$lte' => $endAt],
+                ],
+                [
+                    'sort'  => ['created_at' => -1],
+                    'skip'  => ($page - 1) * $pageSize,
+                    'limit' => $pageSize,
+                ]
+            )
+            ->toArray();
+    }
+
+    /**
+     * 获取最后一条聊天记录消息记录列表
+     *
+     * @param int    $customerId
+     * @param string $startAt
+     * @param string $endAt
+     * @param int    $page
+     * @param int    $pageSize
+     *
+     * @return array
+     */
+    public function getLastMessageChatList(int $customerId, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array
+    {
+        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+            ->aggregate([
+                [
+                    '$match' => [
+                        'customer_id' => $customerId,
+                    ],
+                ],
+                [
+                    '$group' => [
+                        '_id'         => '$openid',
+                        'openid'      => ['$last' => '$openid'],
+                        'customer_id' => ['$last' => '$customer_id'],
+                        'created_at'  => ['$last' => '$created_at'],
+                        'sender'      => ['$last' => '$sender'],
+                        'msg_type'    => ['$last' => '$msg_type'],
+                        'is_read'     => ['$last' => '$is_read'],
+                        'data'        => ['$last' => '$data'],
+                    ]
+                ],
+                [
+                    '$sort' => ['created_at' => -1],
+                ],
+                [
+                    '$skip' => ($page - 1) * $pageSize,
+                ],
+                [
+                    '$limit' => $pageSize,
+                ]
+            ])
+            ->toArray();
     }
 }

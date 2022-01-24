@@ -11,6 +11,8 @@
 namespace App\OfficialAccount\Interfaces\Facade\V3;
 
 use Agarwood\Core\Support\Impl\AbstractBaseController;
+use App\Customer\Interfaces\DTO\Customer\ChatDTO;
+use App\Customer\Interfaces\DTO\Customer\ChatRecordDTO;
 use App\OfficialAccount\Application\ChatApplication;
 use App\OfficialAccount\Interfaces\Assembler\ChatAssembler;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO;
@@ -188,6 +190,48 @@ class ChatController extends AbstractBaseController
                 (int)$this->parsingToken->getOfficialAccountId(),
                 $request->getUploadedFiles()
             )
+        )->response();
+    }
+
+    /**
+     * 获取聊天列表
+     *
+     * @RequestMapping(route="chat/chat-list", method={ RequestMethod::GET })
+     * @Validate(validator=ChatDTO::class, type=ValidateType::GET)
+     * @Middleware(OAuthJWTMiddleware::class)
+     *
+     * @param Request $request
+     *
+     * @return Response|null
+     */
+    public function actionChatList(Request $request): ?Response
+    {
+        $dto = ChatAssembler::attributesToChatDTO($request->getQueryParams());
+        return $this->wrapper()->setData(
+            $this->application->chatListProvider(
+                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getCustomerId(),
+                $dto
+            )
+        )->response();
+    }
+
+    /**
+     * 获取聊天记录
+     *
+     * @RequestMapping(route="chat/chat-record", method={ RequestMethod::GET })
+     * @Validate(validator=ChatRecordDTO::class, type=ValidateType::GET)
+     * @Middleware(OAuthJWTMiddleware::class)
+     *
+     * @param Request $request
+     *
+     * @return Response|null
+     */
+    public function actionChatRecord(Request $request): ?Response
+    {
+        $dto = ChatAssembler::attributesToChatRecordDTO($request->getQueryParams());
+        return $this->wrapper()->setData(
+            $this->application->chatRecordProvider((int)$this->parsingToken->getCustomerId(), $dto)
         )->response();
     }
 }

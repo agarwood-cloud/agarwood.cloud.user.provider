@@ -12,7 +12,7 @@ namespace App\Customer\Application\Impl;
 
 use App\Customer\Application\CustomerApplication;
 use App\Customer\Domain\CustomerDomain;
-use App\Customer\Infrastructure\Cache\RedisUser;
+use App\Customer\Infrastructure\Redis\RedisUser;
 use App\Customer\Interfaces\Bo\Customer\ChatRecordBo;
 use App\Customer\Interfaces\DTO\Customer\ChangeStatusDTO;
 use App\Customer\Interfaces\DTO\Customer\ChatDTO;
@@ -47,7 +47,7 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var \App\Customer\Infrastructure\Cache\RedisUser
+     * @var \App\Customer\Infrastructure\Redis\RedisUser
      */
     public RedisUser $user;
 

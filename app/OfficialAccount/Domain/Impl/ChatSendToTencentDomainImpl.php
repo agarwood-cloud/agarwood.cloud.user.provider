@@ -12,13 +12,11 @@ namespace App\OfficialAccount\Domain\Impl;
 
 use Agarwood\Core\Exception\BusinessException;
 use App\OfficialAccount\Domain\ChatSendToTencentDomain;
-use App\OfficialAccount\Infrastructure\NoSQL\MongoDB;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
-use Carbon\Carbon;
 use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
@@ -29,8 +27,6 @@ use EasyWeChat\Kernel\Messages\Text;
 use EasyWeChat\Kernel\Messages\Video;
 use EasyWeChat\Kernel\Messages\Voice;
 use EasyWeChat\OfficialAccount\Application;
-use MongoDB\InsertOneResult;
-use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Upload\UploadedFile;
 
 /**
@@ -38,13 +34,6 @@ use Swoft\Http\Message\Upload\UploadedFile;
  */
 class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
 {
-    /**
-     * @\Swoft\Bean\Annotation\Mapping\Inject()
-     *
-     * @var MongoDB
-     */
-    protected MongoDB $mongodb;
-
     /**
      * 回复文本消息
      *
@@ -201,7 +190,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      *
      * @param int         $officialAccountId
      * @param Application $app
-     * @param array     $uploadedFiles
+     * @param array       $uploadedFiles
      *
      * @return array
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
@@ -243,12 +232,12 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             //上传到微信服务器
             $mediaInfo = $app->media->uploadImage($imageUrl);
             $result[]  = [
-                'imageUrl'     => str_replace(
+                'imageUrl'  => str_replace(
                     env('MEDIA_SERVER_PATH'),
                     rtrim(env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com/'), '/') . '/',
                     $imageUrl
                 ),
-                'mediaInfo'  => $mediaInfo,
+                'mediaInfo' => $mediaInfo,
             ];
         }
         return $result;
@@ -304,29 +293,5 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             ];
         }
         return $result;
-    }
-
-    /**
-     * 保存消息到mongodb
-     *
-     * @param string $openid
-     * @param int    $customerId
-     * @param string $send
-     * @param string $data
-     * @param bool   $isRead
-     *
-     * @return InsertOneResult
-     */
-    public function saveToMongoDB(string $openid, int $customerId, string $send, string $data, bool $isRead = false): InsertOneResult
-    {
-        return $this->mongodb->save([
-            'openid'        => $openid,
-            'custom_uuid'   => $customerId,
-            'send'          => $send,
-            'data'          => $data,
-            'is_read'       => $isRead,
-            'created_time'  => Carbon::now()->toDateTimeString(),
-            'response_time' => 0,
-        ]);
     }
 }

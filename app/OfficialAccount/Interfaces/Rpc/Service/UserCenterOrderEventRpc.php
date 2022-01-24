@@ -12,7 +12,7 @@ namespace App\OfficialAccount\Interfaces\Rpc\Service;
 
 use Agarwood\Rpc\UserCenter\UserCenterOrderEventRpcInterface;
 use App\Customer\Domain\Aggregate\Repository\CustomerToDoRepository;
-use App\OfficialAccount\Infrastructure\NoSQL\MongoDB;
+// use App\OfficialAccount\Infrastructure\NoSQL\MongoDB;
 use Carbon\Carbon;
 use JsonException;
 
@@ -21,12 +21,12 @@ use JsonException;
  */
 class UserCenterOrderEventRpc implements UserCenterOrderEventRpcInterface
 {
-    /**
-     * @\Swoft\Bean\Annotation\Mapping\Inject()
-     *
-     * @var MongoDB
-     */
-    protected MongoDB $mongoDB;
+//    /**
+//     * @\Swoft\Bean\Annotation\Mapping\Inject()
+//     *
+//     * @var MongoDB
+//     */
+//    protected MongoDB $mongoDB;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()

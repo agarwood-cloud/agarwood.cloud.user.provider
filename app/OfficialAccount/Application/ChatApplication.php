@@ -10,12 +10,13 @@
 
 namespace App\OfficialAccount\Application;
 
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO;
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
-use Swoft\Http\Message\Request;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -45,8 +46,8 @@ interface ChatApplication
     /**
      * 视频消息
      *
-     * @param int $officialAccountId
-     * @param VideoDTO    $DTO
+     * @param int      $officialAccountId
+     * @param VideoDTO $DTO
      *
      * @return bool
      */
@@ -75,7 +76,7 @@ interface ChatApplication
     /**
      * 上传图片
      *
-     * @param int     $officialAccountId
+     * @param int   $officialAccountId
      * @param array $uploadedFiles
      *
      * @return array
@@ -91,4 +92,21 @@ interface ChatApplication
      * @return array
      */
     public function uploadVideoProvider(int $officialAccountId, array $uploadedFiles): array;
+
+    /**
+     * @param int                                              $officialAccountId
+     * @param int                                              $customerId
+     * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO $dto
+     *
+     * @return array
+     */
+    public function chatListProvider(int $officialAccountId, int $customerId, ChatDTO $dto): array;
+
+    /**
+     * @param int                                                 $customerId
+     * @param \App\Customer\Interfaces\DTO\Customer\ChatRecordDTO $dto
+     *
+     * @return array
+     */
+    public function chatRecordProvider(int $customerId, ChatRecordDTO $dto): array;
 }

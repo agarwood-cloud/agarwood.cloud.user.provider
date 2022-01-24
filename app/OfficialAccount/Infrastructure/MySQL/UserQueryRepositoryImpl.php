@@ -50,6 +50,36 @@ class UserQueryRepositoryImpl implements UserQueryRepository
     }
 
     /**
+     * find user info by openid.
+     *
+     * @param array $openid
+     *
+     * @return array
+     */
+    public function findAllByOpenid(array $openid): array
+    {
+        return DB::table(User::tableName())
+            ->select(
+                'id',
+                'oa_id as officialAccountId',
+                'openid',
+                'customer_id as customerId',
+                'customer',
+                'nickname',
+                'head_img_url as headImgUrl',
+                'subscribe_at as subscribeAt',
+                'unsubscribe_at as unsubscribeAt',
+                'subscribe',
+                'subscribe_scene as subscribeScene',
+                'created_at as createdAt',
+                'updated_at as updatedAt'
+            )
+            ->whereIn('openid', $openid)
+            ->get()
+            ->toArray();
+    }
+
+    /**
      * User List Query Builder
      *
      * @param int   $officialAccountId

@@ -8,7 +8,7 @@
  * @author   agarwood
  */
 
-namespace App\Customer\Infrastructure\Cache;
+namespace App\Customer\Infrastructure\Redis;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()

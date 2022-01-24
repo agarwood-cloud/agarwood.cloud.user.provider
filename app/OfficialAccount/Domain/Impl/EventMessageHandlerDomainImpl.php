@@ -163,9 +163,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $user['customerId'] ?? 0,
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content],
-                    Carbon::now()->toDateTimeString(),
-                    false
+                    ['content' => $content]
                 );
             }
         }, Message::EVENT);
@@ -214,9 +212,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $user['customerId'] ?? 0,
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content],
-                    Carbon::now()->toDateTimeString(),
-                    false
+                    ['content' => $content]
                 );
             }
         }, Message::EVENT);
@@ -279,8 +275,6 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content],
-                    Carbon::now()->toDateTimeString(),
-                    false
                 );
             }
         }, Message::EVENT);
@@ -344,9 +338,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $user['customerId'] ?? 0,
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content],
-                    Carbon::now()->toDateTimeString(),
-                    false
+                    ['content' => $content]
                 );
             }
         }, Message::EVENT);
@@ -412,9 +404,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $user['customerId'] ?? 0,
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content],
-                    Carbon::now()->toDateTimeString(),
-                    false
+                    ['content' => $content]
                 );
             }
         }, Message::EVENT);

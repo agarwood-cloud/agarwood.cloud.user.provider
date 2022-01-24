@@ -11,6 +11,8 @@
 namespace App\OfficialAccount\Application\Impl;
 
 use Agarwood\Core\Exception\BusinessException;
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO;
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO;
 use App\OfficialAccount\Application\ChatApplication;
 use App\OfficialAccount\Domain\ChatSendToTencentDomain;
 use App\OfficialAccount\Domain\MongoMessageRecordDomain;
@@ -21,6 +23,7 @@ use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
 use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
+use Carbon\Carbon;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -308,5 +311,36 @@ class ChatApplicationImpl implements ChatApplication
         $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
 
         return $this->chatSendToTencentDomain->uploadVideo($officialAccountId, $app, $uploadedFiles);
+    }
+
+    /**
+     * 最近的聊天列表
+     *
+     * @param int                                           $officialAccountId
+     * @param int                                           $customerId
+     * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO $dto
+     *
+     * @return array
+     */
+    public function chatListProvider(int $officialAccountId, int $customerId, ChatDTO $dto): array
+    {
+        return $this->mongoMessageRecordDomain->getLastMessageChatList(
+            $customerId,
+            $dto->getStartAt() ?: Carbon::now()->subMonths(3)->toDateTimeString(),
+            $dto->getEndAt() ?: Carbon::now()->toDateTimeString(),
+            $dto->getPage(),
+            $dto->getPerPage()
+        );
+    }
+
+    /**
+     * @param int                                                    $customerId
+     * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO $dto
+     *
+     * @return array
+     */
+    public function chatRecordProvider(int $customerId, ChatRecordDTO $dto): array
+    {
+        return [];
     }
 }

@@ -42,9 +42,9 @@ class CustomerController extends AbstractBaseController
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var CustomerApplication
+     * @var \App\Customer\Application\CustomerApplication
      */
-    protected CustomerApplication $application;
+    public CustomerApplication $application;
 
     /**
      * 生成对应客服的专属二维码，扫码后可直接分配给该客服
@@ -97,7 +97,11 @@ class CustomerController extends AbstractBaseController
     {
         $dto = CustomerAssembler::attributesToChatDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->chatProvider((int)$this->parsingToken->getOfficialAccountId(), (int)$this->parsingToken->getCustomerId(), $dto)
+            $this->application->chatProvider(
+                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getCustomerId(),
+                $dto
+            )
         )->response();
     }
 

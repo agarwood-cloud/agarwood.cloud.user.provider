@@ -8,10 +8,10 @@
  * @author   agarwood
  */
 
-namespace App\Customer\Infrastructure\Cache\Impl;
+namespace App\Customer\Infrastructure\Redis\Impl;
 
-use App\Customer\Infrastructure\Cache\Enum\RedisUserCacheEnum;
-use App\Customer\Infrastructure\Cache\RedisUser;
+use App\Customer\Infrastructure\Redis\Enum\RedisUserCacheEnum;
+use App\Customer\Infrastructure\Redis\RedisUser;
 use Swoft\Redis\Redis;
 
 /**

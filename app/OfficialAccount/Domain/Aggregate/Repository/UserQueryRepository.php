@@ -23,6 +23,13 @@ interface UserQueryRepository
     public function findByOpenid(string $openid): array;
 
     /**
+     * @param array $openid
+     *
+     * @return array
+     */
+    public function findAllByOpenid(array $openid): array;
+
+    /**
      * User List Query Builder
      *
      * @param int   $officialAccountId

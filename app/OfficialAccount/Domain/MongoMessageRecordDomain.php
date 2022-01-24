@@ -81,12 +81,11 @@ interface MongoMessageRecordDomain
      * @param string $sender     发送者
      * @param string $msgType    消息类型
      * @param array  $data       消息内容
-     * @param string $createdAt  创建时间
      * @param bool   $isRead     是否已读
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, string $createdAt, bool $isRead = false): InsertOneResult;
+    public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult;
 
     /**
      * 插入多条聊天记录
@@ -119,4 +118,30 @@ interface MongoMessageRecordDomain
      * @return \MongoDB\UpdateResult
      */
     public function updateManyToReadByOpenid(string $openid, bool $isRead = true, array $options = []): UpdateResult;
+
+    /**
+     * 获取粉丝的聊天记录
+     *
+     * @param string $openid
+     * @param string $startAt
+     * @param string $endAt
+     * @param int    $page
+     * @param int    $pageSize
+     *
+     * @return array
+     */
+    public function getMessageRecordByOpenid(string $openid, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array;
+
+    /**
+     * 获取最后一条聊天记录消息记录列表
+     *
+     * @param int    $customerId
+     * @param string $startAt
+     * @param string $endAt
+     * @param int    $page
+     * @param int    $pageSize
+     *
+     * @return array
+     */
+    public function getLastMessageChatList(int $customerId, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array;
 }

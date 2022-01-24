@@ -95,17 +95,4 @@ interface ChatSendToTencentDomain
      * @return array
      */
     public function uploadVideo(int $officialAccountId, Application $app, array $uploadedFiles): array;
-
-    /**
-     * 保存消息到mongodb
-     *
-     * @param string $openid
-     * @param int $customerId
-     * @param string $send
-     * @param string $data
-     * @param bool   $isRead
-     *
-     * @return InsertOneResult
-     */
-    public function saveToMongoDB(string $openid, int $customerId, string $send, string $data, bool $isRead = false): InsertOneResult;
 }

@@ -75,8 +75,15 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     public function officialAccountApplication(int $officialAccountsId): Application
     {
         // todo 优化: 可以使用缓存
-        $config = $this->officialAccountsRpc->officialAccountsConfig($officialAccountsId);
+        // $config = $this->officialAccountsRpc->officialAccountsConfig($officialAccountsId);
 
-        return $this->weChat->officialAccount($config);
+        $config = [
+            'app_id'  => 'wx3d4726296a65e6aa',                    // AppID
+            'secret'  => '2f1358264dd78d1f603a123e5ec3c653',                   // AppSecret
+            'token'   => '6bc8a1a64e71d',                    // Token
+            'aes_key' => 'CE3oQoWW8BCbfotuhiixmXgLwQ5ypZ2hQ6s1mNYZ0Xc',
+        ];
+
+        return $this->weChat->officialAccountConsole($config);
     }
 }

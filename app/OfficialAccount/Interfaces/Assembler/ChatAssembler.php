@@ -10,6 +10,8 @@
 
 namespace App\OfficialAccount\Interfaces\Assembler;
 
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO;
+use App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
@@ -77,5 +79,25 @@ class ChatAssembler
     public static function attributesToNewsItemMessageDTO(array $attributes): NewsItemDTO
     {
         return ObjectHelper::init(new NewsItemDTO(), $attributes);
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return ChatDTO
+     */
+    public static function attributesToChatDTO(array $attributes): ChatDTO
+    {
+        return ObjectHelper::init(new ChatDTO(), $attributes);
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return ChatRecordDTO
+     */
+    public static function attributesToChatRecordDTO(array $attributes): ChatRecordDTO
+    {
+        return ObjectHelper::init(new ChatRecordDTO(), $attributes);
     }
 }
