@@ -81,7 +81,7 @@ class NewsItemDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public string $url = '';
+    public string $newItemUrl = '';
 
     /**
      * 标题
@@ -112,7 +112,7 @@ class NewsItemDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public string $image = '';
+    public string $imageUrl = '';
 
     /**
      * 发送者
@@ -208,17 +208,17 @@ class NewsItemDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getNewItemUrl(): string
     {
-        return $this->url;
+        return $this->newItemUrl;
     }
 
     /**
-     * @param string $url
+     * @param string $newItemUrl
      */
-    public function setUrl(string $url): void
+    public function setNewItemUrl(string $newItemUrl): void
     {
-        $this->url = $url;
+        $this->newItemUrl = $newItemUrl;
     }
 
     /**
@@ -256,17 +256,17 @@ class NewsItemDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getImage(): string
+    public function getImageUrl(): string
     {
-        return $this->image;
+        return $this->imageUrl;
     }
 
     /**
-     * @param string $image
+     * @param string $imageUrl
      */
-    public function setImage(string $image): void
+    public function setImageUrl(string $imageUrl): void
     {
-        $this->image = $image;
+        $this->imageUrl = $imageUrl;
     }
 
     /**

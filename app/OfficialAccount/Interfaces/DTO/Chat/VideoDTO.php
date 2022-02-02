@@ -93,7 +93,7 @@ class VideoDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public string $url = '';
+    public string $videoUrl = '';
 
     /**
      * 视频标题
@@ -238,17 +238,17 @@ class VideoDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getVideoUrl(): string
     {
-        return $this->url;
+        return $this->videoUrl;
     }
 
     /**
-     * @param string $url
+     * @param string $videoUrl
      */
-    public function setUrl(string $url): void
+    public function setVideoUrl(string $videoUrl): void
     {
-        $this->url = $url;
+        $this->videoUrl = $videoUrl;
     }
 
     /**

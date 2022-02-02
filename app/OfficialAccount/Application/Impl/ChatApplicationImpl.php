@@ -174,7 +174,7 @@ class ChatApplicationImpl implements ChatApplication
                     $DTO->getMediaId(),
                     $DTO->getDescription(),
                     $DTO->getThumbMediaId(),
-                    $DTO->getUrl(),
+                    $DTO->getVideoUrl(),
                     'customer'
                 );
 
@@ -218,7 +218,7 @@ class ChatApplicationImpl implements ChatApplication
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getMediaId(),
-                    $DTO->getUrl(),
+                    $DTO->getVoiceUrl(),
                     'customer'
                 );
 
@@ -263,8 +263,8 @@ class ChatApplicationImpl implements ChatApplication
                     $DTO->getToUserName(),
                     $DTO->getTitle(),
                     $DTO->getDescription(),
-                    $DTO->getUrl(),
-                    $DTO->getImage(),
+                    $DTO->getNewItemUrl(),
+                    $DTO->getImageUrl(),
                     'customer'
                 );
 

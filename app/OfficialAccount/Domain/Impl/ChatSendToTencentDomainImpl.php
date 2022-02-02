@@ -166,8 +166,8 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             new NewsItem([
                 'title'       => $DTO->getTitle(),
                 'description' => $DTO->getDescription(),
-                'url'         => $DTO->getUrl(),
-                'image'       => $DTO->getImage(),
+                'url'         => $DTO->getNewItemUrl(),
+                'image'       => $DTO->getImageUrl(),
             ]),
         ];
         $message  = new News($items);

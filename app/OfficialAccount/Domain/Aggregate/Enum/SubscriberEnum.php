@@ -21,4 +21,9 @@ class SubscriberEnum
      * Handle messages sent by Tencent
      */
     public const REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL = 'chat.wechat.from.tencent';
+
+    /**
+     * Send message to customer
+     */
+    public const REDIS_SUBSCRIBER_CUSTOMER_CHAT_CHANNEL = 'chat.wechat.from.customer';
 }

@@ -93,7 +93,7 @@ class VoiceDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public string $url = '';
+    public string $voiceUrl = '';
 
     /**
      * 发送者
@@ -205,17 +205,17 @@ class VoiceDTO extends AbstractBaseDTO
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getVoiceUrl(): string
     {
-        return $this->url;
+        return $this->voiceUrl;
     }
 
     /**
-     * @param string $url
+     * @param string $voiceUrl
      */
-    public function setUrl(string $url): void
+    public function setVoiceUrl(string $voiceUrl): void
     {
-        $this->url = $url;
+        $this->voiceUrl = $voiceUrl;
     }
 
     /**
