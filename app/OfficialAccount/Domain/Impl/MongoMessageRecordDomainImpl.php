@@ -108,7 +108,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult
     {
-        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, $customerId, $sender, $msgType, $data, $isRead);
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, (int)$customerId, $sender, $msgType, $data, $isRead);
     }
 
     /**
