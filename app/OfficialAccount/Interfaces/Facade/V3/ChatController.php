@@ -219,19 +219,20 @@ class ChatController extends AbstractBaseController
     /**
      * 获取聊天记录
      *
-     * @RequestMapping(route="chat/chat-record", method={ RequestMethod::GET })
+     * @RequestMapping(route="chat/chat-record/{openid}", method={ RequestMethod::GET })
      * @Validate(validator=ChatRecordDTO::class, type=ValidateType::GET)
      * @Middleware(OAuthJWTMiddleware::class)
      *
+     * @param string  $openid
      * @param Request $request
      *
      * @return Response|null
      */
-    public function actionChatRecord(Request $request): ?Response
+    public function actionChatRecord(string $openid, Request $request): ?Response
     {
         $dto = ChatAssembler::attributesToChatRecordDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->chatRecordProvider((int)$this->parsingToken->getCustomerId(), $dto)
+            $this->application->chatRecordProvider($openid, (int)$this->parsingToken->getCustomerId(), $dto)
         )->response();
     }
 }

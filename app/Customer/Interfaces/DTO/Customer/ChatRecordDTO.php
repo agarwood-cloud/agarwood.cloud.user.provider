@@ -11,11 +11,9 @@
 namespace App\Customer\Interfaces\DTO\Customer;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\Date;
 use Swoft\Validator\Annotation\Mapping\IsInt;
 use Swoft\Validator\Annotation\Mapping\IsString;
 use Swoft\Validator\Annotation\Mapping\Min;
-use Swoft\Validator\Annotation\Mapping\NotEmpty;
 use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
@@ -47,17 +45,6 @@ class ChatRecordDTO extends AbstractBaseDTO
     /**
      *
      * @IsString()
-     * @NotEmpty()
-     *
-     * @var string
-     */
-    public string $openid = '';
-
-    /**
-     *
-     * @IsString()
-     * @NotEmpty()
-     * @Date()
      *
      * @var string
      */
@@ -66,31 +53,10 @@ class ChatRecordDTO extends AbstractBaseDTO
     /**
      *
      * @IsString()
-     * @NotEmpty()
-     * @Date()
      *
      * @var string
      */
     public string $endAt = '';
-
-    /**
-     * @return string
-     */
-    public function getOpenid(): string
-    {
-        return $this->openid;
-    }
-
-    /**
-     * @param string $openid
-     *
-     * @return ChatRecordDTO
-     */
-    public function setOpenid(string $openid): ChatRecordDTO
-    {
-        $this->openid = $openid;
-        return $this;
-    }
 
     /**
      * @return string

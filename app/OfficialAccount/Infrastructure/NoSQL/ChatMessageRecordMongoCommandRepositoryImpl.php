@@ -53,7 +53,10 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function insertOneMessage(string $openid, int $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
+            // ->{$this->database}->{$this->collection}
             ->insertOne([
                 'openid'      => $openid,
                 'customer_id' => $customerId,
@@ -75,7 +78,10 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function insertManyMessage(array $document, array $options = []): InsertManyResult
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
+            // ->{$this->database}->{$this->collection}
             ->insertMany($document, $options);
     }
 
@@ -90,7 +96,10 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function updateOneMessageToReadByOpenid(string $openid, bool $isRead = true, array $options = []): UpdateResult
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
+            // ->{$this->database}->{$this->collection}
             ->updateOne(
                 ['openid' => $openid],
                 ['$set' => ['is_read' => $isRead]],
@@ -109,7 +118,10 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function updateManyToReadByOpenid(string $openid, bool $isRead = true, array $options = []): UpdateResult
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
+            // ->{$this->database}->{$this->collection}
             ->updateMany(
                 ['openid' => $openid],
                 ['$set' => ['is_read' => $isRead]],
@@ -130,19 +142,30 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function getMessageRecordByOpenid(string $openid, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
-            ->find(
-                [
-                    'openid'     => $openid,
-                    'created_at' => ['$gte' => $startAt, '$lte' => $endAt],
-                ],
-                [
-                    'sort'  => ['created_at' => -1],
-                    'skip'  => ($page - 1) * $pageSize,
-                    'limit' => $pageSize,
-                ]
-            )
-            ->toArray();
+        $filter = [
+            'openid'     => $openid,
+            'created_at' => ['$gte' => $startAt, '$lte' => $endAt],
+        ];
+
+        $options = [
+            'sort'  => ['created_at' => -1],
+            'skip'  => ($page - 1) * $pageSize,
+            'limit' => $pageSize,
+            'count' => true,
+        ];
+        return [
+            // 聊天记录
+            'list'  => MongoClient::getInstance()
+                ->selectDatabase($this->database)
+                ->selectCollection($this->collection)
+                ->find($filter, $options)
+                ->toArray(),
+            // 总数
+            'total' => MongoClient::getInstance()
+                ->selectDatabase($this->database)
+                ->selectCollection($this->collection)
+                ->countDocuments($filter),
+        ];
     }
 
     /**

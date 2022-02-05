@@ -90,5 +90,4 @@ interface ChatMessageRecordMongoCommandRepository
      * @return array
      */
     public function getLastMessageChatList(int $customerId, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array;
-
 }

@@ -16,8 +16,6 @@ use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
 use EasyWeChat\OfficialAccount\Application;
-use MongoDB\InsertOneResult;
-use Swoft\Http\Message\Request;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()

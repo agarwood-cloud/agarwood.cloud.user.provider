@@ -119,10 +119,9 @@ interface ChatSendToCustomerDomain
     /**
      * 将错误的异常消息全部转发给node
      *
-     * @param string $toUserName   客服的uuid
-     * @param string $fromUserId   粉丝的openid
-     * @param string $fromUserName 粉丝的昵称
-     * @param string $content      转发的消息
+     * @param string $toUserName 客服的uuid
+     * @param string $fromUserId 粉丝的openid
+     * @param string $content    转发的消息
      * @param int    $errorCode
      *
      * @return void
@@ -130,7 +129,6 @@ interface ChatSendToCustomerDomain
     public function errorMessage(
         string $toUserName,
         string $fromUserId,
-        string $fromUserName,
         string $content,
         int    $errorCode
     ): void;

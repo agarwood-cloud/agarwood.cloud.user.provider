@@ -334,13 +334,20 @@ class ChatApplicationImpl implements ChatApplication
     }
 
     /**
+     * @param string                                                 $openid
      * @param int                                                    $customerId
      * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO $dto
      *
      * @return array
      */
-    public function chatRecordProvider(int $customerId, ChatRecordDTO $dto): array
+    public function chatRecordProvider(string $openid, int $customerId, ChatRecordDTO $dto): array
     {
-        return [];
+        return $this->mongoMessageRecordDomain->getMessageRecordByOpenid(
+            $openid,
+            $dto->getStartAt() ?: Carbon::now()->subMonths(3)->toDateTimeString(),
+            $dto->getEndAt() ?: Carbon::now()->toDateTimeString(),
+            $dto->getPage(),
+            $dto->getPerPage()
+        );
     }
 }

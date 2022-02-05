@@ -25,6 +25,7 @@ use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO as ChatTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO as ChatVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO as ChatVoiceDTO;
 use Exception;
+use JsonException;
 use MongoDB\InsertManyResult;
 use MongoDB\InsertOneResult;
 use MongoDB\UpdateResult;
@@ -173,13 +174,34 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      * @param int    $pageSize
      *
      * @return array
+     * @throws JsonException
      */
     public function getMessageRecordByOpenid(string $openid, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array
     {
         $message = $this->chatMessageRecordMongoCommandRepository->getMessageRecordByOpenid($openid, $startAt, $endAt, $page, $pageSize);
 
+        // 如果不存在聊天记录，则返回空数组
+        if (!$message['list']) {
+            return ['list' => [], 'total' => 0];
+        }
+        // 转换数组，删除特殊数组的对象
+        $message['list'] = json_decode(json_encode($message['list'], JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+
+        // 转驼峰
+        foreach ($message['list'] as $key => $value) {
+            if ($value['_id']) {
+                $message['list'][$key]['id'] = $value['_id']['$oid'];
+                unset($message['list'][$key]['_id']);
+            }
+        }
+        $message['list'] = ArrayHelper::convertToHump($message['list']);
+
         // 用户信息
-        $message['user'] = $this->userQueryRepository->findByOpenid($openid);
+        // $message['user'] = $this->userQueryRepository->findByOpenid($openid);
+
+        // 分页信息
+        $message['perPage'] = $pageSize;
+        $message['page']    = $page;
 
         return $message;
     }

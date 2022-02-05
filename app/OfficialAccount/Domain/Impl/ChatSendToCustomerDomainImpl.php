@@ -31,7 +31,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @param string $content    转发的消息
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function textMessage(string $toUserName, string $fromUserId, string $content): void
     {
@@ -46,8 +46,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
             'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::TEXT_MESSAGE,
         ];
-
-        var_dump('bady', $body);
 
         // send to customer
         Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_CUSTOMER_CHAT_CHANNEL, json_encode($body, JSON_THROW_ON_ERROR));
@@ -95,7 +93,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @param string $description
      * @param string $thumbMediaId
      * @param string $videoUrl
-     * @param string $sender
      *
      * @return void
      * @throws JsonException
@@ -139,7 +136,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @param string $voiceUrl
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function voiceMessage(string $toUserName, string $fromUserId, string $fromUserName, string $mediaId, string $voiceUrl): void
     {
@@ -200,18 +197,16 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      *
      * @param string $toUserName
      * @param string $fromUserId
-     * @param string $fromUserName
      * @param string $content
      * @param int    $errorCode
      *
      * @throws JsonException
      */
-    public function errorMessage(string $toUserName, string $fromUserId, string $fromUserName, string $content, int $errorCode): void
+    public function errorMessage(string $toUserName, string $fromUserId, string $content, int $errorCode): void
     {
         $body = [
             'toUserName'   => $toUserName,
             'fromUserId'   => $fromUserId,
-            'fromUserName' => $fromUserName,
             'content'      => $content,
             'sender'       => 'customer',
             'errorCode'    => $errorCode,

@@ -103,10 +103,11 @@ interface ChatApplication
     public function chatListProvider(int $officialAccountId, int $customerId, ChatDTO $dto): array;
 
     /**
-     * @param int                                                 $customerId
-     * @param \App\Customer\Interfaces\DTO\Customer\ChatRecordDTO $dto
+     * @param string                                                 $openid
+     * @param int                                                    $customerId
+     * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO $dto
      *
      * @return array
      */
-    public function chatRecordProvider(int $customerId, ChatRecordDTO $dto): array;
+    public function chatRecordProvider(string $openid, int $customerId, ChatRecordDTO $dto): array;
 }
