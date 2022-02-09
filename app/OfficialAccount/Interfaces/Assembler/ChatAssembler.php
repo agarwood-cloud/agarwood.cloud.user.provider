@@ -10,6 +10,7 @@
 
 namespace App\OfficialAccount\Interfaces\Assembler;
 
+use Agarwood\Core\Util\ArrayHelper;
 use App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
@@ -98,6 +99,6 @@ class ChatAssembler
      */
     public static function attributesToChatRecordDTO(array $attributes): ChatRecordDTO
     {
-        return ObjectHelper::init(new ChatRecordDTO(), $attributes);
+        return ObjectHelper::init(new ChatRecordDTO(), ArrayHelper::numericToInt($attributes, ['perPage', 'page']));
     }
 }

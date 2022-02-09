@@ -10,7 +10,7 @@
     "domain-driven-design"
   ],
   "description": "Each organization has its own private domain traffic",
-  "license": "Apache-2.0",
+  "license": "GPL-3.0",
   "require": {
     "php": ">=8.0",
     "ext-pdo": "*",

@@ -53,7 +53,10 @@ class ParsingTokenImpl implements ParsingToken
      */
     public function getUserId(): int|string|null
     {
-        return $this->oauthCenterJWTRpc->getUserId($this->getBearer());
+        if ($this->getBearer()) {
+            return $this->oauthCenterJWTRpc->getUserId($this->getBearer());
+        }
+        return null;
     }
 
     /**
@@ -63,7 +66,10 @@ class ParsingTokenImpl implements ParsingToken
      */
     public function getCustomer(): string|null
     {
-        return $this->oauthCenterJWTRpc->getCustomer($this->getBearer());
+        if ($this->getBearer()) {
+            return $this->oauthCenterJWTRpc->getCustomer($this->getBearer());
+        }
+        return null;
     }
 
     /**
@@ -71,7 +77,10 @@ class ParsingTokenImpl implements ParsingToken
      */
     public function getCustomerId(): int|null
     {
-        return $this->oauthCenterJWTRpc->getCustomerId($this->getBearer());
+        if ($this->getBearer()) {
+            return $this->oauthCenterJWTRpc->getCustomerId($this->getBearer());
+        }
+        return null;
     }
 
     /**
@@ -79,7 +88,10 @@ class ParsingTokenImpl implements ParsingToken
      */
     public function getNickname(): string|null
     {
-        return $this->oauthCenterJWTRpc->getNickname($this->getBearer());
+        if ($this->getBearer()) {
+            return $this->oauthCenterJWTRpc->getNickname($this->getBearer());
+        }
+        return null;
     }
 
     /**
@@ -87,7 +99,10 @@ class ParsingTokenImpl implements ParsingToken
      */
     public function getOfficialAccountId(): int|null
     {
-        return $this->oauthCenterJWTRpc->getOfficialAccountId($this->getBearer());
+        if ($this->getBearer()) {
+            return $this->oauthCenterJWTRpc->getOfficialAccountId($this->getBearer());
+        }
+        return null;
     }
 
     /**
