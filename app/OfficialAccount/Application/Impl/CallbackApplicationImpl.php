@@ -85,14 +85,14 @@ class CallbackApplicationImpl implements CallbackApplication
     /**
      * 微信事件回调
      *
-     * @param int|string $tencentId
+     * @param int|string $platformId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public function officialAccountProvider(int|string $tencentId): Response
+    public function officialAccountProvider(int|string $platformId): Response
     {
         /*
         |-----------------------------------------------------------------
@@ -102,33 +102,33 @@ class CallbackApplicationImpl implements CallbackApplication
         |-----------------------------------------------------------------
         */
 
-        $app = $this->officialAccountsRpc->officialAccountApplication((int)$tencentId);
+        $app = $this->officialAccountsRpc->officialAccountApplication((int)$platformId);
 
         // 关注欢迎语 && 自动回复
-        $this->welcomeSubscribeDomain->welcomeSubscribe((int)$tencentId, $app);
-        $this->welcomeSubscribeDomain->autoReply((int)$tencentId, $app);
+        $this->welcomeSubscribeDomain->welcomeSubscribe((int)$platformId, $app);
+        $this->welcomeSubscribeDomain->autoReply((int)$platformId, $app);
 
         // 事件处理器
-        $this->eventMessageHandlerDomain->eventSubscribe((int)$tencentId, $app);
-        $this->eventMessageHandlerDomain->eventUnsubscribe((int)$tencentId, $app);
-        $this->eventMessageHandlerDomain->eventClick((int)$tencentId, $app);
-        $this->eventMessageHandlerDomain->eventScan((int)$tencentId, $app);
-        $this->eventMessageHandlerDomain->eventView((int)$tencentId, $app);
+        $this->eventMessageHandlerDomain->eventSubscribe((int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventUnsubscribe((int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventClick((int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventScan((int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventView((int)$platformId, $app);
 
         // 默认事件处理器, 缓存粉丝信息
-        // $this->defaultMessageHandlerDomain->defaultMessage((int)$tencentId, $app);
+        // $this->defaultMessageHandlerDomain->defaultMessage((int)$platformId, $app);
 
         // 文本消息
-        $this->textMessageHandlerDomain->textMessage((int)$tencentId, $app);
+        $this->textMessageHandlerDomain->textMessage((int)$platformId, $app);
 
         // 音频消息
-        $this->voiceMessageHandlerDomain->voiceMessage((int)$tencentId, $app);
+        $this->voiceMessageHandlerDomain->voiceMessage((int)$platformId, $app);
 
         // 视频消息
-        $this->videoMessageHandlerDomain->videoMessage((int)$tencentId, $app);
+        $this->videoMessageHandlerDomain->videoMessage((int)$platformId, $app);
 
         // 图片消息
-        $this->imageMessageHandlerDomain->imageMessage((int)$tencentId, $app);
+        $this->imageMessageHandlerDomain->imageMessage((int)$platformId, $app);
 
         // todo 文件消息
 

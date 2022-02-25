@@ -61,17 +61,17 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $tencentId, IndexDTO $DTO): array
+    public function indexProvider(int $platformId, IndexDTO $DTO): array
     {
-        return $this->customerDomain->index($tencentId, $DTO->toArrayLine());
+        return $this->customerDomain->index($platformId, $DTO->toArrayLine());
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $tencentId, CreateDTO $DTO): Collection
+    public function createProvider(int $platformId, CreateDTO $DTO): Collection
     {
-        $this->customerDomain->create($tencentId, $DTO->toArrayLine());
+        $this->customerDomain->create($platformId, $DTO->toArrayLine());
 
         //这里可以设置更多的返回值
         return Collection::make($DTO);
@@ -105,9 +105,9 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @inheritDoc
      */
-    public function scanSubscribeProvider(int $tencentId, int $customerId): array
+    public function scanSubscribeProvider(int $platformId, int $customerId): array
     {
-        return $this->customerDomain->scanSubscribe($tencentId, $customerId);
+        return $this->customerDomain->scanSubscribe($platformId, $customerId);
     }
 
     /**
@@ -120,20 +120,20 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOfflineProvider(int $tencentId, string $ids): array
+    public function obtainOfflineProvider(int $platformId, string $ids): array
     {
-        return $this->customerDomain->obtainOffline($tencentId, $ids);
+        return $this->customerDomain->obtainOffline($platformId, $ids);
     }
 
     /**
      * Chat Record List
      *
-     * @param int     $tencentId
+     * @param int     $platformId
      * @param int     $customerId
      * @param ChatDTO $DTO
      *
@@ -141,7 +141,7 @@ class CustomerApplicationImpl implements CustomerApplication
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function chatProvider(int $tencentId, int $customerId, ChatDTO $DTO): array
+    public function chatProvider(int $platformId, int $customerId, ChatDTO $DTO): array
     {
         $client = MongoClient::getInstance();
 
@@ -153,7 +153,7 @@ class CustomerApplicationImpl implements CustomerApplication
 
         // 获取腾讯接口的openid信息
         if (count($userInfo) !== count($openid)) {
-            $app   = $this->officialAccountsRpc->officialAccountApplication($tencentId);
+            $app   = $this->officialAccountsRpc->officialAccountApplication($platformId);
             $users = $app->user->select($openid);
 
             if (is_array($users) && isset($users['user_info_list'])) {
@@ -203,25 +203,25 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * offline
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function obtainFansOfflineProvider(int $tencentId): array
+    public function obtainFansOfflineProvider(int $platformId): array
     {
-        return $this->customerDomain->obtainFansOffline($tencentId);
+        return $this->customerDomain->obtainFansOffline($platformId);
     }
 
     /**
      * online status
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $id
      *
      * @return array
      */
-    public function obtainStatusProvider(int $tencentId, int $id): array
+    public function obtainStatusProvider(int $platformId, int $id): array
     {
-        return ['status' => $this->customerDomain->obtainStatus($tencentId, $id)];
+        return ['status' => $this->customerDomain->obtainStatus($platformId, $id)];
     }
 }

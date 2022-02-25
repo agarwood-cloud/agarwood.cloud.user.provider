@@ -20,50 +20,50 @@ interface EventMessageHandlerDomain
     /**
      * 关注事件领域服务
      *
-     * @param int         $tencentId
+     * @param int         $platformId
      * @param Application $application
      *
      * @return void
      */
-    public function eventSubscribe(int $tencentId, Application $application): void;
+    public function eventSubscribe(int $platformId, Application $application): void;
 
     /**
      * 取消关注事件领域服务
      *
-     * @param int         $tencentId
+     * @param int         $platformId
      * @param Application $application
      *
      * @return void
      */
-    public function eventUnsubscribe(int $tencentId, Application $application): void;
+    public function eventUnsubscribe(int $platformId, Application $application): void;
 
     /**
      * 关注扫码事件领域服务
      *
-     * @param int         $tencentId
+     * @param int         $platformId
      * @param Application $application
      *
      * @return void
      */
-    public function eventScan(int $tencentId, Application $application): void;
+    public function eventScan(int $platformId, Application $application): void;
 
     /**
      * 点击菜单拉取消息时的事件推送
      *
-     * @param int         $tencentId
+     * @param int         $platformId
      * @param Application $application
      *
      * @return void
      */
-    public function eventClick(int $tencentId, Application $application): void;
+    public function eventClick(int $platformId, Application $application): void;
 
     /**
      * 点击菜单跳转链接时的事件推送
      *
-     * @param int         $tencentId
+     * @param int         $platformId
      * @param Application $application
      *
      * @return void
      */
-    public function eventView(int $tencentId, Application $application): void;
+    public function eventView(int $platformId, Application $application): void;
 }

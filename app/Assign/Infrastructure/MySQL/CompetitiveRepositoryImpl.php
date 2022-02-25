@@ -24,12 +24,12 @@ class CompetitiveRepositoryImpl implements CompetitiveRepository
     /**
      * 管理员管理列表数据
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array
+    public function index(int $platformId, array $filter): array
     {
         return DB::table(Customer::tableName() . ' as c')
             ->select(
@@ -50,7 +50,7 @@ class CompetitiveRepositoryImpl implements CompetitiveRepository
                 'co.profit_rate as profitRate'
             )
             ->leftJoin(CustomerCompetitive::tableName() . ' as co', 'c.id', '=', 'co.customer_id')
-            ->where('c.service_id', '=', $tencentId)
+            ->where('c.service_id', '=', $platformId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })

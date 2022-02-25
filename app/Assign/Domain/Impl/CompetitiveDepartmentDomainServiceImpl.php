@@ -28,14 +28,14 @@ class CompetitiveDepartmentDomainServiceImpl implements CompetitiveDepartmentDom
     protected DepartmentRepository $departmentRepository;
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      * @param array  $filter
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array
+    public function index(int $platformId, array $filter): array
     {
-        return $this->departmentRepository->index($tencentId, $filter);
+        return $this->departmentRepository->index($platformId, $filter);
     }
 
     /**

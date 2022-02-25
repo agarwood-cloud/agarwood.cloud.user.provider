@@ -113,7 +113,7 @@ class CustomerToDo extends Model
      *
      * @var string|null
      */
-    private $tencentId;
+    private $platformId;
 
     /**
      * 状态[todo:待办,doing:正在处理,finish:处理完成]
@@ -251,13 +251,13 @@ class CustomerToDo extends Model
     }
 
     /**
-     * @param string|null $tencentId
+     * @param string|null $platformId
      *
      * @return self
      */
-    public function setServiceUuid(?int $tencentId): self
+    public function setServiceUuid(?int $platformId): self
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
 
         return $this;
     }

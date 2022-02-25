@@ -26,22 +26,22 @@ interface CustomerApplication
     /**
      * Customer Service List Data
      *
-     * @param int                                            $tencentId
+     * @param int                                            $platformId
      * @param \App\Customer\Interfaces\DTO\Customer\IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $tencentId, IndexDTO $DTO): array;
+    public function indexProvider(int $platformId, IndexDTO $DTO): array;
 
     /**
      * Create Customer Service Account
      *
-     * @param int                                             $tencentId
+     * @param int                                             $platformId
      * @param \App\Customer\Interfaces\DTO\Customer\CreateDTO $DTO
      *
      * @return \Swoft\Stdlib\Collection
      */
-    public function createProvider(int $tencentId, CreateDTO $DTO): Collection;
+    public function createProvider(int $platformId, CreateDTO $DTO): Collection;
 
     /**
      * Delete Customer Service Account
@@ -74,12 +74,12 @@ interface CustomerApplication
     /**
      *  Generate QR code
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribeProvider(int $tencentId, int $customerId): array;
+    public function scanSubscribeProvider(int $platformId, int $customerId): array;
 
     /**
      * Change Status
@@ -94,23 +94,23 @@ interface CustomerApplication
     /**
      * Clear queue
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOfflineProvider(int $tencentId, string $ids): array;
+    public function obtainOfflineProvider(int $platformId, string $ids): array;
 
     /**
      * Chat Record List
      *
-     * @param int     $tencentId
+     * @param int     $platformId
      * @param int     $customerId
      * @param ChatDTO $DTO
      *
      * @return array
      */
-    public function chatProvider(int $tencentId, int $customerId, ChatDTO $DTO): array;
+    public function chatProvider(int $platformId, int $customerId, ChatDTO $DTO): array;
 
     /**
      * Chat Record
@@ -125,19 +125,19 @@ interface CustomerApplication
     /**
      * All Customer Service Quit Queue
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function obtainFansOfflineProvider(int $tencentId): array;
+    public function obtainFansOfflineProvider(int $platformId): array;
 
     /**
      * Customer Service Status
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $id
      *
      * @return array
      */
-    public function obtainStatusProvider(int $tencentId, int $id): array;
+    public function obtainStatusProvider(int $platformId, int $id): array;
 }

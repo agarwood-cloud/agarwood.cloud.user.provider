@@ -18,10 +18,10 @@ interface CustomerOverviewDomainService
     /**
      * 领域服务接口： 获取列表
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter 过滤条件
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array;
+    public function index(int $platformId, array $filter): array;
 }

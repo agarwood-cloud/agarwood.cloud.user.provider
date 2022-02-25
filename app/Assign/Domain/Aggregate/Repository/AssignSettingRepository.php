@@ -18,14 +18,14 @@ interface AssignSettingRepository
     /**
      * 记录抢粉信息
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      * @param string $openid
      * @param string $obtainStatus
      *
      * @return bool
      */
-    public function recordAssignFans(int $tencentId, int $customerId, string $openid, string $obtainStatus = 'obtain'): bool;
+    public function recordAssignFans(int $platformId, int $customerId, string $openid, string $obtainStatus = 'obtain'): bool;
 
     /**
      * 是否设置抢粉的信息
@@ -40,11 +40,11 @@ interface AssignSettingRepository
      * 查找该分配粉丝的部门及相关参数部
      *      Tips: 门分配粉丝为0的，不分配粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function getDepartments(int $tencentId): array;
+    public function getDepartments(int $platformId): array;
 
     /**
      * 客户所在的组别信息

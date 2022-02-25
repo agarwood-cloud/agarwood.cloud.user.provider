@@ -85,16 +85,16 @@ class AssignRepositoryImpl implements AssignRepository
     /**
      * 查找可用的该公众号的客服
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function getCustomerUuidByServiceUuid(int $tencentId): array
+    public function getCustomerUuidByServiceUuid(int $platformId): array
     {
         // 优先查找有设置分组的
         $customerIds = DB::table(CustomerCompetitive::tableName())
             ->select('customer_id as id')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -106,7 +106,7 @@ class AssignRepositoryImpl implements AssignRepository
         // 如果没有设置，再随机分配
         return DB::table(Customer::tableName())
             ->select('id')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -167,11 +167,11 @@ class AssignRepositoryImpl implements AssignRepository
     /**
      * 查找该公众号最后一个抢粉的信息
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function lastOfficialAccountObtainFans(int $tencentId): array
+    public function lastOfficialAccountObtainFans(int $platformId): array
     {
         // select *
         // from `user_center_customer_obtain_fans` as `user_center_co`
@@ -186,7 +186,7 @@ class AssignRepositoryImpl implements AssignRepository
         return DB::table(CustomerObtainFans::tableName() . ' as co')
             ->select('co.rate', 'co.department_id')
             ->leftJoin(CustomerCompetitiveDepartment::tableName() . ' as ccd', 'co.department_id', '=', 'ccd.id')
-            ->where('co.service_id', '=', $tencentId)
+            ->where('co.service_id', '=', $platformId)
             ->where('co.obtain_status', '=', 'obtain')
             ->where('co.department_id', '!=', '')
             ->where('ccd.rate', '>', 0)

@@ -29,12 +29,12 @@ interface GroupRepository
      * //第二步，把与顶级相关的相关的二级，三级分类取出来（最多支持三级）
      * //第三步，组成树型结构
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function customerGroupFirstPage(int $tencentId, array $filter): array;
+    public function customerGroupFirstPage(int $platformId, array $filter): array;
 
     /**
      * 粉丝分组列表数据（最多支持三级分类）
@@ -43,12 +43,12 @@ interface GroupRepository
      * //第二步，把与顶级相关的相关的二级，三级分类取出来（最多支持三级）
      * //第三步，组成树型结构
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function fansGroupFirstPage(int $tencentId, array $filter): array;
+    public function fansGroupFirstPage(int $platformId, array $filter): array;
 
     /**
      * 权限 pUuid 获取相关的数据
@@ -111,12 +111,12 @@ interface GroupRepository
     public function findCustomerGroupByUuid(int $id): ?CustomerGroup;
 
     /**
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $secondUuid
      *
      * @return  array
      */
-    public function getFansGroupByUuid(int $tencentId, array $secondUuid): array;
+    public function getFansGroupByUuid(int $platformId, array $secondUuid): array;
 
     /**
      * @param int $id
@@ -157,12 +157,12 @@ interface GroupRepository
     /**
      * 客服粉丝分组列表
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param int $customerId
      * @param array  $filter
      * @param bool   $isPagination
      *
      * @return array
      */
-    public function customerFansGroupFirstPage(int $tencentId, int $customerId, array $filter, bool $isPagination): array;
+    public function customerFansGroupFirstPage(int $platformId, int $customerId, array $filter, bool $isPagination): array;
 }

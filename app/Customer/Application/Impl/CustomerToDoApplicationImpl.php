@@ -37,24 +37,24 @@ class CustomerToDoApplicationImpl implements CustomerToDoApplication
      * @inheritDoc
      * @throws Exception
      */
-    public function indexProvider(int $tencentId, int $customerId, IndexDTO $DTO): array
+    public function indexProvider(int $platformId, int $customerId, IndexDTO $DTO): array
     {
         $filter = $DTO->toArrayLine();
 
         // 待办
         $filter['status'] = $DTO->getStatus() ?: CustomerToDoStatusEnum::STATUS_TODO;
 
-        return $this->domain->index($tencentId, $customerId, $filter);
+        return $this->domain->index($platformId, $customerId, $filter);
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $tencentId, int $customerId, CreateDTO $DTO): Collection
+    public function createProvider(int $platformId, int $customerId, CreateDTO $DTO): Collection
     {
         //增加部分系统自己添加的参数 i.e: id
         $attributes                  = $DTO->toArrayNotNull([], true);
-        $attributes['service_id']    = $tencentId;
+        $attributes['service_id']    = $platformId;
         $attributes['customer_id']   = $customerId;
         $attributes['status']        = CustomerToDoStatusEnum::STATUS_TODO;
         $collection                  = $this->domain->create($attributes);

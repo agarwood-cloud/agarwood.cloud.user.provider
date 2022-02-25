@@ -20,23 +20,23 @@ interface AutoReplyRepository
     /**
      * 自动回复的数据
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      *
      * @return array
      */
-    public function auto(int $tencentId, int $customerId): array;
+    public function auto(int $platformId, int $customerId): array;
 
     /**
      * 列表数据 (快捷回复)
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      * @param array  $filter
      *
      * @return array
      */
-    public function index(int $tencentId, int $customerId, array $filter): array;
+    public function index(int $platformId, int $customerId, array $filter): array;
 
     /**
      * 创建
@@ -67,12 +67,12 @@ interface AutoReplyRepository
     /**
      * 自动回复
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      *
      * @return array
      */
-    public function autoReplyMessage(int $tencentId, int $customerId): array;
+    public function autoReplyMessage(int $platformId, int $customerId): array;
 
     /**
      * 创建保存

@@ -26,12 +26,12 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
     /**
      * 群发消息列表
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array
+    public function index(int $platformId, array $filter): array
     {
         return DB::table(Broadcasting::tableName())
             ->select(
@@ -48,7 +48,7 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
                 'status',
                 'created_at as createdAt'
             )
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->when($filter['content'], function ($query, $param) {
                 return $query->where('content', 'like', '%' . $param . '%');
             })
@@ -109,12 +109,12 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
     /**
      * 分组列表
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function fansGroup(int $tencentId, array $filter): array
+    public function fansGroup(int $platformId, array $filter): array
     {
         return DB::table(FansGroup::tableName() . ' as fg')
             ->select(
@@ -124,7 +124,7 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
             ->selectRaw('COUNT(*) as `number`')
             ->join(User::tableName() . ' as u', 'u.group_id', '=', 'fg.id')
             ->where('u.subscribe', '=', 'subscribe')
-            ->where('fg.service_id', '=', $tencentId)
+            ->where('fg.service_id', '=', $platformId)
             ->where('fg.deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
             ->groupBy(['fg.id'])
             ->when($filter['group_name'], function ($query, $groupName) {

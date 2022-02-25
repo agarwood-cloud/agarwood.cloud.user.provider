@@ -88,14 +88,14 @@ class OAuthDomainServiceImpl implements OAuthDomainService
     /**
      * @inheritDoc
      */
-    public function token(string $openid, string $token, int $tencentId, int $customerId, string $customer): string
+    public function token(string $openid, string $token, int $platformId, int $customerId, string $customer): string
     {
         // 这里把其它的值也加入
         // 构造jwt的 token 值
         return $this->jwt->builder($openid)
             ->setTokenToJWT($token)
             ->setCustomerUuidToJWT($customerId)
-            ->setServiceUuidToJWT($tencentId)
+            ->setServiceUuidToJWT($platformId)
             ->setCustomerToJWT($customer)
             ->token();
     }

@@ -32,29 +32,29 @@ class BroadcastingDomainServiceImpl implements BroadcastingDomainService
     /**
      * 已发送的列表
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param array  $toArrayLine
      * @param bool   $isPagination
      *
      * @return array
      */
-    public function index(int $tencentId, array $toArrayLine, bool $isPagination): array
+    public function index(int $platformId, array $toArrayLine, bool $isPagination): array
     {
-        return $this->broadcastingRepository->index($tencentId, $toArrayLine, $isPagination);
+        return $this->broadcastingRepository->index($platformId, $toArrayLine, $isPagination);
     }
 
     /**
      * 群发文本消息
      *
-     * @param string                                  $tencentId
+     * @param string                                  $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      * @param SendTextDTO                             $textDTO
      *
      * @return array
      */
-    public function sendText(int $tencentId, Application $application, SendTextDTO $textDTO): array
+    public function sendText(int $platformId, Application $application, SendTextDTO $textDTO): array
     {
-        Timer::after(5, function () use ($tencentId, $application, $textDTO) {
+        Timer::after(5, function () use ($platformId, $application, $textDTO) {
             // 查找需要发送的组别
             foreach ($textDTO->getSendTo() as $item) {
                 $openid = $this->broadcastingRepository->findGroupByUuid($item['groupUuid']);
@@ -79,7 +79,7 @@ class BroadcastingDomainServiceImpl implements BroadcastingDomainService
                     'group_name'   => $item['groupName'],
                     'number'       => count($openid),
                     'status'       => $status,
-                    'service_uuid' => $tencentId,
+                    'service_uuid' => $platformId,
                     'msg_id'       => $msgId ?? 0
                 ];
 
@@ -95,14 +95,14 @@ class BroadcastingDomainServiceImpl implements BroadcastingDomainService
     /**
      * 分组列表
      *
-     * @param string       $tencentId
+     * @param string       $platformId
      * @param FansGroupDTO $dto
      * @param bool         $isPagination
      *
      * @return array
      */
-    public function fansGroup(int $tencentId, FansGroupDTO $dto, bool $isPagination): array
+    public function fansGroup(int $platformId, FansGroupDTO $dto, bool $isPagination): array
     {
-        return $this->broadcastingRepository->fansGroup($tencentId, $dto->toArrayLine(), $isPagination);
+        return $this->broadcastingRepository->fansGroup($platformId, $dto->toArrayLine(), $isPagination);
     }
 }

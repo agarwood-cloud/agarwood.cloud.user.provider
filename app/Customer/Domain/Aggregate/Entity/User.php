@@ -113,7 +113,7 @@ class User extends Model
      *
      * @var string
      */
-    private $tencentId;
+    private $platformId;
 
     /**
      * 是否关注
@@ -278,13 +278,13 @@ class User extends Model
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return self
      */
-    public function setServiceUuid(int $tencentId): self
+    public function setServiceUuid(int $platformId): self
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
 
         return $this;
     }

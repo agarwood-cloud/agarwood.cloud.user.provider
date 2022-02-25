@@ -20,11 +20,11 @@ interface OfficialAccountsRpc
     /**
      * Get the config of the EasyWechat.
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function officialAccountsConfig(int $tencentId): array;
+    public function officialAccountsConfig(int $platformId): array;
 
     /**
      * Get all official account information
@@ -39,14 +39,14 @@ interface OfficialAccountsRpc
     /**
      * Get the details of the official account
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function officialAccountsInfo(int $tencentId): array;
+    public function officialAccountsInfo(int $platformId): array;
 
     /**
      * Get the official account application
      */
-    public function officialAccountApplication(int $tencentId): Application;
+    public function officialAccountApplication(int $platformId): Application;
 }

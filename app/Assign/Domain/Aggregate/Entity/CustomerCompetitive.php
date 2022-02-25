@@ -131,7 +131,7 @@ class CustomerCompetitive extends Model
      *
      * @var string|null
      */
-    private $tencentId;
+    private $platformId;
 
     /**
      * 可圈粉状态(usable[可用] disabled[禁用])
@@ -293,13 +293,13 @@ class CustomerCompetitive extends Model
     }
 
     /**
-     * @param string|null $tencentId
+     * @param string|null $platformId
      *
      * @return self
      */
-    public function setServiceUuid(?int $tencentId): self
+    public function setServiceUuid(?int $platformId): self
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
 
         return $this;
     }

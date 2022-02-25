@@ -61,13 +61,13 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
     /**
      * 文件消息
      *
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function textMessage(int $tencentId, Application $application): void
+    public function textMessage(int $platformId, Application $application): void
     {
         $application->server->push(function ($payload) {
             // todo 获取到所属的客服

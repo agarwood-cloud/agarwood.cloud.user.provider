@@ -20,16 +20,16 @@ interface WelcomeSubscribeDomain
     /**
      * 点击菜单自动回复
      *
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function autoReply(int $tencentId, Application $application): void;
+    public function autoReply(int $platformId, Application $application): void;
 
     /**
      * 欢迎关注语
      *
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function welcomeSubscribe(int $tencentId, Application $application): void;
+    public function welcomeSubscribe(int $platformId, Application $application): void;
 }

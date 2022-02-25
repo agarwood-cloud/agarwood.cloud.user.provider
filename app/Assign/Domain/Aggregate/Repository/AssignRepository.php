@@ -50,11 +50,11 @@ interface AssignRepository
     /**
      * 查找可用的该公众号的客服
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function getCustomerUuidByServiceUuid(int $tencentId): array;
+    public function getCustomerUuidByServiceUuid(int $platformId): array;
 
     /**
      * 查找所在的部门
@@ -90,11 +90,11 @@ interface AssignRepository
     /**
      * 查找该公众号最后一个抢粉的信息
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function lastOfficialAccountObtainFans(int $tencentId): array;
+    public function lastOfficialAccountObtainFans(int $platformId): array;
 
     /**
      * 查找部门最后一个抢粉的信息

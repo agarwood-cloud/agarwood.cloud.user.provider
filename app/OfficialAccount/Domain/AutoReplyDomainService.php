@@ -20,14 +20,14 @@ interface AutoReplyDomainService
 {
     /**
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      * @param array  $filter       过滤条件
      * @param bool   $isPagination 是否分页
      *
      * @return array
      */
-    public function index(int $tencentId, int $customerId, array $filter, bool $isPagination = true): array;
+    public function index(int $platformId, int $customerId, array $filter, bool $isPagination = true): array;
 
     /**
      * 新建

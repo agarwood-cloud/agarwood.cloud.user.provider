@@ -78,25 +78,25 @@ class CustomerDomainImpl implements CustomerDomain
     public CustomerCommandRepository $customerCommandRepository;
 
     /**
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array
+    public function index(int $platformId, array $filter): array
     {
-        return $this->customerQueryRepository->index($tencentId, $filter);
+        return $this->customerQueryRepository->index($platformId, $filter);
     }
 
     /**
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(int $tencentId, array $attributes): bool
+    public function create(int $platformId, array $attributes): bool
     {
-        return $this->customerCommandRepository->create($tencentId, $attributes);
+        return $this->customerCommandRepository->create($platformId, $attributes);
     }
 
     /**
@@ -136,15 +136,15 @@ class CustomerDomainImpl implements CustomerDomain
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribe(int $tencentId, int $customerId): array
+    public function scanSubscribe(int $platformId, int $customerId): array
     {
         // 这里获取实例
-        $app    = $this->officialAccountsRpc->officialAccountApplication($tencentId);
+        $app    = $this->officialAccountsRpc->officialAccountApplication($platformId);
 
         //生成临时图片
         $result = $app->qrcode->temporary(UserEnum::SCAN_FROM_CUSTOMER_SUBSCRIBE . $customerId, 7 * 24 * 3600);
@@ -172,15 +172,15 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 删除抢粉的客服
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOffline(int $tencentId, string $ids): array
+    public function obtainOffline(int $platformId, string $ids): array
     {
         // 读取集合里面，正在抢粉的信息
-        Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, $ids);
+        Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $platformId, $ids);
 
         // 查找需要删除的客服所在的部门
         $department = $this->customerAssignRepository->getCustomerDepartment($ids);
@@ -321,14 +321,14 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 清除抢粉信息
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function obtainFansOffline(int $tencentId): array
+    public function obtainFansOffline(int $platformId): array
     {
         // 删除公众号的客服在线集合
-        $department = $this->departmentRepository->getAllDepartments($tencentId);
+        $department = $this->departmentRepository->getAllDepartments($platformId);
 
         foreach ($department as $key => $value) {
             // 这里是删除综合竞争力抢粉的
@@ -339,10 +339,10 @@ class CustomerDomainImpl implements CustomerDomain
         }
 
         // 删除该公众号下的所有部门集合
-        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_OBTAIN_SETS_LIST . $tencentId);
+        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_OBTAIN_SETS_LIST . $platformId);
 
         // 删除公众号基础抢粉的队列
-        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_ONLINE_BASE_LIST . $tencentId);
+        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_ONLINE_BASE_LIST . $platformId);
 
         // TODO 这里没有做判断
         return ['msg' => '删除成功'];
@@ -351,13 +351,13 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 抢粉状态
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $id
      *
      * @return bool
      */
-    public function obtainStatus(int $tencentId, int $id): bool
+    public function obtainStatus(int $platformId, int $id): bool
     {
-        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$id);
+        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $platformId, (string)$id);
     }
 }

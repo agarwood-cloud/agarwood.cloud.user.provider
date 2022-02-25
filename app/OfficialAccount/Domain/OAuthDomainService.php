@@ -34,13 +34,13 @@ interface OAuthDomainService
      *
      * @param string $openid
      * @param string $token
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      * @param string $customer
      *
      * @return string
      */
-    public function token(string $openid, string $token, int $tencentId, int $customerId, string $customer): string;
+    public function token(string $openid, string $token, int $platformId, int $customerId, string $customer): string;
 
     /**
      * 生成跳转的目标地址

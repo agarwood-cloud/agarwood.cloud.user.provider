@@ -22,12 +22,12 @@ interface UserApplication
     /**
      * User List
      *
-     * @param int|null                                          $tencentId
+     * @param int|null                                          $platformId
      * @param \App\OfficialAccount\Interfaces\DTO\User\IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(?int $tencentId, IndexDTO $DTO): array;
+    public function indexProvider(?int $platformId, IndexDTO $DTO): array;
 
     /**
      * @param string $openid

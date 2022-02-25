@@ -23,12 +23,12 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
     /**
      * 分组下的所有客服信息
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function groupForCustomer(int $tencentId, array $filter): array
+    public function groupForCustomer(int $platformId, array $filter): array
     {
         return DB::table(Customer::tableName())
             ->select(
@@ -39,7 +39,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
             ->when($filter['group_name'], function ($query, $groupName) {
                 return $query->where('group_name', 'like', '%' . $groupName . '%');
             })
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->get()
             ->toArray();
     }
@@ -47,14 +47,14 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
     /**
      * 时间段内的新增粉丝
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param array  $customerId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function groupForCustomerOpenid(int $tencentId, array $customerId, string $startAt, string $endAt): array
+    public function groupForCustomerOpenid(int $platformId, array $customerId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->select(
@@ -62,7 +62,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId', // 这里数据有些问题，group_id 没有记录到
                 'openid'
             )
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->get()
@@ -72,14 +72,14 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
     /**
      * 每个小组的新增粉丝数量 【新粉数量】
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param array  $customerId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function groupForNewFansSum(int $tencentId, array $customerId, string $startAt, string $endAt): array
+    public function groupForNewFansSum(int $platformId, array $customerId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->select(
@@ -87,7 +87,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId',
             )
             ->selectRaw('COUNT(`openid`) as newFansNum')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->groupBy(['customer_id'])
@@ -98,7 +98,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
     /**
      * 新粉成交数量
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param array  $customerId
      * @param array  $openid
      * @param string $startAt
@@ -106,7 +106,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
      *
      * @return array
      */
-    public function groupFromSalesFansSum(int $tencentId, array $customerId, array $openid, string $startAt, string $endAt): array
+    public function groupFromSalesFansSum(int $platformId, array $customerId, array $openid, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->select(
@@ -114,7 +114,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId',
             )
             ->selectRaw('COUNT(`openid`) as newFansSalesNum')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->whereIn('openid', $openid)

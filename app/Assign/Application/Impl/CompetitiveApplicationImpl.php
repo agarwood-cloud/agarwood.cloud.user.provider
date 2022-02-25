@@ -36,18 +36,18 @@ class CompetitiveApplicationImpl implements CompetitiveApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $tencentId, IndexDTO $DTO): array
+    public function indexProvider(int $platformId, IndexDTO $DTO): array
     {
-        return $this->domain->index($tencentId, $DTO->toArrayNotEmpty([], true));
+        return $this->domain->index($platformId, $DTO->toArrayNotEmpty([], true));
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $tencentId, CreateDTO $DTO): Collection
+    public function createProvider(int $platformId, CreateDTO $DTO): Collection
     {
         $attributes                 = $DTO->toArrayLine();
-        $attributes['service_uuid'] = $tencentId;
+        $attributes['service_uuid'] = $platformId;
         $attributes['uuid']         = Uuid::uuid4()->toString();
         $this->domain->create($attributes);
         //这里可以设置更多的返回值
@@ -75,8 +75,8 @@ class CompetitiveApplicationImpl implements CompetitiveApplication
     /**
      * @inheritDoc
      */
-    public function obtainFansProvider(int $tencentId, int $customerId): int
+    public function obtainFansProvider(int $platformId, int $customerId): int
     {
-        return $this->domain->obtainFans($tencentId, $customerId);
+        return $this->domain->obtainFans($platformId, $customerId);
     }
 }

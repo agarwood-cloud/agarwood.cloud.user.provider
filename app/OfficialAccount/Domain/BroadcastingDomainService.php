@@ -22,33 +22,33 @@ interface BroadcastingDomainService
     /**
      * 群发文本消息
      *
-     * @param string      $tencentId
+     * @param string      $platformId
      * @param Application $application
      * @param SendTextDTO $textDTO
      *
      * @return array
      */
-    public function sendText(int $tencentId, Application $application, SendTextDTO $textDTO): array;
+    public function sendText(int $platformId, Application $application, SendTextDTO $textDTO): array;
 
     /**
      * 已发送的列表
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param array  $toArrayLine
      * @param bool   $isPagination
      *
      * @return array
      */
-    public function index(int $tencentId, array $toArrayLine, bool $isPagination): array;
+    public function index(int $platformId, array $toArrayLine, bool $isPagination): array;
 
     /**
      * 分组列表
      *
-     * @param string       $tencentId
+     * @param string       $platformId
      * @param FansGroupDTO $dto
      * @param bool         $isPagination
      *
      * @return array
      */
-    public function fansGroup(int $tencentId, FansGroupDTO $dto, bool $isPagination): array;
+    public function fansGroup(int $platformId, FansGroupDTO $dto, bool $isPagination): array;
 }

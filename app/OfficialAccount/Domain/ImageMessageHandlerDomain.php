@@ -18,8 +18,8 @@ use EasyWeChat\OfficialAccount\Application;
 interface ImageMessageHandlerDomain
 {
     /**
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function imageMessage(int $tencentId, Application $application): void;
+    public function imageMessage(int $platformId, Application $application): void;
 }

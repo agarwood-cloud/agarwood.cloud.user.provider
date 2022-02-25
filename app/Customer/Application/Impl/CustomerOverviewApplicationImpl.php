@@ -31,9 +31,9 @@ class CustomerOverviewApplicationImpl implements CustomerOverviewApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $tencentId, IndexDTO $DTO): array
+    public function indexProvider(int $platformId, IndexDTO $DTO): array
     {
         // todo: 待加入其它的数据统计信息
-        return $this->domain->index($tencentId, $DTO->toArrayLine());
+        return $this->domain->index($platformId, $DTO->toArrayLine());
     }
 }

@@ -18,8 +18,8 @@ use EasyWeChat\OfficialAccount\Application;
 interface TextMessageHandlerDomain
 {
     /**
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function textMessage(int $tencentId, Application $application): void;
+    public function textMessage(int $platformId, Application $application): void;
 }

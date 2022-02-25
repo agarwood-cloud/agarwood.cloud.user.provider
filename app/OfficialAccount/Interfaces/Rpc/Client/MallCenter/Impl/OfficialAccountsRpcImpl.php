@@ -38,13 +38,13 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     protected WeChat $weChat;
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function officialAccountsConfig(int $tencentId): array
+    public function officialAccountsConfig(int $platformId): array
     {
-        return $this->officialAccountsRpc->officialAccountsConfig($tencentId);
+        return $this->officialAccountsRpc->officialAccountsConfig($platformId);
     }
 
     /**
@@ -58,24 +58,24 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function officialAccountsInfo(int $tencentId): array
+    public function officialAccountsInfo(int $platformId): array
     {
-        return $this->officialAccountsRpc->officialAccountsInfo($tencentId);
+        return $this->officialAccountsRpc->officialAccountsInfo($platformId);
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return \EasyWeChat\OfficialAccount\Application
      */
-    public function officialAccountApplication(int $tencentId): Application
+    public function officialAccountApplication(int $platformId): Application
     {
         // todo 优化: 可以使用缓存
-        // $config = $this->officialAccountsRpc->officialAccountsConfig($tencentId);
+        // $config = $this->officialAccountsRpc->officialAccountsConfig($platformId);
 
         $config = [
             'app_id'  => 'wx3d4726296a65e6aa',                    // AppID

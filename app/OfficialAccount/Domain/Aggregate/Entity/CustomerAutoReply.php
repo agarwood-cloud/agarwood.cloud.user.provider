@@ -94,7 +94,7 @@ class CustomerAutoReply extends Model
      *
      * @var string|null
      */
-    private $tencentId;
+    private $platformId;
 
     /**
      *
@@ -199,13 +199,13 @@ class CustomerAutoReply extends Model
     }
 
     /**
-     * @param string|null $tencentId
+     * @param string|null $platformId
      *
      * @return self
      */
-    public function setServiceUuid(?int $tencentId): self
+    public function setServiceUuid(?int $platformId): self
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
 
         return $this;
     }

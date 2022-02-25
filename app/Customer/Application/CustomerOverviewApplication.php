@@ -18,10 +18,10 @@ use App\Customer\Interfaces\DTO\CustomerOverview\IndexDTO;
 interface CustomerOverviewApplication
 {
     /**
-     * @param int                                                    $tencentId
+     * @param int                                                    $platformId
      * @param \App\Customer\Interfaces\DTO\CustomerOverview\IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $tencentId, IndexDTO $DTO): array;
+    public function indexProvider(int $platformId, IndexDTO $DTO): array;
 }

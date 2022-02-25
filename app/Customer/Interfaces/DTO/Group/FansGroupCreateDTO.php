@@ -27,7 +27,7 @@ class FansGroupCreateDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public int $tencentId = 0;
+    public int $platformId = 0;
 
     /**
      * 父类UUID
@@ -101,11 +101,11 @@ class FansGroupCreateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      */
-    public function setServiceUuid(int $tencentId): void
+    public function setServiceUuid(int $platformId): void
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
     }
 
     /**

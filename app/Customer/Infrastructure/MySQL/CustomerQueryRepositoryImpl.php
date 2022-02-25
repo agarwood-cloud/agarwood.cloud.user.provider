@@ -24,11 +24,11 @@ class CustomerQueryRepositoryImpl implements CustomerQueryRepository
      * 公众号管理列表数据
      *
      * @param array $filter
-     * @param int   $tencentId
+     * @param int   $platformId
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array
+    public function index(int $platformId, array $filter): array
     {
         return DB::table(Customer::tableName())
             ->select(
@@ -44,7 +44,7 @@ class CustomerQueryRepositoryImpl implements CustomerQueryRepository
                 'updated_at as updatedAt'
             )
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
-            ->where('oa_id', '=', $tencentId)
+            ->where('oa_id', '=', $platformId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })

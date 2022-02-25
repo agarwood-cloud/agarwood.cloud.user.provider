@@ -33,13 +33,13 @@ interface OAuthApplication
      *
      * @param User   $user
      * @param string $token
-     * @param int $tencentId
+     * @param int $platformId
      * @param int $customerId
      * @param string $customer
      *
      * @return string
      */
-    public function jwtTokenProvider(User $user, string $token, int $tencentId, int $customerId, string $customer): string;
+    public function jwtTokenProvider(User $user, string $token, int $platformId, int $customerId, string $customer): string;
 
     /**
      * 构建跳转目标链接

@@ -37,7 +37,7 @@ class LoginDTO extends AbstractBaseDTO
      *
      * @var int
      */
-    public int $tencentId = 0;
+    public int $platformId = 0;
 
     /**
      * Password
@@ -75,11 +75,11 @@ class LoginDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      */
-    public function setOfficialAccountId(int $tencentId): void
+    public function setOfficialAccountId(int $platformId): void
     {
-        $this->officialAccountId = $tencentId;
+        $this->officialAccountId = $platformId;
     }
 
     /**

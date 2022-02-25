@@ -33,9 +33,9 @@ class BusinessOverviewService implements UserCenterBusinessRpcInterface
      * @inheritDoc
      * @throws DbException
      */
-    public function allSubscribeFans(int $tencentId): array
+    public function allSubscribeFans(int $platformId): array
     {
-        return $this->userRpcRepository->subscribeFans($tencentId);
+        return $this->userRpcRepository->subscribeFans($platformId);
     }
 
     /**
@@ -44,9 +44,9 @@ class BusinessOverviewService implements UserCenterBusinessRpcInterface
      * @inheritDoc
      * @throws DbException
      */
-    public function theDayFans(int $tencentId, string $startAt, string $endAt): array
+    public function theDayFans(int $platformId, string $startAt, string $endAt): array
     {
-        return $this->userRpcRepository->theDayFans($tencentId, $startAt, $endAt);
+        return $this->userRpcRepository->theDayFans($platformId, $startAt, $endAt);
     }
 
     /**
@@ -55,53 +55,53 @@ class BusinessOverviewService implements UserCenterBusinessRpcInterface
      * @inheritDoc
      * @throws DbException
      */
-    public function theDayUnsubscribeFans(int $tencentId, string $startAt, string $endAt): array
+    public function theDayUnsubscribeFans(int $platformId, string $startAt, string $endAt): array
     {
-        return $this->userRpcRepository->theDayUnsubscribeFans($tencentId, $startAt, $endAt);
+        return $this->userRpcRepository->theDayUnsubscribeFans($platformId, $startAt, $endAt);
     }
 
     /**
      * 时间段内关注粉丝的成交的openid
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function turnoverTimeIntervalOpenid(int $tencentId, array $openid, string $startAt, string $endAt): array
+    public function turnoverTimeIntervalOpenid(int $platformId, array $openid, string $startAt, string $endAt): array
     {
-        return $this->userRpcRepository->turnoverTimeIntervalOpenid($tencentId, $openid, $startAt, $endAt);
+        return $this->userRpcRepository->turnoverTimeIntervalOpenid($platformId, $openid, $startAt, $endAt);
     }
 
     /**
      * 时段分析：新增粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeFans(int $tencentId, string $startAt, string $endAt): array
+    public function userCenterTurnoverTimeFans(int $platformId, string $startAt, string $endAt): array
     {
-        return $this->userRpcRepository->userCenterTurnoverTimeFans($tencentId, $startAt, $endAt);
+        return $this->userRpcRepository->userCenterTurnoverTimeFans($platformId, $startAt, $endAt);
     }
 
     /**
      * 时段分析：新增粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeBuyFans(int $tencentId, array $openid, string $startAt, string $endAt): array
+    public function userCenterTurnoverTimeBuyFans(int $platformId, array $openid, string $startAt, string $endAt): array
     {
-        return $this->userRpcRepository->userCenterTurnoverTimeBuyFans($tencentId, $openid, $startAt, $endAt);
+        return $this->userRpcRepository->userCenterTurnoverTimeBuyFans($platformId, $openid, $startAt, $endAt);
     }
 
     /**

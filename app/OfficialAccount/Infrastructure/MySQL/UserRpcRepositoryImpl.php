@@ -32,34 +32,34 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 关注的所有粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function subscribeFans(int $tencentId): array
+    public function subscribeFans(int $platformId): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as fans')
             ->where([
                 ['subscribe', '=', 'subscribe'],
-                ['service_id', '=', $tencentId]
+                ['service_id', '=', $platformId]
             ])->firstArray();
     }
 
     /**
      * 当天关注的粉丝(包括取消关注的粉丝)
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayFans(int $tencentId, string $startAt, string $endAt): array
+    public function theDayFans(int $platformId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayFans`')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->firstArray();
     }
@@ -67,18 +67,18 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 当天取消关注的粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayUnsubscribeFans(int $tencentId, string $startAt, string $endAt): array
+    public function theDayUnsubscribeFans(int $platformId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayUnsubscribeFans`')
             ->where('subscribe', '=', 'unsubscribe')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('unsubscribed_at', [$startAt, $endAt])
             ->firstArray();
     }
@@ -128,19 +128,19 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 时间段内关注的openid
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function turnoverTimeIntervalOpenid(int $tencentId, array $openid, string $startAt, string $endAt): array
+    public function turnoverTimeIntervalOpenid(int $platformId, array $openid, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->select('openid')
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('openid', $openid)
             ->get()
@@ -150,17 +150,17 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 新增粉丝
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeFans(int $tencentId, string $startAt, string $endAt): array
+    public function userCenterTurnoverTimeFans(int $platformId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`, count(`openid`) as `value`, "新增粉丝" as category')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->groupBy(['time'])
             ->orderBy('time')
@@ -171,18 +171,18 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 时段分析：成交粉丝
      *
-     * @param int    $tencentId
+     * @param int    $platformId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeBuyFans(int $tencentId, array $openid, string $startAt, string $endAt): array
+    public function userCenterTurnoverTimeBuyFans(int $platformId, array $openid, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`, count(`openid`) as `value`, "成交粉丝" as category')
-            ->where('service_id', '=', $tencentId)
+            ->where('service_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('openid', $openid)
             ->groupBy(['time'])

@@ -24,25 +24,25 @@ interface CustomerToDoApplication
      * 应用层
      *      分组应用层列表服务接口
      *
-     * @param int      $tencentId
+     * @param int      $platformId
      * @param int      $customerId
      * @param IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $tencentId, int $customerId, IndexDTO $DTO): array;
+    public function indexProvider(int $platformId, int $customerId, IndexDTO $DTO): array;
 
     /**
      * 应用层
      *      分组应用层创建分组服务接口
      *
-     * @param int       $tencentId
+     * @param int       $platformId
      * @param int       $customerId
      * @param CreateDTO $DTO
      *
      * @return Collection
      */
-    public function createProvider(int $tencentId, int $customerId, CreateDTO $DTO): Collection;
+    public function createProvider(int $platformId, int $customerId, CreateDTO $DTO): Collection;
 
     /**
      * 应用层

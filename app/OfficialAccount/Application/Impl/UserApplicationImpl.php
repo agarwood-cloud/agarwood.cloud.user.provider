@@ -39,17 +39,17 @@ class UserApplicationImpl implements UserApplication
     /**
      * User list data
      *
-     * @param int|null $tencentId
+     * @param int|null $platformId
      * @param IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(?int $tencentId, IndexDTO $DTO): array
+    public function indexProvider(?int $platformId, IndexDTO $DTO): array
     {
-        if (null === $tencentId) {
+        if (null === $platformId) {
             return [];
         }
-        return $this->userDomain->index($tencentId, $DTO->toArrayLine());
+        return $this->userDomain->index($platformId, $DTO->toArrayLine());
     }
 
     /**

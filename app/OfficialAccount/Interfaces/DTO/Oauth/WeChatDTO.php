@@ -74,7 +74,7 @@ class WeChatDTO extends AbstractBaseDTO
      *
      * @var int
      */
-    public int $tencentId = 0;
+    public int $platformId = 0;
 
     /**
      * @return string
@@ -165,10 +165,10 @@ class WeChatDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      */
-    public function setServiceId(int $tencentId): void
+    public function setServiceId(int $platformId): void
     {
-        $this->serviceId = $tencentId;
+        $this->serviceId = $platformId;
     }
 }

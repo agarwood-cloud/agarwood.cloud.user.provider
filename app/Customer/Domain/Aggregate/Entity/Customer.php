@@ -113,7 +113,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private string $tencentId = '';
+    private string $platformId = '';
 
     /**
      * 服务号uuid
@@ -260,13 +260,13 @@ class Customer extends Model
     }
 
     /**
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return self
      */
-    public function setServiceUuid(int $tencentId): self
+    public function setServiceUuid(int $platformId): self
     {
-        $this->serviceUuid = $tencentId;
+        $this->serviceUuid = $platformId;
 
         return $this;
     }
@@ -420,11 +420,11 @@ class Customer extends Model
     }
 
     /**
-     * @param string $tencentId
+     * @param string $platformId
      */
-    public function setOfficialAccountId(string $tencentId): void
+    public function setOfficialAccountId(string $platformId): void
     {
-        $this->officialAccountId = $tencentId;
+        $this->officialAccountId = $platformId;
     }
 
     /**

@@ -25,13 +25,13 @@ class CustomerToDoRepositoryImpl implements CustomerToDoRepository
     /**
      * 列表数据
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $tencentId, int $customerId, array $filter): array
+    public function index(int $platformId, int $customerId, array $filter): array
     {
         return DB::table(CustomerToDo::tableName())
             ->select(
@@ -46,7 +46,7 @@ class CustomerToDoRepositoryImpl implements CustomerToDoRepository
                 'remark'
             )
             ->orderBy('deadline_at')
-            ->where('service_uuid', '=', $tencentId)
+            ->where('service_uuid', '=', $platformId)
             ->where('customer_uuid', '=', $customerId)
             ->when($filter['status'], function ($query, $status) {
                 return $query->where('status', '=', $status);

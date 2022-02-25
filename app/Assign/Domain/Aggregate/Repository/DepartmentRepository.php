@@ -20,12 +20,12 @@ interface DepartmentRepository
     /**
      * 管理员管理列表数据
      *
-     * @param int   $tencentId
+     * @param int   $platformId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $tencentId, array $filter): array;
+    public function index(int $platformId, array $filter): array;
 
     /**
      * 创建
@@ -79,18 +79,18 @@ interface DepartmentRepository
      * 查找该分配粉丝的部门及相关参数部
      *      Tips: 门分配粉丝为0的，不分配粉丝
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function getDepartments(int $tencentId): array;
+    public function getDepartments(int $platformId): array;
 
     /**
      * 所有的部门，包括不抢粉的部门
      *
-     * @param int $tencentId
+     * @param int $platformId
      *
      * @return array
      */
-    public function getAllDepartments(int $tencentId): array;
+    public function getAllDepartments(int $platformId): array;
 }

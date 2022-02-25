@@ -60,13 +60,13 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
     public MongoMessageRecordDomain $mongoMessageRecordDomain;
 
     /**
-     * @param int                                     $tencentId
+     * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function imageMessage(int $tencentId, Application $application): void
+    public function imageMessage(int $platformId, Application $application): void
     {
         $application->server->push(function ($message) use ($application) {
 

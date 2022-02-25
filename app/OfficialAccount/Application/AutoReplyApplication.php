@@ -25,26 +25,26 @@ interface AutoReplyApplication
      * 应用层
      *      分组应用层列表服务接口
      *
-     * @param string   $tencentId
+     * @param string   $platformId
      * @param string   $customerId
      * @param IndexDTO $DTO
      * @param bool     $isPagination
      *
      * @return array
      */
-    public function indexProvider(int $tencentId, int $customerId, IndexDTO $DTO, bool $isPagination = true): array;
+    public function indexProvider(int $platformId, int $customerId, IndexDTO $DTO, bool $isPagination = true): array;
 
     /**
      * 应用层
      *      分组应用层创建分组服务接口
      *
-     * @param string    $tencentId
+     * @param string    $platformId
      * @param string    $customerId
      * @param CreateDTO $DTO
      *
      * @return Collection
      */
-    public function createProvider(int $tencentId, int $customerId, CreateDTO $DTO): Collection;
+    public function createProvider(int $platformId, int $customerId, CreateDTO $DTO): Collection;
 
     /**
      * 应用层
@@ -68,11 +68,11 @@ interface AutoReplyApplication
     public function updateProvider(string $uuid, UpdateDTO $DTO): Collection;
 
     /**
-     * @param string  $tencentId
+     * @param string  $platformId
      * @param string  $customerId
      * @param SaveDTO $DTO
      *
      * @return Collection
      */
-    public function saveProvider(int $tencentId, int $customerId, SaveDTO $DTO): Collection;
+    public function saveProvider(int $platformId, int $customerId, SaveDTO $DTO): Collection;
 }
