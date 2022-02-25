@@ -84,6 +84,6 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
             'aes_key' => 'CE3oQoWW8BCbfotuhiixmXgLwQ5ypZ2hQ6s1mNYZ0Xc',
         ];
 
-        return $this->weChat->officialAccountConsole($config);
+        return $this->weChat->officialAccount($config);
     }
 }

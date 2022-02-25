@@ -11,14 +11,11 @@
 namespace App\OfficialAccount\Interfaces\Facade;
 
 use App\OfficialAccount\Application\CallbackApplication;
-use App\OfficialAccount\Interfaces\DTO\User\CreateDTO;
 use Swoft\Http\Message\ContentType;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Annotation\Mapping\Controller;
 use Swoft\Http\Server\Annotation\Mapping\RequestMapping;
 use Swoft\Http\Server\Annotation\Mapping\RequestMethod;
-use Swoft\Validator\Annotation\Mapping\Validate;
-use Swoft\Validator\Annotation\Mapping\ValidateType;
 
 /**
  * Tencent callback for official account
@@ -35,21 +32,19 @@ class CallbackController
     public CallbackApplication $application;
 
     /**
-     * address for callback:
-     *      i.e:  http://www.xxx.com/user-center/official-account/token/332066116408967168.html
+     * Official account callback.  i.e:
+     *    https://api.xxx.com/official-account/callback/official-account/token/{platform}.html
      *
      * @RequestMapping(
-     *     route="official-account/token/{tencentId}.html",
-     *     method={ RequestMethod::POST }
-     * )
-     *
-     * @Validate(validator=CreateDTO::class, type=ValidateType::BODY)
-     * @param int|string $tencentId
-     * @param Response   $response
+     *     route="official-account/token/{platform}.html",
+     *     method={RequestMethod::GET, RequestMethod::POST, RequestMethod::PUT, RequestMethod::PATCH, RequestMethod::OPTIONS}
+     *     )
+     * @param string   $platform
+     * @param Response $response
      *
      * @return Response|null
      */
-    public function actionOfficialAccount(int|string $tencentId, Response $response): ?Response
+    public function actionOfficialAccount(string $platform, Response $response): ?Response
     {
         /*
         |-----------------------------------------------------------------
@@ -61,7 +56,7 @@ class CallbackController
         //返回类型，根据请求的类型返回
         $response->withContentType(ContentType::XML);
         return $response->withContent(
-            $this->application->officialAccountProvider($tencentId)->getContent()
+            $this->application->officialAccountProvider($platform)->getContent()
         );
     }
 }
