@@ -24,7 +24,7 @@ use Swoft\Stdlib\Collection;
 class CompetitiveDepartmentApplicationImpl implements CompetitiveDepartmentApplication
 {
     /**
-     * 部门领域服务
+     * 部门的领域服务
      *
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *

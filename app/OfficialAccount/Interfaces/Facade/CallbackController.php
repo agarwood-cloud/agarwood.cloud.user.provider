@@ -21,7 +21,7 @@ use Swoft\Validator\Annotation\Mapping\Validate;
 use Swoft\Validator\Annotation\Mapping\ValidateType;
 
 /**
- * 微信回调控制器
+ * Tencent callback for official account
  *
  * @Controller(prefix="/official-account/callback")
  */
@@ -35,21 +35,21 @@ class CallbackController
     public CallbackApplication $application;
 
     /**
-     * 微信的回调地址:
-     *      i.e:  http://www.xxx.com/user-center/official-account/token/eb6c374c1e91e.html
+     * address for callback:
+     *      i.e:  http://www.xxx.com/user-center/official-account/token/332066116408967168.html
      *
      * @RequestMapping(
-     *     route="official-account/token/{officialAccountsId}.html",
+     *     route="official-account/token/{tencentId}.html",
      *     method={ RequestMethod::POST }
      * )
      *
      * @Validate(validator=CreateDTO::class, type=ValidateType::BODY)
-     * @param int|string $officialAccountsId
+     * @param int|string $tencentId
      * @param Response   $response
      *
      * @return Response|null
      */
-    public function actionOfficialAccount(int|string $officialAccountsId, Response $response): ?Response
+    public function actionOfficialAccount(int|string $tencentId, Response $response): ?Response
     {
         /*
         |-----------------------------------------------------------------
@@ -61,7 +61,7 @@ class CallbackController
         //返回类型，根据请求的类型返回
         $response->withContentType(ContentType::XML);
         return $response->withContent(
-            $this->application->officialAccountProvider($officialAccountsId)->getContent()
+            $this->application->officialAccountProvider($tencentId)->getContent()
         );
     }
 }

@@ -10,8 +10,8 @@
 
 namespace App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\Impl;
 
+use Agarwood\Core\WeChat\Factory\WeChat;
 use Agarwood\Rpc\MallCenter\MallCenterOfficialAccountsRpcInterface;
-use Agarwood\WeChat\Factory\WeChat;
 use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
 use EasyWeChat\OfficialAccount\Application;
 use Swoft\Rpc\Client\Annotation\Mapping\Reference;
@@ -38,13 +38,13 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     protected WeChat $weChat;
 
     /**
-     * @param int $officialAccountsId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function officialAccountsConfig(int $officialAccountsId): array
+    public function officialAccountsConfig(int $tencentId): array
     {
-        return $this->officialAccountsRpc->officialAccountsConfig($officialAccountsId);
+        return $this->officialAccountsRpc->officialAccountsConfig($tencentId);
     }
 
     /**
@@ -58,24 +58,24 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     }
 
     /**
-     * @param int $officialAccountsId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function officialAccountsInfo(int $officialAccountsId): array
+    public function officialAccountsInfo(int $tencentId): array
     {
-        return $this->officialAccountsRpc->officialAccountsInfo($officialAccountsId);
+        return $this->officialAccountsRpc->officialAccountsInfo($tencentId);
     }
 
     /**
-     * @param int $officialAccountsId
+     * @param int $tencentId
      *
      * @return \EasyWeChat\OfficialAccount\Application
      */
-    public function officialAccountApplication(int $officialAccountsId): Application
+    public function officialAccountApplication(int $tencentId): Application
     {
         // todo 优化: 可以使用缓存
-        // $config = $this->officialAccountsRpc->officialAccountsConfig($officialAccountsId);
+        // $config = $this->officialAccountsRpc->officialAccountsConfig($tencentId);
 
         $config = [
             'app_id'  => 'wx3d4726296a65e6aa',                    // AppID

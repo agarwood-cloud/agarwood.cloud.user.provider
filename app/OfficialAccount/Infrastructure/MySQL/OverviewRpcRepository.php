@@ -60,14 +60,14 @@ class OverviewRpcRepository
     /**
      * 抢粉的数量，按客服分组
      *
-     * @param int $officialAccountsId
+     * @param int $tencentId
      * @param array  $customerId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function obtainFans(int $officialAccountsId, array $customerId, string $startAt, string $endAt): array
+    public function obtainFans(int $tencentId, array $customerId, string $startAt, string $endAt): array
     {
         return DB::table(CustomerObtainFans::tableName())
             ->selectRaw(
@@ -75,7 +75,7 @@ class OverviewRpcRepository
                 `customer_uuid` as `customerUuid`,
                 `service_uuid` as `serviceUuid`'
             )
-            ->where('service_uuid', '=', $officialAccountsId)
+            ->where('service_uuid', '=', $tencentId)
             ->whereBetween('created_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
             ->groupBy(['customer_uuid'])
@@ -86,14 +86,14 @@ class OverviewRpcRepository
     /**
      * 总粉丝数量，包括取消关注的
      *
-     * @param int $officialAccountsId
+     * @param int $tencentId
      * @param array  $customerId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function fans(int $officialAccountsId, array $customerId, string $startAt, string $endAt): array
+    public function fans(int $tencentId, array $customerId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw(
@@ -101,7 +101,7 @@ class OverviewRpcRepository
                 `service_uuid` as `serviceUuid`,
                 COUNT(`id`) as `fansNum`'
             )
-            ->where('service_uuid', '=', $officialAccountsId)
+            ->where('service_uuid', '=', $tencentId)
             //这里做关注时间也可以统计未关注的，因为关注时间取关后不会消失的
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
@@ -113,14 +113,14 @@ class OverviewRpcRepository
     /**
      * 取关的人粉丝
      *
-     * @param int $officialAccountsId
+     * @param int $tencentId
      * @param array  $customerId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function unsubscribe(int $officialAccountsId, array $customerId, string $startAt, string $endAt): array
+    public function unsubscribe(int $tencentId, array $customerId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw(
@@ -128,7 +128,7 @@ class OverviewRpcRepository
                 `service_uuid` as `serviceUuid`,
                 COUNT(`id`) as `unsubFansNum`'
             )
-            ->where('service_uuid', '=', $officialAccountsId)
+            ->where('service_uuid', '=', $tencentId)
             //取消关注的时间
             ->whereBetween('unsubscribed_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
@@ -140,7 +140,7 @@ class OverviewRpcRepository
     /**
      * 在xx时间段内关注且有成交的粉丝的openid
      *
-     * @param int $officialAccountsId
+     * @param int $tencentId
      * @param array  $customerId
      * @param array  $openid
      * @param string $startAt
@@ -148,14 +148,14 @@ class OverviewRpcRepository
      *
      * @return array
      */
-    public function salesNewFansOpenid(int $officialAccountsId, array $customerId, array $openid, string $startAt, string $endAt): array
+    public function salesNewFansOpenid(int $tencentId, array $customerId, array $openid, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->select(
                 'openid',
                 'customer_uuid as customerUuid'
             )
-            ->where('service_uuid', '=', $officialAccountsId)
+            ->where('service_uuid', '=', $tencentId)
             ->whereIn('openid', $openid)
             ->whereIn('customer_uuid', $customerId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
@@ -166,7 +166,7 @@ class OverviewRpcRepository
     /**
      * 在xx时间段内有成交的粉丝的数量
      *
-     * @param int $officialAccountsId
+     * @param int $tencentId
      * @param array  $customerId
      * @param array  $openid
      * @param string $startAt
@@ -174,14 +174,14 @@ class OverviewRpcRepository
      *
      * @return array
      */
-    public function newFansCash(int $officialAccountsId, array $customerId, array $openid, string $startAt, string $endAt): array
+    public function newFansCash(int $tencentId, array $customerId, array $openid, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw(
                 'COUNT(`openid`) as `newFansCashNum`,
                 `customer_uuid` as `customerUuid`'
             )
-            ->where('service_uuid', '=', $officialAccountsId)
+            ->where('service_uuid', '=', $tencentId)
             ->whereIn('openid', $openid)
             ->whereIn('customer_uuid', $customerId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])

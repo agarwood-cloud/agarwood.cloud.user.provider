@@ -10,6 +10,7 @@
 
 namespace App\Customer\Domain\Impl;
 
+use Agarwood\Core\WeChat\Factory\WeChat;
 use App\Assign\Domain\Aggregate\Enum\AssignEnum;
 use App\Assign\Domain\Aggregate\Enum\BaseAssignStrategyEnum;
 use App\Customer\Domain\Aggregate\Repository\CustomerAssignRepository;
@@ -28,7 +29,6 @@ use JsonException;
 use MongoDB\Client;
 use Swoft\Db\Exception\DbException;
 use Swoft\Redis\Redis;
-use Agarwood\WeChat\Factory\WeChat;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -45,7 +45,7 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
      *
-     * @var \Agarwood\WeChat\Factory\WeChat
+     * @var \Agarwood\Core\WeChat\Factory\WeChat
      */
     protected WeChat $wechat;
 

@@ -32,7 +32,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private $account;
+    private string $account = '';
 
     /**
      * 创建时间
@@ -41,7 +41,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private $createdAt;
+    private string $createdAt = '';
 
     /**
      * 删除时间
@@ -50,16 +50,16 @@ class Customer extends Model
      *
      * @var string
      */
-    private $deletedAt;
+    private string $deletedAt = '';
 
     /**
      * 所在分组名称
      *
      * @Column(name="group_name", prop="groupName")
      *
-     * @var string|null
+     * @var string
      */
-    private $groupName;
+    private string $groupName = '';
 
     /**
      * 分组ID
@@ -68,7 +68,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private $groupUuid;
+    private string $groupUuid = '';
 
     /**
      *
@@ -77,7 +77,7 @@ class Customer extends Model
      *
      * @var int
      */
-    private $id;
+    private int $id = 0;
 
     /**
      * 名称
@@ -113,7 +113,16 @@ class Customer extends Model
      *
      * @var string
      */
-    private $officialAccountId;
+    private string $officialAccountId = '';
+
+    /**
+     * 服务号uuid
+     *
+     * @Column(name="enterpriseId", prop="enterpriseId")
+     *
+     * @var string
+     */
+    private $enterpriseId;
 
     /**
      * usable:可用,disabled:不可用
@@ -400,5 +409,37 @@ class Customer extends Model
     public function getUuid(): ?string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfficialAccountId(): string
+    {
+        return $this->officialAccountId;
+    }
+
+    /**
+     * @param string $officialAccountId
+     */
+    public function setOfficialAccountId(string $officialAccountId): void
+    {
+        $this->officialAccountId = $officialAccountId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnterpriseId(): string
+    {
+        return $this->enterpriseId;
+    }
+
+    /**
+     * @param string $enterpriseId
+     */
+    public function setEnterpriseId(string $enterpriseId): void
+    {
+        $this->enterpriseId = $enterpriseId;
     }
 }

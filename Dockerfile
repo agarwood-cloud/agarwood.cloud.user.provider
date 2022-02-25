@@ -13,8 +13,7 @@ LABEL maintainer="676786620@qq.com>" version="2.0"
 
 # default APP_ENV = test
 ENV APP_ENV=${app_env:-"test"} \
-    TIMEZONE=${timezone:-"Asia/Shanghai"} \
-    COMPOSER_ALLOW_SUPERUSER=1
+    TIMEZONE=${timezone:-"Asia/Shanghai"}
 
 # To install the Redis extension.
 RUN set -ex \
@@ -38,10 +37,10 @@ RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "[Date]\date.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
 # Install composer deps
 
-ADD . /var/www/agarwood
-
-WORKDIR /var/www/agarwood
-
-EXPOSE 18316 18317 18318
-
-CMD ["php", "/var/www/agarwood/bin/agarwood", "http:start"]
+#ADD . /var/www/agarwood
+#
+#WORKDIR /var/www/agarwood
+#
+#EXPOSE 18316 18317 18318
+#
+#CMD ["php", "/var/www/agarwood/bin/agarwood", "http:start"]

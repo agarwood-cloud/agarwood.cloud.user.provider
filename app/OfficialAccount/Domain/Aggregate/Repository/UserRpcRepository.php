@@ -72,37 +72,37 @@ interface UserRpcRepository
     /**
      * 时间段内关注的openid
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function turnoverTimeIntervalOpenid(int $officialAccountsId, array $openid, string $startAt, string $endAt): array;
+    public function turnoverTimeIntervalOpenid(int $tencentId, array $openid, string $startAt, string $endAt): array;
 
     /**
      * 新增粉丝
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeFans(int $officialAccountsId, string $startAt, string $endAt): array;
+    public function userCenterTurnoverTimeFans(int $tencentId, string $startAt, string $endAt): array;
 
     /**
      * 时段分析：成交粉丝
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param array  $openid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function userCenterTurnoverTimeBuyFans(int $officialAccountsId, array $openid, string $startAt, string $endAt): array;
+    public function userCenterTurnoverTimeBuyFans(int $tencentId, array $openid, string $startAt, string $endAt): array;
 
     /**
      * 粉丝关联的客服信息

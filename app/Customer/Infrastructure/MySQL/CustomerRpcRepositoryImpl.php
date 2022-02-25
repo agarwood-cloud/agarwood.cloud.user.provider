@@ -31,6 +31,7 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
         return DB::table(Customer::tableName())
             ->select(
                 'id',
+                'enterprise_id as enterpriseId',
                 'oa_id as officialAccountId',
                 'name',
                 'account',

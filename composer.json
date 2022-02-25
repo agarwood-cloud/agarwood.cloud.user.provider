@@ -12,7 +12,7 @@
   "description": "Each organization has its own private domain traffic",
   "license": "GPL-3.0",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "ext-pdo": "*",
     "ext-redis": "*",
     "ext-json": "*",
@@ -36,7 +36,6 @@
     "swoft/crontab": "^2.0",
     "agarwood/core": "dev-master",
     "agarwood/rpc": "dev-master",
-    "agarwood-cloud/easy-wechat":"8.0.x-dev",
     "yurunsoft/guzzle-swoole": "^2.2",
     "lcobucci/jwt": "^4.0",
     "nesbot/carbon": "^2.44",
@@ -87,10 +86,6 @@
     {
       "type": "git",
       "url": "git@github.com:agarwood-cloud/agarwood.cloud.rpc.provider.git"
-    },
-    {
-      "type": "git",
-      "url": "git@gitee.com:agilawood-cloud/agarwood.cloud.easy.wechat.provider.git"
     }
   ],
   "config": {

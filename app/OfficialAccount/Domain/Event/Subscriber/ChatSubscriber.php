@@ -105,7 +105,7 @@ class ChatSubscriber extends UserProcess
                 if ($message['msgType'] === WebSocketMessage::TEXT_MESSAGE) {
                     $DTO = ChatAssembler::attributesToTextMessageDTO($message);
                     try {
-                        // $this->chatSendToTencentDomain->textMessage($app, $DTO);
+                        $this->chatSendToTencentDomain->textMessage($app, $DTO);
                     } catch (Throwable $e) {
                         CLog::error('Failed to send text message to tencent: %s', $e->getMessage());
                         // todo: 发送消息回客户端

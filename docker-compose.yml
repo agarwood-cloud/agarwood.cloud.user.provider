@@ -1,7 +1,8 @@
-version: '3.4'
+version: '3.9'
 services:
-  agarwood:
-    image: agarwood/user:2.0
+  user:
+    build: .
+    image: agarwood/user:${AGARWOOD_VERSION}
     command: ['php', '/var/www/agarwood/bin/agarwood', 'http:start']
     container_name: agarwood-user
     environment:
@@ -10,6 +11,31 @@ services:
     restart: always
     env_file:
       - .env
+    volumes:
+      - .:/var/www/agarwood
     ports:
       - ${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}
       - ${RPC_SERVER_PORT}:${RPC_SERVER_PORT}
+    depends_on:
+      - redis
+      - mysql
+    links:
+      - redis
+      - mysql
+  redis:
+    image: "redis:6.2-alpine"
+    container_name: redis
+    restart: always
+    ports:
+      - "16379:6379"
+  mysql:
+    image: "mysql:8.0"
+    container_name: mysql
+    restart: always
+    volumes:
+      - /usr/local/mysql/data:/var/lib/mysql
+      - /private/etc/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    ports:
+      - "13306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MASTER_DB_PWD}

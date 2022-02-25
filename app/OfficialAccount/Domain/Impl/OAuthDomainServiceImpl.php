@@ -10,6 +10,7 @@
 
 namespace App\OfficialAccount\Domain\Impl;
 
+use Agarwood\Core\WeChat\Factory\WeChat;
 use App\Customer\Domain\Aggregate\Repository\CustomerQueryRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserInfoRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserOfficialAccountRepository;
@@ -23,7 +24,6 @@ use EasyWeChat\OfficialAccount\Application;
 use Overtrue\Socialite\Exceptions\AuthorizeFailedException;
 use Overtrue\Socialite\User;
 use Swoft\Db\Exception\DbException;
-use Agarwood\WeChat\Factory\WeChat;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()

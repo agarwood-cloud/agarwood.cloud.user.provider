@@ -28,50 +28,50 @@ class GroupOverviewService implements UserCenterGroupOverviewRpcInterface
     /**
      * 分组下的所有客服信息
      *
-     * @param int   $officialAccountsId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function groupForCustomer(int $officialAccountsId, array $filter): array
+    public function groupForCustomer(int $tencentId, array $filter): array
     {
-        return $this->groupOverviewRpcDao->groupForCustomer($officialAccountsId, $filter);
+        return $this->groupOverviewRpcDao->groupForCustomer($tencentId, $filter);
     }
 
     /**
      * 时间段内的新增粉丝
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param array  $customerUuid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function groupForCustomerOpenid(int $officialAccountsId, array $customerUuid, string $startAt, string $endAt): array
+    public function groupForCustomerOpenid(int $tencentId, array $customerUuid, string $startAt, string $endAt): array
     {
-        return $this->groupOverviewRpcDao->groupForCustomerOpenid($officialAccountsId, $customerUuid, $startAt, $endAt);
+        return $this->groupOverviewRpcDao->groupForCustomerOpenid($tencentId, $customerUuid, $startAt, $endAt);
     }
 
     /**
      * 每个小组的新增粉丝数量 【新粉数量】
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param array  $customerUuid
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function groupForNewFansSum(int $officialAccountsId, array $customerUuid, string $startAt, string $endAt): array
+    public function groupForNewFansSum(int $tencentId, array $customerUuid, string $startAt, string $endAt): array
     {
-        return $this->groupOverviewRpcDao->groupForNewFansSum($officialAccountsId, $customerUuid, $startAt, $endAt);
+        return $this->groupOverviewRpcDao->groupForNewFansSum($tencentId, $customerUuid, $startAt, $endAt);
     }
 
     /**
      * 新粉成交数量
      *
-     * @param int    $officialAccountsId
+     * @param int    $tencentId
      * @param array  $customerUuid
      * @param array  $openid
      * @param string $startAt
@@ -79,8 +79,8 @@ class GroupOverviewService implements UserCenterGroupOverviewRpcInterface
      *
      * @return array
      */
-    public function groupFromSalesFansSum(int $officialAccountsId, array $customerUuid, array $openid, string $startAt, string $endAt): array
+    public function groupFromSalesFansSum(int $tencentId, array $customerUuid, array $openid, string $startAt, string $endAt): array
     {
-        return $this->groupOverviewRpcDao->groupFromSalesFansSum($officialAccountsId, $customerUuid, $openid, $startAt, $endAt);
+        return $this->groupOverviewRpcDao->groupFromSalesFansSum($tencentId, $customerUuid, $openid, $startAt, $endAt);
     }
 }
