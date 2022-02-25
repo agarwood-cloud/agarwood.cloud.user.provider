@@ -26,24 +26,24 @@ interface CompetitiveDepartmentApplication
      *      综合竞争力列表服务接口
      *
      *
-     * @param string   $officialAccountId
+     * @param string   $tencentId
      * @param IndexDTO $DTO
      * @param bool     $isPagination
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO, bool $isPagination = true): array;
+    public function indexProvider(int $tencentId, IndexDTO $DTO, bool $isPagination = true): array;
 
     /**
      * 应用层
      *      综合竞争力服务接口
      *
-     * @param string    $officialAccountId
+     * @param string    $tencentId
      * @param CreateDTO $DTO
      *
      * @return Collection
      */
-    public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection;
+    public function createProvider(int $tencentId, CreateDTO $DTO): Collection;
 
     /**
      * 应用层

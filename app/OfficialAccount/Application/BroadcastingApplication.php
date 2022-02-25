@@ -26,32 +26,32 @@ interface BroadcastingApplication
      *      客服列表服务接口
      *
      *
-     * @param string   $officialAccountId
+     * @param string   $tencentId
      * @param IndexDTO $DTO
      * @param bool     $isPagination
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO, bool $isPagination = true): array;
+    public function indexProvider(int $tencentId, IndexDTO $DTO, bool $isPagination = true): array;
 
     /**
      * 群发文本消息
      *
-     * @param string      $officialAccountId
+     * @param string      $tencentId
      * @param SendTextDTO $DTO
      *
      * @return array
      */
-    public function sendTextProvider(int $officialAccountId, SendTextDTO $DTO): array;
+    public function sendTextProvider(int $tencentId, SendTextDTO $DTO): array;
 
     /**
      * 分组列表
      *
-     * @param string       $officialAccountId
+     * @param string       $tencentId
      * @param FansGroupDTO $dto
      * @param bool         $isPagination
      *
      * @return array
      */
-    public function fansGroupProvider(int $officialAccountId, FansGroupDTO $dto, bool $isPagination = true): array;
+    public function fansGroupProvider(int $tencentId, FansGroupDTO $dto, bool $isPagination = true): array;
 }

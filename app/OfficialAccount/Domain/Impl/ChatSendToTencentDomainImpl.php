@@ -188,7 +188,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
     /**
      * 上传图片
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $app
      * @param array       $uploadedFiles
      *
@@ -197,7 +197,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function uploadImage(int $officialAccountId, Application $app, array $uploadedFiles): array
+    public function uploadImage(int $tencentId, Application $app, array $uploadedFiles): array
     {
         $result = [];
         foreach ($uploadedFiles as $file) {
@@ -246,7 +246,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
     /**
      * 上传图片
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $app
      * @param array       $uploadedFiles
      *
@@ -255,7 +255,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function uploadVideo(int $officialAccountId, Application $app, array $uploadedFiles): array
+    public function uploadVideo(int $tencentId, Application $app, array $uploadedFiles): array
     {
         $result = [];
         foreach ($uploadedFiles as $file) {

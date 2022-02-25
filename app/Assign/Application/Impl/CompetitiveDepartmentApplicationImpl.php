@@ -35,18 +35,18 @@ class CompetitiveDepartmentApplicationImpl implements CompetitiveDepartmentAppli
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO, bool $isPagination = true): array
+    public function indexProvider(int $tencentId, IndexDTO $DTO, bool $isPagination = true): array
     {
-        return $this->domain->index($officialAccountId, $DTO->toArrayNotEmpty([], true), $isPagination);
+        return $this->domain->index($tencentId, $DTO->toArrayNotEmpty([], true), $isPagination);
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection
+    public function createProvider(int $tencentId, CreateDTO $DTO): Collection
     {
         $attributes                 = $DTO->toArrayLine();
-        $attributes['service_uuid'] = $officialAccountId;
+        $attributes['service_uuid'] = $tencentId;
         $this->domain->create($attributes);
         //这里可以设置更多的返回值
         return Collection::make($DTO);

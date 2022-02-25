@@ -82,12 +82,12 @@ class UserQueryRepositoryImpl implements UserQueryRepository
     /**
      * User List Query Builder
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
         return DB::table(User::tableName())
             ->selectRaw(
@@ -106,7 +106,7 @@ class UserQueryRepositoryImpl implements UserQueryRepository
                 `updated_at` as `updatedAt`'
             )
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->where('oa_id', '=', $officialAccountId)
+            ->where('oa_id', '=', $tencentId)
             ->orderByDesc('id')
             ->when($filter['openid'], function ($query, $param) {
                 return $query->whereIn('openid', $param);

@@ -60,13 +60,13 @@ class VideoMessageHandlerDomainImpl implements VideoMessageHandlerDomain
     public MongoMessageRecordDomain $mongoMessageRecordDomain;
 
     /**
-     * @param int                                     $officialAccountId
+     * @param int                                     $tencentId
      * @param \EasyWeChat\OfficialAccount\Application $application
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function videoMessage(int $officialAccountId, Application $application): void
+    public function videoMessage(int $tencentId, Application $application): void
     {
         $application->server->push(function ($message) use ($application) {
 

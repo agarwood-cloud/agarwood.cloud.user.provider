@@ -26,12 +26,12 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
     /**
      * 自动回复的数据
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return array
      */
-    public function auto(int $officialAccountId, int $customerId): array
+    public function auto(int $tencentId, int $customerId): array
     {
         return DB::table(CustomerAutoReply::tableName())
             ->select(
@@ -41,7 +41,7 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', 'auto')
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
@@ -51,13 +51,13 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
     /**
      * 列表数据 (快捷回复)
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, int $customerId, array $filter): array
+    public function index(int $tencentId, int $customerId, array $filter): array
     {
         return DB::table(CustomerAutoReply::tableName())
             ->select(
@@ -67,7 +67,7 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', 'quick')
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT) // 未删除
@@ -121,16 +121,16 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
     /**
      * 自动回复
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return array
      */
-    public function autoReplyMessage(int $officialAccountId, int $customerId): array
+    public function autoReplyMessage(int $tencentId, int $customerId): array
     {
         return DB::table(CustomerAutoReply::tableName())
             ->select()
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', ReplyEnum::AUTO_REPLY_TYPE)
             ->where('event_key', '=', ReplyEnum::EVENT_KEY)

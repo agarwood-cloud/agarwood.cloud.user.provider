@@ -32,10 +32,10 @@ interface UserQueryRepository
     /**
      * User List Query Builder
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array;
+    public function index(int $tencentId, array $filter): array;
 }

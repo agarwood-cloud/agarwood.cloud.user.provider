@@ -20,50 +20,50 @@ interface AssignQueue
     /**
      * 加入抢粉队列
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      */
-    public function pushQueue(int $officialAccountId, int $customerId): void;
+    public function pushQueue(int $tencentId, int $customerId): void;
 
     /**
      * 弹出抢粉队列
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return int
      */
-    public function popQueue(int $officialAccountId): int;
+    public function popQueue(int $tencentId): int;
 
     /**
      * 检查是否在抢粉队列里面
      *    数据结构 - 集合
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return bool
      */
-    public function status(int $officialAccountId, int $customerId): bool;
+    public function status(int $tencentId, int $customerId): bool;
 
     /**
      * 标记正在抢粉
      *    数据结构 - 集合
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return void
      */
-    public function pushSetsStatus(int $officialAccountId, int $customerId): void;
+    public function pushSetsStatus(int $tencentId, int $customerId): void;
 
     /**
      * 删除正在抢粉的标记
      *    数据结构 - 集合
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return int
      */
-    public function popSetsStatus(int $officialAccountId, int $customerId): int;
+    public function popSetsStatus(int $tencentId, int $customerId): int;
 }

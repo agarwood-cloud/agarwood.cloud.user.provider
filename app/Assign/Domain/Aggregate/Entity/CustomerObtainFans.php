@@ -95,7 +95,7 @@ class CustomerObtainFans extends Model
      *
      * @var string|null
      */
-    private $officialAccountId;
+    private $tencentId;
 
     /**
      * 更新日期
@@ -200,13 +200,13 @@ class CustomerObtainFans extends Model
     }
 
     /**
-     * @param string|null $officialAccountId
+     * @param string|null $tencentId
      *
      * @return self
      */
-    public function setServiceUuid(?int $officialAccountId): self
+    public function setServiceUuid(?int $tencentId): self
     {
-        $this->serviceUuid = $officialAccountId;
+        $this->serviceUuid = $tencentId;
 
         return $this;
     }

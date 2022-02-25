@@ -20,33 +20,33 @@ interface UserRpcRepository
     /**
      * 关注的所有粉丝
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function subscribeFans(int $officialAccountId): array;
+    public function subscribeFans(int $tencentId): array;
 
     /**
      * 当天关注的粉丝(包括取消关注的粉丝)
      *
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayFans(int $officialAccountId, string $startAt, string $endAt): array;
+    public function theDayFans(int $tencentId, string $startAt, string $endAt): array;
 
     /**
      * 当天取消关注的粉丝
      *
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayUnsubscribeFans(int $officialAccountId, string $startAt, string $endAt): array;
+    public function theDayUnsubscribeFans(int $tencentId, string $startAt, string $endAt): array;
 
     /**
      * 在xx时间段内成交的粉丝的 openid

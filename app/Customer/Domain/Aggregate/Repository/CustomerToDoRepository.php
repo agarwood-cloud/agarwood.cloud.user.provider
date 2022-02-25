@@ -18,13 +18,13 @@ interface CustomerToDoRepository
     /**
      * 列表数据
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, int $customerId, array $filter): array;
+    public function index(int $tencentId, int $customerId, array $filter): array;
 
     /**
      * 创建

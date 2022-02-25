@@ -16,13 +16,13 @@ interface CustomerToDoDomainService
 {
     /**
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter 过滤条件
      *
      * @return array
      */
-    public function index(int $officialAccountId, int $customerId, array $filter): array;
+    public function index(int $tencentId, int $customerId, array $filter): array;
 
     /**
      * 新建

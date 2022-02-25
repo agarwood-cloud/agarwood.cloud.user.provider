@@ -26,13 +26,13 @@ class CustomerOverviewDomainServiceImpl implements CustomerOverviewDomainService
     public CustomerOverviewRepository $customerOverviewRepository;
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param array  $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
-        return $this->customerOverviewRepository->index($officialAccountId, $filter);
+        return $this->customerOverviewRepository->index($tencentId, $filter);
     }
 }

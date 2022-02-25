@@ -88,17 +88,17 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 关注事件领域服务
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $application
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventSubscribe(int $officialAccountId, Application $application): void
+    public function eventSubscribe(int $tencentId, Application $application): void
     {
         // 记录用户的信息
-        $application->server->push(function ($message) use ($officialAccountId, $application) {
+        $application->server->push(function ($message) use ($tencentId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
 
             // 关注事件
@@ -107,7 +107,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
 
                 $attributes          = (array)$application->user->get($DTO->getFromUserName());
-                $attributes['oa_id'] = $officialAccountId;
+                $attributes['oa_id'] = $tencentId;
 
                 if (empty($user)) {
                     if ($DTO->getEventKey()) {
@@ -116,10 +116,10 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                         $attributes['customerId'] = str_replace(UserEnum::SCAN_FROM_CUSTOMER_UNSUBSCRIBE, '', $DTO->getEventKey());
                     } else {
                         // 这里是通过分粉的机制来分粉
-                        $attributes['customerId'] = $this->assignQueue->popQueue($officialAccountId);
+                        $attributes['customerId'] = $this->assignQueue->popQueue($tencentId);
 
                         // 重新分配也算是抢粉，记录抢粉信息
-                        $this->assignSettingRepository->recordAssignFans($officialAccountId, $attributes['customerId'], $DTO->getFromUserName());
+                        $this->assignSettingRepository->recordAssignFans($tencentId, $attributes['customerId'], $DTO->getFromUserName());
                     }
 
                     // todo 关联客服信息
@@ -132,13 +132,13 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     // 如果已关注的，且没有分配客服，则重新分配客服
                     if (empty($user['customer_id'])) {
                         // 这里是通过分粉的机制来分粉
-                        $attributes['customerId'] = $this->assignQueue->popQueue($officialAccountId);
+                        $attributes['customerId'] = $this->assignQueue->popQueue($tencentId);
 
                         //  todo 关联客服信息
                         // $attributes['customerId'] && $attributes['customer'] = $this->customerExtendsRepository->findByUuid($attributes['customerId'])->getName();
 
                         // 重新分配也算是抢粉，记录抢粉信息
-                        $this->assignSettingRepository->recordAssignFans($officialAccountId, $attributes['customerId'], $DTO->getFromUserName());
+                        $this->assignSettingRepository->recordAssignFans($tencentId, $attributes['customerId'], $DTO->getFromUserName());
                     }
 
                     // 更新用户信息
@@ -172,21 +172,21 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 取消关注事件领域服务
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $application
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventUnsubscribe(int $officialAccountId, Application $application): void
+    public function eventUnsubscribe(int $tencentId, Application $application): void
     {
-        $application->server->push(function ($message) use ($officialAccountId) {
+        $application->server->push(function ($message) use ($tencentId) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::UNSUBSCRIBE) {
                 // 取消关注事件
                 $attributes = [
-                    'oa_id'          => $officialAccountId,
+                    'oa_id'          => $tencentId,
                     'subscribe'      => 'unsubscribe',
                     'unsubscribe_at' => Carbon::now()->toDateTimeString()
                 ];
@@ -221,16 +221,16 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 关注扫码事件领域服务
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $application
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventScan(int $officialAccountId, Application $application): void
+    public function eventScan(int $tencentId, Application $application): void
     {
-        $application->server->push(function ($message) use ($officialAccountId, $application) {
+        $application->server->push(function ($message) use ($tencentId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::SCAN) {
                 // 如果存在则，更新所属的客服
@@ -241,7 +241,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
 
                 if ($user) {
                     $attributes = [
-                        'oa_id'       => $officialAccountId,
+                        'oa_id'       => $tencentId,
                         'customer_id' => (int)$customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];
@@ -283,16 +283,16 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 点击菜单拉取消息时的事件推送
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $application
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventClick(int $officialAccountId, Application $application): void
+    public function eventClick(int $tencentId, Application $application): void
     {
-        $application->server->push(function ($message) use ($officialAccountId, $application) {
+        $application->server->push(function ($message) use ($tencentId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::CLICK) {
                 // 如果存在则，更新所属的客服
@@ -300,10 +300,10 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
                 if ($user && $user['customer_id']) {
                     // 这里是通过分粉的机制来分粉
-                    $customerId = $this->assignQueue->popQueue($officialAccountId);
+                    $customerId = $this->assignQueue->popQueue($tencentId);
 
                     $attributes = [
-                        'oa_id'       => $officialAccountId,
+                        'oa_id'       => $tencentId,
                         'customer_id' => $customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];
@@ -311,7 +311,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 } else {
                     // 当用户信息不存在数据库时
                     $attributes = (array)$application->user->get($DTO->getFromUserName());
-                    $customerId = $this->assignQueue->popQueue($officialAccountId);
+                    $customerId = $this->assignQueue->popQueue($tencentId);
 
                     // todo 关联客服信息
                     $attributes['customer_id'] = (int)$customerId;
@@ -347,16 +347,16 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 点击菜单跳转链接时的事件推送
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $application
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventView(int $officialAccountId, Application $application): void
+    public function eventView(int $tencentId, Application $application): void
     {
-        $application->server->push(function ($message) use ($officialAccountId, $application) {
+        $application->server->push(function ($message) use ($tencentId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::VIEW) {
                 // 如果存在则，更新所属的客服
@@ -366,10 +366,10 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 if ($user && $user['customer_id']) {
 
                     // 这里是通过分粉的机制来分粉
-                    $customerId = $this->assignQueue->popQueue($officialAccountId);
+                    $customerId = $this->assignQueue->popQueue($tencentId);
 
                     $attributes = [
-                        'oa_id'       => $officialAccountId,
+                        'oa_id'       => $tencentId,
                         'customer_id' => $customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];
@@ -377,7 +377,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 } else {
                     // 当用户信息不存在数据库时
                     $attributes = (array)$application->user->get($DTO->getFromUserName());
-                    $customerId = $this->assignQueue->popQueue($officialAccountId);
+                    $customerId = $this->assignQueue->popQueue($tencentId);
 
                     // todo 关联客服信息
                     $attributes['customer_id'] = $customerId;

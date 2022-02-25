@@ -18,12 +18,12 @@ interface CompetitiveRepository
     /**
      * 管理员管理列表数据
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array;
+    public function index(int $tencentId, array $filter): array;
 
     /**
      * 创建

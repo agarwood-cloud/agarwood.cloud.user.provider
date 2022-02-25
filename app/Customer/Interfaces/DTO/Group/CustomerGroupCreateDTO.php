@@ -36,7 +36,7 @@ class CustomerGroupCreateDTO extends AbstractBaseDTO
      *
      * @var string
      */
-    public int $officialAccountId = 0;
+    public int $tencentId = 0;
 
     /**
      * 分组名称
@@ -118,11 +118,11 @@ class CustomerGroupCreateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      */
-    public function setServiceUuid(int $officialAccountId): void
+    public function setServiceUuid(int $tencentId): void
     {
-        $this->serviceUuid = $officialAccountId;
+        $this->serviceUuid = $tencentId;
     }
 
     /**

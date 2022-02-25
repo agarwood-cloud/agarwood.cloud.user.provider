@@ -44,18 +44,18 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
      * @inheritDoc
      * @throws Exception
      */
-    public function assignCustomer(int $officialAccountId): int
+    public function assignCustomer(int $tencentId): int
     {
         // 1. 部门的抢粉信息（该公众号的所有部门的信息, 包含已排好分配粉丝的先后顺序）
-        $department = $this->assignSettingRepository->getDepartments($officialAccountId);
+        $department = $this->assignSettingRepository->getDepartments($tencentId);
 
         // 如果没有设置抢粉信息，随机分配一个客服
         if (empty($department)) {
-            return $this->randomAssign($officialAccountId);
+            return $this->randomAssign($tencentId);
         }
 
         // 2. 查找最后一个要分配的部门，推断出当前要分配的部门
-        $last = $this->assignRepository->lastOfficialAccountObtainFans($officialAccountId); // 最后一个抢粉的信息
+        $last = $this->assignRepository->lastOfficialAccountObtainFans($tencentId); // 最后一个抢粉的信息
 
         // 3. 此条件是第一次抢粉时, 如果该部门有人抢粉，则返回抢粉的
         if (empty($last)) {
@@ -79,7 +79,7 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
             }
 
             // 当没有人在抢粉
-            return $this->randomAssign($officialAccountId);
+            return $this->randomAssign($tencentId);
         }
 
         /*
@@ -145,13 +145,13 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
         }
 
         // 临时的解决方法是，随机分配该公众号一个客服
-        return $this->randomAssign($officialAccountId);
+        return $this->randomAssign($tencentId);
     }
 
     /**
      * @inheritDoc
      */
-    public function assignList(int $officialAccountId, int $customerId, int $power = 0): bool
+    public function assignList(int $tencentId, int $customerId, int $power = 0): bool
     {
         // 2.检查是否已满足基本的抢粉数
         // $dayObtainFans 今天抢粉数量
@@ -212,7 +212,7 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
         }
 
         // 3. 记录正在抢粉的客服
-        $this->pushSetsStatus($officialAccountId, $customerId);
+        $this->pushSetsStatus($tencentId, $customerId);
 
         // 4. 优先根据基础抢粉数，如果未达到基础抢粉数，则加入到基础抢粉的队列
         if ($dayObtainFans < $customerCompetitive['base_fans']) {
@@ -305,10 +305,10 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
      * @inheritDoc
      * @throws Exception
      */
-    public function randomAssign(int $officialAccountId): int
+    public function randomAssign(int $tencentId): int
     {
         // 临时的解决方法是，随机分配该公众号一个客服
-        $customerAll = array_column($this->assignRepository->getCustomerUuidByServiceUuid($officialAccountId), 'id');
+        $customerAll = array_column($this->assignRepository->getCustomerUuidByServiceUuid($tencentId), 'id');
 
         // 如果不存在客服信息则返回空值
         if (empty($customerAll)) {
@@ -322,8 +322,8 @@ class BaseAssignStrategyImpl implements BaseAssignStrategy
     /**
      * @inheritDoc
      */
-    public function pushSetsStatus(int $officialAccountId, int $customerId): void
+    public function pushSetsStatus(int $tencentId, int $customerId): void
     {
-        Redis::sAdd(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, (string)$customerId);
+        Redis::sAdd(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$customerId);
     }
 }

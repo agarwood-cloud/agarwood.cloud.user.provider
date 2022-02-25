@@ -25,21 +25,21 @@ interface CustomerDomain
      * customer list data
      *
      * @param array $filter condition
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array;
+    public function index(int $tencentId, array $filter): array;
 
     /**
      *  create
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(int $officialAccountId, array $attributes): bool;
+    public function create(int $tencentId, array $attributes): bool;
 
     /**
      * update
@@ -72,12 +72,12 @@ interface CustomerDomain
     /**
      * scan QR code
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribe(int $officialAccountId, int $customerId): array;
+    public function scanSubscribe(int $tencentId, int $customerId): array;
 
     /**
      * @param int             $id
@@ -88,12 +88,12 @@ interface CustomerDomain
     public function changeStatus(int $id, ChangeStatusDTO $DTO): array;
 
     /**
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOffline(int $officialAccountId, string $ids): array;
+    public function obtainOffline(int $tencentId, string $ids): array;
 
     /**
      *  chat list data
@@ -119,17 +119,17 @@ interface CustomerDomain
     public function chatRecord(int $customerId, Client $client, ChatRecordDTO $DTO, array $month): array;
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function obtainFansOffline(int $officialAccountId): array;
+    public function obtainFansOffline(int $tencentId): array;
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $id
      *
      * @return bool
      */
-    public function obtainStatus(int $officialAccountId, int $id): bool;
+    public function obtainStatus(int $tencentId, int $id): bool;
 }

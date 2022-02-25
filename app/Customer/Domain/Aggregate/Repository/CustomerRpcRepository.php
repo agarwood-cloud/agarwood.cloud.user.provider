@@ -16,10 +16,10 @@ namespace App\Customer\Domain\Aggregate\Repository;
 interface CustomerRpcRepository
 {
     /**
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $username
      *
      * @return array
      */
-    public function login(int $officialAccountId, string $username): array;
+    public function login(int $tencentId, string $username): array;
 }

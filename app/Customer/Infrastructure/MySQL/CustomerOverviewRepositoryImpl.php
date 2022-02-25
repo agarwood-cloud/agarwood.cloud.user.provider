@@ -23,12 +23,12 @@ class CustomerOverviewRepositoryImpl implements CustomerOverviewRepository
     /**
      * 管理员管理列表数据
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
         return DB::table(Customer::tableName())
             ->select(
@@ -38,7 +38,7 @@ class CustomerOverviewRepositoryImpl implements CustomerOverviewRepository
                 'phone'
             )
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
-            ->where('oa_id', '=', $officialAccountId)
+            ->where('oa_id', '=', $tencentId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })

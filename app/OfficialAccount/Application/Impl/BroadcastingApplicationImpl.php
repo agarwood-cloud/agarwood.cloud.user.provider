@@ -39,41 +39,41 @@ class BroadcastingApplicationImpl implements BroadcastingApplication
     /**
      * 已发送的列表
      *
-     * @param string   $officialAccountId
+     * @param string   $tencentId
      * @param IndexDTO $DTO
      * @param bool     $isPagination
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO, bool $isPagination = true): array
+    public function indexProvider(int $tencentId, IndexDTO $DTO, bool $isPagination = true): array
     {
-        return $this->domain->index($officialAccountId, $DTO->toArrayLine(), $isPagination);
+        return $this->domain->index($tencentId, $DTO->toArrayLine(), $isPagination);
     }
 
     /**
-     * @param string      $officialAccountId
+     * @param string      $tencentId
      * @param SendTextDTO $DTO
      *
      * @return array
      */
-    public function sendTextProvider(int $officialAccountId, SendTextDTO $DTO): array
+    public function sendTextProvider(int $tencentId, SendTextDTO $DTO): array
     {
-        $app = $this->serviceRpc->officialAccountApplication($officialAccountId);
+        $app = $this->serviceRpc->officialAccountApplication($tencentId);
 
-        return $this->domain->sendText($officialAccountId, $app, $DTO);
+        return $this->domain->sendText($tencentId, $app, $DTO);
     }
 
     /**
      * 分组列表
      *
-     * @param string       $officialAccountId
+     * @param string       $tencentId
      * @param FansGroupDTO $dto
      * @param bool         $isPagination
      *
      * @return array
      */
-    public function fansGroupProvider(int $officialAccountId, FansGroupDTO $dto, bool $isPagination = true): array
+    public function fansGroupProvider(int $tencentId, FansGroupDTO $dto, bool $isPagination = true): array
     {
-        return $this->domain->fansGroup($officialAccountId, $dto, $isPagination);
+        return $this->domain->fansGroup($tencentId, $dto, $isPagination);
     }
 }

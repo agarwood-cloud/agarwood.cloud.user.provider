@@ -33,18 +33,18 @@ class CallbackController
 
     /**
      * Official account callback.  i.e:
-     *    https://api.xxx.com/official-account/callback/official-account/token/{platform}.html
+     *    https://api.xxx.com/user-center/official-account/callback/official-account/token/{platformId}.html
      *
      * @RequestMapping(
      *     route="official-account/token/{platform}.html",
      *     method={RequestMethod::GET, RequestMethod::POST, RequestMethod::PUT, RequestMethod::PATCH, RequestMethod::OPTIONS}
      *     )
-     * @param string   $platform
+     * @param string   $platformId
      * @param Response $response
      *
      * @return Response|null
      */
-    public function actionOfficialAccount(string $platform, Response $response): ?Response
+    public function actionOfficialAccount(string $platformId, Response $response): ?Response
     {
         /*
         |-----------------------------------------------------------------
@@ -56,7 +56,7 @@ class CallbackController
         //返回类型，根据请求的类型返回
         $response->withContentType(ContentType::XML);
         return $response->withContent(
-            $this->application->officialAccountProvider($platform)->getContent()
+            $this->application->officialAccountProvider($platformId)->getContent()
         );
     }
 }

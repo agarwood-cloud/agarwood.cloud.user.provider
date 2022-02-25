@@ -26,12 +26,12 @@ interface GroupDomainService
      * //第二步，把与顶级相关的相关的二级，三级分类取出来（最多支持三级）
      * //第三步，组成树型结构
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param array  $filter 过滤条件
      *
      * @return array
      */
-    public function customerIndex(int $officialAccountId, array $filter): array;
+    public function customerIndex(int $tencentId, array $filter): array;
 
     /**
      *  获取列表
@@ -42,12 +42,12 @@ interface GroupDomainService
      * //第二步，把与顶级相关的相关的二级，三级分类取出来（最多支持三级）
      * //第三步，组成树型结构
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param array  $filter 过滤条件
      *
      * @return array
      */
-    public function fansIndex(int $officialAccountId, array $filter): array;
+    public function fansIndex(int $tencentId, array $filter): array;
 
     /**
      * agarwood.cloud.user.center.provider - 领域服务接口： 新建
@@ -126,11 +126,11 @@ interface GroupDomainService
     /**
      * 客服的粉丝分组
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function customer(int $officialAccountId, int $customerId, array $filter): array;
+    public function customer(int $tencentId, int $customerId, array $filter): array;
 }

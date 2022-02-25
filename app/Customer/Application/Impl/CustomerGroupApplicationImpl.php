@@ -34,19 +34,19 @@ class CustomerGroupApplicationImpl implements CustomerGroupApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $officialAccountId, CustomerGroupIndexDTO $DTO): array
+    public function indexProvider(int $tencentId, CustomerGroupIndexDTO $DTO): array
     {
-        return $this->domain->customerIndex($officialAccountId, $DTO->toArrayLine(), $isPagination);
+        return $this->domain->customerIndex($tencentId, $DTO->toArrayLine(), $isPagination);
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $officialAccountId, CustomerGroupCreateDTO $DTO): Collection
+    public function createProvider(int $tencentId, CustomerGroupCreateDTO $DTO): Collection
     {
         //增加部分系统自己添加的参数 i.e: uuid
         $attributes                 = $DTO->toArrayLine();
-        $attributes['service_uuid'] = $officialAccountId;
+        $attributes['service_uuid'] = $tencentId;
         $this->domain->customerCreate($attributes);
         //这里可以设置更多的返回值
         return Collection::make($DTO);

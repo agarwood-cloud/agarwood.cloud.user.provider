@@ -32,34 +32,34 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 关注的所有粉丝
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function subscribeFans(int $officialAccountId): array
+    public function subscribeFans(int $tencentId): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as fans')
             ->where([
                 ['subscribe', '=', 'subscribe'],
-                ['service_id', '=', $officialAccountId]
+                ['service_id', '=', $tencentId]
             ])->firstArray();
     }
 
     /**
      * 当天关注的粉丝(包括取消关注的粉丝)
      *
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayFans(int $officialAccountId, string $startAt, string $endAt): array
+    public function theDayFans(int $tencentId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayFans`')
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->firstArray();
     }
@@ -67,18 +67,18 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     /**
      * 当天取消关注的粉丝
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param string $startAt
      * @param string $endAt
      *
      * @return array
      */
-    public function theDayUnsubscribeFans(int $officialAccountId, string $startAt, string $endAt): array
+    public function theDayUnsubscribeFans(int $tencentId, string $startAt, string $endAt): array
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayUnsubscribeFans`')
             ->where('subscribe', '=', 'unsubscribe')
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->whereBetween('unsubscribed_at', [$startAt, $endAt])
             ->firstArray();
     }

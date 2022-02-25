@@ -23,13 +23,13 @@ class WelcomeSubscribeDomainImpl implements WelcomeSubscribeDomain
     /**
      * 欢迎关注语
      *
-     * @param int                                     $officialAccountId
+     * @param int                                     $tencentId
      * @param \EasyWeChat\OfficialAccount\Application $application
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function autoReply(int $officialAccountId, Application $application): void
+    public function autoReply(int $tencentId, Application $application): void
     {
         // todo
     }
@@ -37,13 +37,13 @@ class WelcomeSubscribeDomainImpl implements WelcomeSubscribeDomain
     /**
      * 欢迎关注语
      *
-     * @param int                                     $officialAccountId
+     * @param int                                     $tencentId
      * @param \EasyWeChat\OfficialAccount\Application $application
      *
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function welcomeSubscribe(int $officialAccountId, Application $application): void
+    public function welcomeSubscribe(int $tencentId, Application $application): void
     {
         $application->server->push(function ($message) {
             // 关注事件

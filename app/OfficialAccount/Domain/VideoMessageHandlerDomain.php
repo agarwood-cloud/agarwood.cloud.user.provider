@@ -18,8 +18,8 @@ use EasyWeChat\OfficialAccount\Application;
 interface VideoMessageHandlerDomain
 {
     /**
-     * @param int                                     $officialAccountId
+     * @param int                                     $tencentId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function videoMessage(int $officialAccountId, Application $application): void;
+    public function videoMessage(int $tencentId, Application $application): void;
 }

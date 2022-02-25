@@ -83,16 +83,16 @@ class CustomerAssignRepositoryImpl implements CustomerAssignRepository
     /**
      * 查找可用的该公众号的客服
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function getCustomerUuidByServiceUuid(int $officialAccountId): array
+    public function getCustomerUuidByServiceUuid(int $tencentId): array
     {
         // 优先查找有设置分组的
         $customerIds = DB::table(CustomerCompetitive::tableName())
             ->select('customer_id as id')
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -104,7 +104,7 @@ class CustomerAssignRepositoryImpl implements CustomerAssignRepository
         // 如果没有设置，再随机分配
         return DB::table(Customer::tableName())
             ->select('id')
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();

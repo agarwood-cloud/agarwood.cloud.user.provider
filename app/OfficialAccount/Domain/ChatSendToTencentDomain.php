@@ -75,22 +75,22 @@ interface ChatSendToTencentDomain
     /**
      * 上传图片
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $app
      * @param array     $uploadedFiles
      *
      * @return array
      */
-    public function uploadImage(int $officialAccountId, Application $app, array $uploadedFiles): array;
+    public function uploadImage(int $tencentId, Application $app, array $uploadedFiles): array;
 
     /**
      * 上传视频
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param Application $app
      * @param array       $uploadedFiles
      *
      * @return array
      */
-    public function uploadVideo(int $officialAccountId, Application $app, array $uploadedFiles): array;
+    public function uploadVideo(int $tencentId, Application $app, array $uploadedFiles): array;
 }

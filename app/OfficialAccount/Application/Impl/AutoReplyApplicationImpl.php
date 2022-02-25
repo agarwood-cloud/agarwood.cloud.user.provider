@@ -38,9 +38,9 @@ class AutoReplyApplicationImpl implements AutoReplyApplication
      * @inheritDoc
      * @throws Exception
      */
-    public function indexProvider(int $officialAccountId, int $customerId, IndexDTO $DTO, bool $isPagination = true): array
+    public function indexProvider(int $tencentId, int $customerId, IndexDTO $DTO, bool $isPagination = true): array
     {
-        $indexData = $this->domain->index($officialAccountId, $customerId, $DTO->toArrayLine(), $isPagination);
+        $indexData = $this->domain->index($tencentId, $customerId, $DTO->toArrayLine(), $isPagination);
 
         if (isset($indexData['list'])) {
             $indexData['list'] = ArrayHelper::index($indexData['list'], null, 'autoType');
@@ -52,11 +52,11 @@ class AutoReplyApplicationImpl implements AutoReplyApplication
     /**
      * @inheritDoc
      */
-    public function createProvider(int $officialAccountId, int $customerId, CreateDTO $DTO): Collection
+    public function createProvider(int $tencentId, int $customerId, CreateDTO $DTO): Collection
     {
         //增加部分系统自己添加的参数 i.e: uuid
         $attributes                  = $DTO->toArrayLine();
-        $attributes['service_uuid']  = $officialAccountId;
+        $attributes['service_uuid']  = $tencentId;
         $attributes['customer_uuid'] = $customerId;
         $attributes['auto_type']     = ReplyEnum::QUICK_REPLY_TYPE;
         $collection                  = $this->domain->create($attributes);
@@ -82,16 +82,16 @@ class AutoReplyApplicationImpl implements AutoReplyApplication
     }
 
     /**
-     * @param string                                                $officialAccountId
+     * @param string                                                $tencentId
      * @param string                                                $customerId
      * @param \App\OfficialAccount\Interfaces\DTO\AutoReply\SaveDTO $DTO
      *
      * @return \Swoft\Stdlib\Collection
      */
-    public function saveProvider(int $officialAccountId, int $customerId, SaveDTO $DTO): Collection
+    public function saveProvider(int $tencentId, int $customerId, SaveDTO $DTO): Collection
     {
         // 是否存在
-        $attributes['service_uuid']  = $officialAccountId;
+        $attributes['service_uuid']  = $tencentId;
         $attributes['customer_uuid'] = $customerId;
         $attributes['auto_type']     = ReplyEnum::AUTO_REPLY_TYPE;
 

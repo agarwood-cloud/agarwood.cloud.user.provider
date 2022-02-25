@@ -80,7 +80,7 @@ class UpdateDTO extends AbstractBaseDTO
      *
      * @var int|null
      */
-    public ?int $officialAccountId = null;
+    public ?int $tencentId = null;
 
     /**
      * usable:可用,disabled:不可用
@@ -197,11 +197,11 @@ class UpdateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param int|null $officialAccountId
+     * @param int|null $tencentId
      */
-    public function setOfficialAccountId(?int $officialAccountId): void
+    public function setOfficialAccountId(?int $tencentId): void
     {
-        $this->officialAccountId = $officialAccountId;
+        $this->officialAccountId = $tencentId;
     }
 
     /**

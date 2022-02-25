@@ -27,10 +27,10 @@ class AutoReplyDomainServiceImpl implements AutoReplyDomainService
      */
     protected AutoReplyRepository $autoReplyRepository;
 
-    public function index(int $officialAccountId, int $customerId, array $filter, bool $isPagination = true): array
+    public function index(int $tencentId, int $customerId, array $filter, bool $isPagination = true): array
     {
-        $auto            = $this->autoReplyRepository->auto($officialAccountId, $customerId);
-        $quick           = $this->autoReplyRepository->index($officialAccountId, $customerId, $filter, $isPagination);
+        $auto            = $this->autoReplyRepository->auto($tencentId, $customerId);
+        $quick           = $this->autoReplyRepository->index($tencentId, $customerId, $filter, $isPagination);
         $quick['list'][] = $auto;
         return $quick;
     }

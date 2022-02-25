@@ -47,7 +47,7 @@ class AssignQueueImpl implements AssignQueue
     /**
      * @inheritDoc
      */
-    public function pushQueue(int $officialAccountId, int $customerId): void
+    public function pushQueue(int $tencentId, int $customerId): void
     {
         // 可以设置多种分配客户的方法
         $power = $this->competePower->computedPower($customerId);
@@ -64,7 +64,7 @@ class AssignQueueImpl implements AssignQueue
         $this->competitiveRepository->update($customerId, ['power' => $power]);
 
         //加入抢粉队列
-        $this->baseAssignStrategy->assignList($officialAccountId, $customerId, $customer['custom_power'] ?? $power);
+        $this->baseAssignStrategy->assignList($tencentId, $customerId, $customer['custom_power'] ?? $power);
 
         // 其它的抢粉方式 i.e
     }
@@ -72,33 +72,33 @@ class AssignQueueImpl implements AssignQueue
     /**
      * @inheritDoc
      */
-    public function popQueue(int $officialAccountId): int
+    public function popQueue(int $tencentId): int
     {
         // 可以设置多种分配客户的方法
-        return $this->baseAssignStrategy->assignCustomer($officialAccountId);
+        return $this->baseAssignStrategy->assignCustomer($tencentId);
     }
 
     /**
      * @inheritDoc
      */
-    public function status(int $officialAccountId, int $customerId): bool
+    public function status(int $tencentId, int $customerId): bool
     {
-        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, (string)$customerId);
+        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$customerId);
     }
 
     /**
      * @inheritDoc
      */
-    public function pushSetsStatus(int $officialAccountId, int $customerId): void
+    public function pushSetsStatus(int $tencentId, int $customerId): void
     {
-        Redis::sAdd(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, (string)$customerId);
+        Redis::sAdd(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$customerId);
     }
 
     /**
      * @inheritDoc
      */
-    public function popSetsStatus(int $officialAccountId, int $customerId): int
+    public function popSetsStatus(int $tencentId, int $customerId): int
     {
-        return Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, (string)$customerId);
+        return Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$customerId);
     }
 }

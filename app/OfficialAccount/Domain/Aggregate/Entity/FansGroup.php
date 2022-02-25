@@ -111,7 +111,7 @@ class FansGroup extends Model
      *
      * @var string|null
      */
-    private $officialAccountId;
+    private $tencentId;
 
     /**
      * 更新时间
@@ -240,13 +240,13 @@ class FansGroup extends Model
     }
 
     /**
-     * @param string|null $officialAccountId
+     * @param string|null $tencentId
      *
      * @return self
      */
-    public function setServiceUuid(?int $officialAccountId): self
+    public function setServiceUuid(?int $tencentId): self
     {
-        $this->serviceUuid = $officialAccountId;
+        $this->serviceUuid = $tencentId;
 
         return $this;
     }

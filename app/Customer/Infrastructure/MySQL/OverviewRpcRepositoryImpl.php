@@ -25,12 +25,12 @@ class OverviewRpcRepositoryImpl implements OverviewRpcRepository
     /**
      * 获取所有的客服数据
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param array  $filter
      *
      * @return array
      */
-    public function customerList(int $officialAccountId, array $filter): array
+    public function customerList(int $tencentId, array $filter): array
     {
         return DB::table(Customer::tableName())
             ->select(
@@ -45,7 +45,7 @@ class OverviewRpcRepositoryImpl implements OverviewRpcRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');

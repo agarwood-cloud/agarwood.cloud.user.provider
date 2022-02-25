@@ -19,12 +19,12 @@ interface OverviewRpcRepository
     /**
      * 获取所有的客服数据
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param array  $filter
      *
      * @return array
      */
-    public function customerList(int $officialAccountId, array $filter): array;
+    public function customerList(int $tencentId, array $filter): array;
 
     /**
      * 抢粉的数量，按客服分组

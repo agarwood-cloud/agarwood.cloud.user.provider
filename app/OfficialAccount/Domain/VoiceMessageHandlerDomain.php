@@ -18,8 +18,8 @@ use EasyWeChat\OfficialAccount\Application;
 interface VoiceMessageHandlerDomain
 {
     /**
-     * @param int                                     $officialAccountId
+     * @param int                                     $tencentId
      * @param \EasyWeChat\OfficialAccount\Application $application
      */
-    public function voiceMessage(int $officialAccountId, Application $application): void;
+    public function voiceMessage(int $tencentId, Application $application): void;
 }

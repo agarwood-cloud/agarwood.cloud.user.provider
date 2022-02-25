@@ -20,9 +20,9 @@ interface CallbackApplication
     /**
      * 公众号回调
      *
-     * @param int|string $officialAccountId
+     * @param int|string $tencentId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function officialAccountProvider(int|string $officialAccountId): Response;
+    public function officialAccountProvider(int|string $tencentId): Response;
 }

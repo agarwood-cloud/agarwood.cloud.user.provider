@@ -74,11 +74,11 @@ class CustomerObtainFansRepositoryImpl implements CustomerObtainFansRepository
     /**
      * 查找该公众号最后一个抢粉的信息
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function lastOfficialAccountObtainFans(int $officialAccountId): array
+    public function lastOfficialAccountObtainFans(int $tencentId): array
     {
         // select *
         // from `user_center_customer_obtain_fans` as `user_center_co`
@@ -93,7 +93,7 @@ class CustomerObtainFansRepositoryImpl implements CustomerObtainFansRepository
         return DB::table(CustomerObtainFans::tableName() . ' as co')
             ->select('co.rate', 'co.department_uuid')
             ->leftJoin(CustomerCompetitiveDepartment::tableName() . ' as ccd', 'co.department_uuid', '=', 'ccd.uuid')
-            ->where('co.service_uuid', '=', $officialAccountId)
+            ->where('co.service_uuid', '=', $tencentId)
             ->where('co.obtain_status', '=', 'obtain')
             ->where('co.department_uuid', '!=', '')
             ->where('ccd.rate', '>', 0)

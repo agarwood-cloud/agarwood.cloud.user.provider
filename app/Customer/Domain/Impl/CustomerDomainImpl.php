@@ -78,25 +78,25 @@ class CustomerDomainImpl implements CustomerDomain
     public CustomerCommandRepository $customerCommandRepository;
 
     /**
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
-        return $this->customerQueryRepository->index($officialAccountId, $filter);
+        return $this->customerQueryRepository->index($tencentId, $filter);
     }
 
     /**
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(int $officialAccountId, array $attributes): bool
+    public function create(int $tencentId, array $attributes): bool
     {
-        return $this->customerCommandRepository->create($officialAccountId, $attributes);
+        return $this->customerCommandRepository->create($tencentId, $attributes);
     }
 
     /**
@@ -136,15 +136,15 @@ class CustomerDomainImpl implements CustomerDomain
     }
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return array
      */
-    public function scanSubscribe(int $officialAccountId, int $customerId): array
+    public function scanSubscribe(int $tencentId, int $customerId): array
     {
         // 这里获取实例
-        $app    = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app    = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         //生成临时图片
         $result = $app->qrcode->temporary(UserEnum::SCAN_FROM_CUSTOMER_SUBSCRIBE . $customerId, 7 * 24 * 3600);
@@ -172,15 +172,15 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 删除抢粉的客服
      *
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOffline(int $officialAccountId, string $ids): array
+    public function obtainOffline(int $tencentId, string $ids): array
     {
         // 读取集合里面，正在抢粉的信息
-        Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, $ids);
+        Redis::sRem(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, $ids);
 
         // 查找需要删除的客服所在的部门
         $department = $this->customerAssignRepository->getCustomerDepartment($ids);
@@ -321,14 +321,14 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 清除抢粉信息
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function obtainFansOffline(int $officialAccountId): array
+    public function obtainFansOffline(int $tencentId): array
     {
         // 删除公众号的客服在线集合
-        $department = $this->departmentRepository->getAllDepartments($officialAccountId);
+        $department = $this->departmentRepository->getAllDepartments($tencentId);
 
         foreach ($department as $key => $value) {
             // 这里是删除综合竞争力抢粉的
@@ -339,10 +339,10 @@ class CustomerDomainImpl implements CustomerDomain
         }
 
         // 删除该公众号下的所有部门集合
-        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_OBTAIN_SETS_LIST . $officialAccountId);
+        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_OBTAIN_SETS_LIST . $tencentId);
 
         // 删除公众号基础抢粉的队列
-        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_ONLINE_BASE_LIST . $officialAccountId);
+        Redis::del(BaseAssignStrategyEnum::OFFICIAL_ACCOUNTS_ONLINE_BASE_LIST . $tencentId);
 
         // TODO 这里没有做判断
         return ['msg' => '删除成功'];
@@ -351,13 +351,13 @@ class CustomerDomainImpl implements CustomerDomain
     /**
      * 抢粉状态
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $id
      *
      * @return bool
      */
-    public function obtainStatus(int $officialAccountId, int $id): bool
+    public function obtainStatus(int $tencentId, int $id): bool
     {
-        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $officialAccountId, (string)$id);
+        return Redis::sIsMember(AssignEnum::OFFICIAL_ACCOUNTS_ONLINE_LIST . $tencentId, (string)$id);
     }
 }

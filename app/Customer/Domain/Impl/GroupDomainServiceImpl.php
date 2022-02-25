@@ -33,10 +33,10 @@ class GroupDomainServiceImpl implements GroupDomainService
      * @inheritDoc
      * @throws DbException
      */
-    public function customerIndex(int $officialAccountId, array $filter, bool $isPagination = true): array
+    public function customerIndex(int $tencentId, array $filter, bool $isPagination = true): array
     {
         //第一页的数据
-        $firstPage = $this->groupRepository->customerGroupFirstPage($officialAccountId, $filter, $isPagination);
+        $firstPage = $this->groupRepository->customerGroupFirstPage($tencentId, $filter, $isPagination);
 
         //第二级
         $secondUuid = array_column($firstPage['list'], 'id');
@@ -180,20 +180,20 @@ class GroupDomainServiceImpl implements GroupDomainService
      * @inheritDoc
      * @throws DbException
      */
-    public function fansIndex(int $officialAccountId, array $filter, bool $isPagination = true): array
+    public function fansIndex(int $tencentId, array $filter, bool $isPagination = true): array
     {
         //第一页的数据
-        $firstPage = $this->groupRepository->fansGroupFirstPage($officialAccountId, $filter, $isPagination);
+        $firstPage = $this->groupRepository->fansGroupFirstPage($tencentId, $filter, $isPagination);
 
         //第二级
         $secondUuid = array_column($firstPage['list'], 'id');
-        $son        = $this->groupRepository->getFansGroupByUuid($officialAccountId, $secondUuid);
+        $son        = $this->groupRepository->getFansGroupByUuid($tencentId, $secondUuid);
 
         //第三级
         $grandson = [];
         if (!empty($son)) {
             $threeUuid = array_column($son, 'id');
-            $grandson  = $this->groupRepository->getFansGroupByUuid($officialAccountId, $threeUuid);
+            $grandson  = $this->groupRepository->getFansGroupByUuid($tencentId, $threeUuid);
         }
 
         //合并数组
@@ -208,26 +208,26 @@ class GroupDomainServiceImpl implements GroupDomainService
     /**
      * 客服粉丝分组
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function customer(int $officialAccountId, int $customerId, array $filter): array
+    public function customer(int $tencentId, int $customerId, array $filter): array
     {
         //第一页的数据
-        $firstPage = $this->groupRepository->customerFansGroupFirstPage($officialAccountId, $customerId, $filter, $isPagination);
+        $firstPage = $this->groupRepository->customerFansGroupFirstPage($tencentId, $customerId, $filter, $isPagination);
 
         //第二级
         $secondUuid = array_column($firstPage['list'], 'id');
-        $son        = $this->groupRepository->getFansGroupByUuid($officialAccountId, $secondUuid);
+        $son        = $this->groupRepository->getFansGroupByUuid($tencentId, $secondUuid);
 
         //第三级
         $grandson = [];
         if (!empty($son)) {
             $threeUuid = array_column($son, 'id');
-            $grandson  = $this->groupRepository->getFansGroupByUuid($officialAccountId, $threeUuid);
+            $grandson  = $this->groupRepository->getFansGroupByUuid($tencentId, $threeUuid);
         }
 
         //合并数组

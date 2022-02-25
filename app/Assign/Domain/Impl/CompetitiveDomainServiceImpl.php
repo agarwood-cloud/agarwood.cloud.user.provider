@@ -37,14 +37,14 @@ class CompetitiveDomainServiceImpl implements CompetitiveDomainService
     protected AssignQueue $competitive;
 
     /**
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
-        return $this->competitiveRepository->index($officialAccountId, $filter);
+        return $this->competitiveRepository->index($tencentId, $filter);
     }
 
     /**
@@ -91,15 +91,15 @@ class CompetitiveDomainServiceImpl implements CompetitiveDomainService
     /**
      * 抢粉
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return int
      */
-    public function obtainFans(int $officialAccountId, int $customerId): int
+    public function obtainFans(int $tencentId, int $customerId): int
     {
         // 加入到抢粉的队列里面, 如果有自定义综合竞争力，则优先按自定义综合竞争力来算
-        $this->competitive->pushQueue($officialAccountId, $customerId);
+        $this->competitive->pushQueue($tencentId, $customerId);
 
         return 1;
     }

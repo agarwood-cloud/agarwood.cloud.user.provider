@@ -27,15 +27,15 @@ class CustomerToDoDomainServiceImpl implements CustomerToDoDomainService
     protected CustomerToDoRepository $customerToDoRepository;
 
     /**
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param int   $customerId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, int $customerId, array $filter): array
+    public function index(int $tencentId, int $customerId, array $filter): array
     {
-        return $this->customerToDoRepository->index($officialAccountId, $customerId, $filter);
+        return $this->customerToDoRepository->index($tencentId, $customerId, $filter);
     }
 
     /**

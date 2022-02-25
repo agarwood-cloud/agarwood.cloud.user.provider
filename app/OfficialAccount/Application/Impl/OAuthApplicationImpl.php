@@ -47,10 +47,10 @@ class OAuthApplicationImpl implements OAuthApplication
     /**
      * @inheritDoc
      */
-    public function jwtTokenProvider(User $user, string $token, int $officialAccountId, int $customerId, string $customer): string
+    public function jwtTokenProvider(User $user, string $token, int $tencentId, int $customerId, string $customer): string
     {
         //这里设置
-        return $this->oauth->token($user->getId(), $token, $officialAccountId, $customerId, $customer);
+        return $this->oauth->token($user->getId(), $token, $tencentId, $customerId, $customer);
     }
 
     /**

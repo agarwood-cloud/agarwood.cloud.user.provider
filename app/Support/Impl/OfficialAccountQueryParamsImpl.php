@@ -23,7 +23,7 @@ class OfficialAccountQueryParamsImpl implements OfficialAccountQueryParams
     public function getOfficialAccountId(): int|null
     {
         // bugfix: 前端发整型，但接收的变为字符串
-        $officialAccountId = context()->getRequest()->get('officialAccountId');
-        return is_numeric($officialAccountId) ? (int)$officialAccountId : null;
+        $tencentId = context()->getRequest()->get('officialAccountId');
+        return is_numeric($tencentId) ? (int)$tencentId : null;
     }
 }

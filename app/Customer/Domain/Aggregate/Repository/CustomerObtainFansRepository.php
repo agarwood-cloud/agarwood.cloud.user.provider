@@ -49,11 +49,11 @@ interface CustomerObtainFansRepository
     /**
      * 查找该公众号最后一个抢粉的信息
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function lastOfficialAccountObtainFans(int $officialAccountId): array;
+    public function lastOfficialAccountObtainFans(int $tencentId): array;
 
     /**
      * 查找部门最后一个抢粉的信息

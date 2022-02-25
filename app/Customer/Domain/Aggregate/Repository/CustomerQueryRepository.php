@@ -19,11 +19,11 @@ interface CustomerQueryRepository
      * 服务号管理列表数据
      *
      * @param array $filter
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array;
+    public function index(int $tencentId, array $filter): array;
 
     /**
      * @param int $id

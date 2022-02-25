@@ -24,23 +24,23 @@ interface CustomerGroupApplication
      * 应用层
      *      分组应用层列表服务接口
      *
-     * @param int                   $officialAccountId
+     * @param int                   $tencentId
      * @param CustomerGroupIndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, CustomerGroupIndexDTO $DTO): array;
+    public function indexProvider(int $tencentId, CustomerGroupIndexDTO $DTO): array;
 
     /**
      * 应用层
      *      分组应用层创建分组服务接口
      *
-     * @param int                    $officialAccountId
+     * @param int                    $tencentId
      * @param CustomerGroupCreateDTO $DTO
      *
      * @return Collection
      */
-    public function createProvider(int $officialAccountId, CustomerGroupCreateDTO $DTO): Collection;
+    public function createProvider(int $tencentId, CustomerGroupCreateDTO $DTO): Collection;
 
     /**
      * 应用层

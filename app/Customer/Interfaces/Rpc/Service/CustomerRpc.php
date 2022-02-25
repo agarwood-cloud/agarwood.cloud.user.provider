@@ -49,7 +49,7 @@ class CustomerRpc implements UserCenterCustomerRpcInterface
         return [];
     }
 
-    public function index(int $officialAccountId, int $pge = 1, int $perPage = 10): array
+    public function index(int $tencentId, int $pge = 1, int $perPage = 10): array
     {
         return [];
     }
@@ -67,13 +67,13 @@ class CustomerRpc implements UserCenterCustomerRpcInterface
     /**
      * login
      *
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $username
      *
      * @return array
      */
-    public function login(int $officialAccountId, string $username): array
+    public function login(int $tencentId, string $username): array
     {
-        return $this->customerRpcRepository->login($officialAccountId, $username);
+        return $this->customerRpcRepository->login($tencentId, $username);
     }
 }

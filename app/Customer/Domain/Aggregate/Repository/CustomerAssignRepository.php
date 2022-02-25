@@ -49,11 +49,11 @@ interface CustomerAssignRepository
     /**
      * 查找可用的该公众号的客服
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function getCustomerUuidByServiceUuid(int $officialAccountId): array;
+    public function getCustomerUuidByServiceUuid(int $tencentId): array;
 
     /**
      * 查找所在的部门

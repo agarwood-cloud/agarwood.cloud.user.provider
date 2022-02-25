@@ -61,17 +61,17 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @inheritDoc
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO): array
+    public function indexProvider(int $tencentId, IndexDTO $DTO): array
     {
-        return $this->customerDomain->index($officialAccountId, $DTO->toArrayLine());
+        return $this->customerDomain->index($tencentId, $DTO->toArrayLine());
     }
 
     /**
      * @inheritDoc
      */
-    public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection
+    public function createProvider(int $tencentId, CreateDTO $DTO): Collection
     {
-        $this->customerDomain->create($officialAccountId, $DTO->toArrayLine());
+        $this->customerDomain->create($tencentId, $DTO->toArrayLine());
 
         //这里可以设置更多的返回值
         return Collection::make($DTO);
@@ -105,9 +105,9 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * @inheritDoc
      */
-    public function scanSubscribeProvider(int $officialAccountId, int $customerId): array
+    public function scanSubscribeProvider(int $tencentId, int $customerId): array
     {
-        return $this->customerDomain->scanSubscribe($officialAccountId, $customerId);
+        return $this->customerDomain->scanSubscribe($tencentId, $customerId);
     }
 
     /**
@@ -120,20 +120,20 @@ class CustomerApplicationImpl implements CustomerApplication
     }
 
     /**
-     * @param int    $officialAccountId
+     * @param int    $tencentId
      * @param string $ids
      *
      * @return array
      */
-    public function obtainOfflineProvider(int $officialAccountId, string $ids): array
+    public function obtainOfflineProvider(int $tencentId, string $ids): array
     {
-        return $this->customerDomain->obtainOffline($officialAccountId, $ids);
+        return $this->customerDomain->obtainOffline($tencentId, $ids);
     }
 
     /**
      * Chat Record List
      *
-     * @param int     $officialAccountId
+     * @param int     $tencentId
      * @param int     $customerId
      * @param ChatDTO $DTO
      *
@@ -141,7 +141,7 @@ class CustomerApplicationImpl implements CustomerApplication
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function chatProvider(int $officialAccountId, int $customerId, ChatDTO $DTO): array
+    public function chatProvider(int $tencentId, int $customerId, ChatDTO $DTO): array
     {
         $client = MongoClient::getInstance();
 
@@ -153,7 +153,7 @@ class CustomerApplicationImpl implements CustomerApplication
 
         // 获取腾讯接口的openid信息
         if (count($userInfo) !== count($openid)) {
-            $app   = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+            $app   = $this->officialAccountsRpc->officialAccountApplication($tencentId);
             $users = $app->user->select($openid);
 
             if (is_array($users) && isset($users['user_info_list'])) {
@@ -203,25 +203,25 @@ class CustomerApplicationImpl implements CustomerApplication
     /**
      * offline
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function obtainFansOfflineProvider(int $officialAccountId): array
+    public function obtainFansOfflineProvider(int $tencentId): array
     {
-        return $this->customerDomain->obtainFansOffline($officialAccountId);
+        return $this->customerDomain->obtainFansOffline($tencentId);
     }
 
     /**
      * online status
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $id
      *
      * @return array
      */
-    public function obtainStatusProvider(int $officialAccountId, int $id): array
+    public function obtainStatusProvider(int $tencentId, int $id): array
     {
-        return ['status' => $this->customerDomain->obtainStatus($officialAccountId, $id)];
+        return ['status' => $this->customerDomain->obtainStatus($tencentId, $id)];
     }
 }

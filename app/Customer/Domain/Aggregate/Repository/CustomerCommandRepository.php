@@ -18,12 +18,12 @@ interface CustomerCommandRepository
     /**
      * 创建客服账号
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(int $officialAccountId, array $attributes): bool;
+    public function create(int $tencentId, array $attributes): bool;
 
     /**
      * 删除

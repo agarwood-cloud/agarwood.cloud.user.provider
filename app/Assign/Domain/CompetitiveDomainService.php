@@ -22,12 +22,12 @@ interface CompetitiveDomainService
     /**
      * 领域服务接口： 获取列表
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter 过滤条件
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array;
+    public function index(int $tencentId, array $filter): array;
 
     /**
      *  领域服务接口： 新建
@@ -61,10 +61,10 @@ interface CompetitiveDomainService
     /**
      * 领域服务接口： 抢粉
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return int
      */
-    public function obtainFans(int $officialAccountId, int $customerId): int;
+    public function obtainFans(int $tencentId, int $customerId): int;
 }

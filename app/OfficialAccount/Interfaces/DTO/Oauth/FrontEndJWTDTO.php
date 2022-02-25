@@ -53,7 +53,7 @@ class FrontEndJWTDTO extends AbstractBaseDTO
      *
      * @var string|null
      */
-    public ?int $officialAccountId = null;
+    public ?int $tencentId = null;
 
     /**
      * @IsString()
@@ -185,10 +185,10 @@ class FrontEndJWTDTO extends AbstractBaseDTO
     }
 
     /**
-     * @param string|null $officialAccountId
+     * @param string|null $tencentId
      */
-    public function setServiceUuid(?int $officialAccountId): void
+    public function setServiceUuid(?int $tencentId): void
     {
-        $this->serviceUuid = $officialAccountId;
+        $this->serviceUuid = $tencentId;
     }
 }

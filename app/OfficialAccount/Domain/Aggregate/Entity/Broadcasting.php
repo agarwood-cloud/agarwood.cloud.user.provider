@@ -129,7 +129,7 @@ class Broadcasting extends Model
      *
      * @var string
      */
-    private $officialAccountId;
+    private $tencentId;
 
     /**
      * 群发任务状态
@@ -291,13 +291,13 @@ class Broadcasting extends Model
     }
 
     /**
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return self
      */
-    public function setServiceUuid(int $officialAccountId): self
+    public function setServiceUuid(int $tencentId): self
     {
-        $this->serviceUuid = $officialAccountId;
+        $this->serviceUuid = $tencentId;
 
         return $this;
     }

@@ -25,15 +25,15 @@ class CustomerCommandRepositoryImpl implements CustomerCommandRepository
     /**
      * 创建客服信息
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $attributes
      *
      * @return bool
      */
-    public function create(int $officialAccountId, array $attributes): bool
+    public function create(int $tencentId, array $attributes): bool
     {
         // id
-        $attributes['oa_id'] = $officialAccountId;
+        $attributes['oa_id'] = $tencentId;
 
         // 密码加密
         $attributes['password'] = password_hash($attributes['password'], PASSWORD_DEFAULT);

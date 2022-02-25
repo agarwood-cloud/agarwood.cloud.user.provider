@@ -26,12 +26,12 @@ class DepartmentRepositoryImpl implements DepartmentRepository
     /**
      * 管理员管理列表数据
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $filter
      *
      * @return array
      */
-    public function index(int $officialAccountId, array $filter): array
+    public function index(int $tencentId, array $filter): array
     {
         return DB::table(CustomerCompetitiveDepartment::tableName())
             ->select(
@@ -47,7 +47,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->when($filter['department'], function ($query, $department) {
                 return $query->where('department', 'like', '%' . $department . '%');
             })
@@ -143,11 +143,11 @@ class DepartmentRepositoryImpl implements DepartmentRepository
      * 查找该分配粉丝的部门及相关参数部
      *      Tips: 门分配粉丝为0的，不分配粉丝
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function getDepartments(int $officialAccountId): array
+    public function getDepartments(int $tencentId): array
     {
         //  select *
         //      from `user_center_customer_competitive_department`
@@ -155,7 +155,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
         //  and `rate` > 0
         //  order by `sort` asc
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('rate', '>', 0) // 进粉速率必须0
             ->where('status', '=', 'usable')
             ->orderBy('sort')
@@ -166,14 +166,14 @@ class DepartmentRepositoryImpl implements DepartmentRepository
     /**
      * 所有的部门，包括不抢粉的部门
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function getAllDepartments(int $officialAccountId): array
+    public function getAllDepartments(int $tencentId): array
     {
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             // ->where('rate', '>', 0) // 进粉速率必需大于0
             ->where('status', '=', 'usable')
             ->orderBy('sort')

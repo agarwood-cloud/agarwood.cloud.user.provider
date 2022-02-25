@@ -27,18 +27,18 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
     /**
      * 记录抢粉的信息
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      * @param string $openid
      * @param string $obtainStatus
      *
      * @return bool
      */
-    public function recordAssignFans(int $officialAccountId, int $customerId, string $openid, string $obtainStatus = 'obtain'): bool
+    public function recordAssignFans(int $tencentId, int $customerId, string $openid, string $obtainStatus = 'obtain'): bool
     {
         $snowflake                   = new Snowflake;
         $attributes['id']            = (int)$snowflake->id();
-        $attributes['service_id']    = $officialAccountId;
+        $attributes['service_id']    = $tencentId;
         $attributes['customer_id']   = $customerId;
         $attributes['openid']        = $openid;
         $attributes['obtain_status'] = $obtainStatus;
@@ -66,11 +66,11 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
      * 查找该分配粉丝的部门及相关参数部
      *      Tips: 门分配粉丝为0的，不分配粉丝
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return array
      */
-    public function getDepartments(int $officialAccountId): array
+    public function getDepartments(int $tencentId): array
     {
         //  select *
         //      from `user_center_customer_competitive_department`
@@ -78,7 +78,7 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
         //  and `rate` > 0
         //  order by `sort` asc
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $officialAccountId)
+            ->where('service_id', '=', $tencentId)
             ->where('rate', '>', 0) // 进粉速率必须0
             ->where('status', '=', 'usable')
             ->orderBy('sort')

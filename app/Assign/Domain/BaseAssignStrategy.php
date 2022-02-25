@@ -20,22 +20,22 @@ interface BaseAssignStrategy
     /**
      * 分配客服
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return int
      */
-    public function assignCustomer(int $officialAccountId): int;
+    public function assignCustomer(int $tencentId): int;
 
     /**
      * 加入抢粉（有序集合/集合/队列）
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      * @param int $power
      *
      * @return bool
      */
-    public function assignList(int $officialAccountId, int $customerId, int $power = 0): bool;
+    public function assignList(int $tencentId, int $customerId, int $power = 0): bool;
 
     /**
      * 加入抢粉队列
@@ -91,17 +91,17 @@ interface BaseAssignStrategy
     /**
      * 随机分配
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      *
      * @return int
      */
-    public function randomAssign(int $officialAccountId): int;
+    public function randomAssign(int $tencentId): int;
 
     /**
      * 标记正在抢粉
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      */
-    public function pushSetsStatus(int $officialAccountId, int $customerId): void;
+    public function pushSetsStatus(int $tencentId, int $customerId): void;
 }

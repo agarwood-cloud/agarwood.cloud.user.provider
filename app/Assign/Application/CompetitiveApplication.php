@@ -26,23 +26,23 @@ interface CompetitiveApplication
      *      综合竞争力列表服务接口
      *
      *
-     * @param int      $officialAccountId
+     * @param int      $tencentId
      * @param IndexDTO $DTO
      *
      * @return array
      */
-    public function indexProvider(int $officialAccountId, IndexDTO $DTO): array;
+    public function indexProvider(int $tencentId, IndexDTO $DTO): array;
 
     /**
      * 应用层
      *      综合竞争力服务接口
      *
-     * @param int       $officialAccountId
+     * @param int       $tencentId
      * @param CreateDTO $DTO
      *
      * @return Collection
      */
-    public function createProvider(int $officialAccountId, CreateDTO $DTO): Collection;
+    public function createProvider(int $tencentId, CreateDTO $DTO): Collection;
 
     /**
      * 应用层
@@ -69,10 +69,10 @@ interface CompetitiveApplication
     /**
      * 圈粉应用提供者
      *
-     * @param int $officialAccountId
+     * @param int $tencentId
      * @param int $customerId
      *
      * @return int
      */
-    public function obtainFansProvider(int $officialAccountId, int $customerId): int;
+    public function obtainFansProvider(int $tencentId, int $customerId): int;
 }

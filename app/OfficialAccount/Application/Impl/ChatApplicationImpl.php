@@ -65,14 +65,14 @@ class ChatApplicationImpl implements ChatApplication
     /**
      * 文本消息
      *
-     * @param int     $officialAccountId
+     * @param int     $tencentId
      * @param TextDTO $DTO
      *
      * @return bool
      */
-    public function textMessageProvider(int $officialAccountId, TextDTO $DTO): bool
+    public function textMessageProvider(int $tencentId, TextDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         try {
             // 发送消息给用户
@@ -106,14 +106,14 @@ class ChatApplicationImpl implements ChatApplication
     /**
      * 图片消息
      *
-     * @param int      $officialAccountId
+     * @param int      $tencentId
      * @param ImageDTO $DTO
      *
      * @return bool
      */
-    public function ImageMessageProvider(int $officialAccountId, ImageDTO $DTO): bool
+    public function ImageMessageProvider(int $tencentId, ImageDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         try {
             // 发送消息给用户
@@ -150,14 +150,14 @@ class ChatApplicationImpl implements ChatApplication
     /**
      * 视频消息
      *
-     * @param int      $officialAccountId
+     * @param int      $tencentId
      * @param VideoDTO $DTO
      *
      * @return bool
      */
-    public function videoMessageProvider(int $officialAccountId, VideoDTO $DTO): bool
+    public function videoMessageProvider(int $tencentId, VideoDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         try {
             // 发送消息给用户
@@ -198,14 +198,14 @@ class ChatApplicationImpl implements ChatApplication
     /**
      * 音频消息
      *
-     * @param int      $officialAccountId
+     * @param int      $tencentId
      * @param VoiceDTO $DTO
      *
      * @return bool
      */
-    public function voiceMessageProvider(int $officialAccountId, VoiceDTO $DTO): bool
+    public function voiceMessageProvider(int $tencentId, VoiceDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         try {
             // 发送消息给用户
@@ -242,14 +242,14 @@ class ChatApplicationImpl implements ChatApplication
     /**
      * 图文消息
      *
-     * @param int         $officialAccountId
+     * @param int         $tencentId
      * @param NewsItemDTO $DTO
      *
      * @return bool
      */
-    public function newsItemMessageProvider(int $officialAccountId, NewsItemDTO $DTO): bool
+    public function newsItemMessageProvider(int $tencentId, NewsItemDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
         try {
             // 发送消息给用户
@@ -286,43 +286,43 @@ class ChatApplicationImpl implements ChatApplication
     }
 
     /**
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadImageProvider(int $officialAccountId, array $uploadedFiles): array
+    public function uploadImageProvider(int $tencentId, array $uploadedFiles): array
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
-        return $this->chatSendToTencentDomain->uploadImage($officialAccountId, $app, $uploadedFiles);
+        return $this->chatSendToTencentDomain->uploadImage($tencentId, $app, $uploadedFiles);
     }
 
     /**
      * 上传视频
      *
-     * @param int   $officialAccountId
+     * @param int   $tencentId
      * @param array $uploadedFiles
      *
      * @return array
      */
-    public function uploadVideoProvider(int $officialAccountId, array $uploadedFiles): array
+    public function uploadVideoProvider(int $tencentId, array $uploadedFiles): array
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($officialAccountId);
+        $app = $this->officialAccountsRpc->officialAccountApplication($tencentId);
 
-        return $this->chatSendToTencentDomain->uploadVideo($officialAccountId, $app, $uploadedFiles);
+        return $this->chatSendToTencentDomain->uploadVideo($tencentId, $app, $uploadedFiles);
     }
 
     /**
      * 最近的聊天列表
      *
-     * @param int                                           $officialAccountId
+     * @param int                                           $tencentId
      * @param int                                           $customerId
      * @param \App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO $dto
      *
      * @return array
      */
-    public function chatListProvider(int $officialAccountId, int $customerId, ChatDTO $dto): array
+    public function chatListProvider(int $tencentId, int $customerId, ChatDTO $dto): array
     {
         return $this->mongoMessageRecordDomain->getLastMessageChatList(
             $customerId,
