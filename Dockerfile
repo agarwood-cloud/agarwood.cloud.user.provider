@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------------------------
 # @build-example docker build . -f Dockerfile -t agarwood/user:2.0
 #
-FROM phpswoole/swoole:4.8.6-php8.1
+FROM phpswoole/swoole:4.8.7-php8.1
 
 LABEL maintainer="676786620@qq.com>" version="2.0"
 
@@ -37,10 +37,10 @@ RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "[Date]\date.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
 # Install composer deps
 
-#ADD . /var/www/agarwood
-#
-#WORKDIR /var/www/agarwood
-#
-#EXPOSE 18316 18317 18318
-#
-#CMD ["php", "/var/www/agarwood/bin/agarwood", "http:start"]
+ADD . /var/www/agarwood
+
+WORKDIR /var/www/agarwood
+
+EXPOSE 18306 18307 18308
+
+CMD ["php", "/var/www/agarwood/bin/agarwood", "http:start"]
