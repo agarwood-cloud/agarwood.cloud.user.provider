@@ -38,7 +38,7 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
     {
         $snowflake                   = new Snowflake;
         $attributes['id']            = (int)$snowflake->id();
-        $attributes['platform_id']    = $platformId;
+        $attributes['platform_id']   = $platformId;
         $attributes['customer_id']   = $customerId;
         $attributes['openid']        = $openid;
         $attributes['obtain_status'] = $obtainStatus;

@@ -14,6 +14,7 @@ use App\OfficialAccount\Domain\Aggregate\Entity\User;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserCommandRepository;
 use App\OfficialAccount\Interfaces\Assembler\UserAssembler;
 use Carbon\Carbon;
+use Godruoyi\Snowflake\Snowflake;
 use Swoft\Db\DB;
 
 /**
@@ -39,6 +40,10 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value['head_img_url'] = $dto->getHeadImgUrl();
         $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
         $value['union_id']     = $dto->getUnionId();
+
+        // 雪花id
+        $snowflake   = new Snowflake;
+        $value['id'] = (int)$snowflake->id();
 
         // 关注时间
         if ($dto->getSubscribeTime() > 0) {
