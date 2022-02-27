@@ -32,7 +32,7 @@ class UserQueryRepositoryImpl implements UserQueryRepository
         return DB::table(User::tableName())
             ->select(
                 'id',
-                'oa_id as officialAccountId',
+                'platform_id as platformId',
                 'openid',
                 'customer_id as customerId',
                 'customer',
@@ -61,7 +61,7 @@ class UserQueryRepositoryImpl implements UserQueryRepository
         return DB::table(User::tableName())
             ->select(
                 'id',
-                'oa_id as officialAccountId',
+                'platform_id as platformId',
                 'openid',
                 'customer_id as customerId',
                 'customer',
@@ -106,7 +106,7 @@ class UserQueryRepositoryImpl implements UserQueryRepository
                 `updated_at` as `updatedAt`'
             )
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->where('oa_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->orderByDesc('id')
             ->when($filter['openid'], function ($query, $param) {
                 return $query->whereIn('openid', $param);

@@ -32,7 +32,7 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
             ->select(
                 'id',
                 'enterprise_id as enterpriseId',
-                'oa_id as officialAccountId',
+                'platform_id as platformId',
                 'name',
                 'account',
                 'phone',
@@ -43,7 +43,7 @@ class CustomerRpcRepositoryImpl implements CustomerRpcRepository
                 'status'
             )
             ->where('account', '=', $username)
-            ->where('oa_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('status', '=', CustomerStatusEnum::USABLE)
             ->firstArray();
     }

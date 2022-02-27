@@ -27,9 +27,9 @@ use Carbon\Carbon;
 use EasyWeChat\Kernel\Messages\Message;
 use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
+use JsonException;
 use ReflectionException;
 use Swoft\Redis\Redis;
-use JsonException;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -106,8 +106,8 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 用户信息是否存在
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
 
-                $attributes          = (array)$application->user->get($DTO->getFromUserName());
-                $attributes['oa_id'] = $platformId;
+                $attributes                = (array)$application->user->get($DTO->getFromUserName());
+                $attributes['platform_id'] = $platformId;
 
                 if (empty($user)) {
                     if ($DTO->getEventKey()) {
@@ -186,7 +186,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
             if ($DTO->getEvent() === WeChatCallbackEvent::UNSUBSCRIBE) {
                 // 取消关注事件
                 $attributes = [
-                    'oa_id'          => $platformId,
+                    'platform_id'    => $platformId,
                     'subscribe'      => 'unsubscribe',
                     'unsubscribe_at' => Carbon::now()->toDateTimeString()
                 ];
@@ -241,7 +241,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
 
                 if ($user) {
                     $attributes = [
-                        'oa_id'       => $platformId,
+                        'platform_id' => $platformId,
                         'customer_id' => (int)$customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];
@@ -303,7 +303,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $customerId = $this->assignQueue->popQueue($platformId);
 
                     $attributes = [
-                        'oa_id'       => $platformId,
+                        'platform_id' => $platformId,
                         'customer_id' => $customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];
@@ -369,7 +369,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $customerId = $this->assignQueue->popQueue($platformId);
 
                     $attributes = [
-                        'oa_id'       => $platformId,
+                        'platform_id' => $platformId,
                         'customer_id' => $customerId,
                         // todo 关联客服信息 'customer'   =>  $customer;
                     ];

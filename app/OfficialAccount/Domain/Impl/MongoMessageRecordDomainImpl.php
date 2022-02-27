@@ -251,7 +251,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             } else {
                 $temp[$key]['user'] = [
                     'id'                => 0,
-                    'officialAccountId' => 0,
+                    'platformId'        => 0,
                     'openid'            => $value['openid'],
                     'customerId'        => $value['customer_id'],
                     'customer'          => '',

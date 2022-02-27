@@ -33,7 +33,7 @@ class CustomerCommandRepositoryImpl implements CustomerCommandRepository
     public function create(int $platformId, array $attributes): bool
     {
         // id
-        $attributes['oa_id'] = $platformId;
+        $attributes['platform_id'] = $platformId;
 
         // 密码加密
         $attributes['password'] = password_hash($attributes['password'], PASSWORD_DEFAULT);
