@@ -194,19 +194,25 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      */
     public function eventUnsubscribe(int $enterpriseId, int $platformId, Application $application): void
     {
-        $application->server->push(function ($message) use ($platformId) {
+        $application->server->push(function ($message) use ($enterpriseId, $platformId) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::UNSUBSCRIBE) {
                 // 取消关注事件
                 $attributes = [
                     'platform_id'    => $platformId,
                     'subscribe'      => 'unsubscribe',
-                    'unsubscribe_at' => Carbon::now()->toDateTimeString()
+                    'unsubscribe_at' => Carbon::now()->toDateTimeString(),
+                    'enterprise_id'  => $enterpriseId,
                 ];
                 $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
 
                 // todo 获取用户信息
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
+
+                // 如果不存在用户信息
+                if (!$user) {
+                    return;
+                }
 
                 $content = 'User has unsubscribed from the official account!';
 
