@@ -43,6 +43,7 @@ class UserCommandRepositoryImpl implements UserCommandRepository
 
         // 企业id
         $value['enterprise_id'] = $attributes['enterprise_id'] ?? 0;
+        $value['platform_id']   = $attributes['platform_id']   ?? 0;
 
         // 雪花id
         $snowflake   = new Snowflake;
