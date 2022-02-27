@@ -70,7 +70,7 @@ class CustomerOverviewController extends AbstractBaseController
         $dto = CustomerOverviewAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getPlatformId(),
                 $dto
             )
         )->response();

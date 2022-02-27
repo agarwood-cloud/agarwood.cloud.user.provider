@@ -18,5 +18,5 @@ interface OfficialAccountQueryParams
     /**
      * @return int|null
      */
-    public function getOfficialAccountId(): int|null;
+    public function getPlatformId(): int|null;
 }

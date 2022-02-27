@@ -67,7 +67,7 @@ class AutoReplyController extends AbstractBaseController
         $dto = AutoReplyAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
                 $dto
             )
@@ -90,7 +90,7 @@ class AutoReplyController extends AbstractBaseController
         $DTO = AutoReplyAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->createProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
                 $DTO
             )
@@ -113,7 +113,7 @@ class AutoReplyController extends AbstractBaseController
         $DTO = AutoReplyAssembler::attributesToSaveDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->saveProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
                 $DTO
             )

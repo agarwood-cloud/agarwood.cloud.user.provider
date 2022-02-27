@@ -95,7 +95,7 @@ class ChatSubscriber extends UserProcess
 
                 // Get EasyWeChat OfficialAccount
                 try {
-                    $app = $this->officialAccountsRpc->officialAccountApplication((int)$message['officialAccountId']);
+                    $app = $this->officialAccountsRpc->officialAccountApplication((int)$message['PlatformId']);
                 } catch (Throwable $e) {
                     CLog::error('Failed to get official account application: %s', $e->getMessage());
                     return;

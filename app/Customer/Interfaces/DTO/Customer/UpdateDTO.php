@@ -191,17 +191,17 @@ class UpdateDTO extends AbstractBaseDTO
     /**
      * @return int|null
      */
-    public function getOfficialAccountId(): ?int
+    public function getPlatformId(): ?int
     {
-        return $this->officialAccountId;
+        return $this->PlatformId;
     }
 
     /**
      * @param int|null $platformId
      */
-    public function setOfficialAccountId(?int $platformId): void
+    public function setPlatformId(?int $platformId): void
     {
-        $this->officialAccountId = $platformId;
+        $this->PlatformId = $platformId;
     }
 
     /**

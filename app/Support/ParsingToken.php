@@ -51,5 +51,5 @@ interface ParsingToken
     /**
      * @return int|null
      */
-    public function getOfficialAccountId(): int|null;
+    public function getPlatformId(): int|null;
 }

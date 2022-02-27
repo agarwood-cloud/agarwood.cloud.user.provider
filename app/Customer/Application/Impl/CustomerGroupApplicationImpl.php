@@ -36,7 +36,7 @@ class CustomerGroupApplicationImpl implements CustomerGroupApplication
      */
     public function indexProvider(int $platformId, CustomerGroupIndexDTO $DTO): array
     {
-        return $this->domain->customerIndex($platformId, $DTO->toArrayLine(), $isPagination);
+        return $this->domain->customerIndex($platformId, $DTO->toArrayLine());
     }
 
     /**

@@ -74,7 +74,7 @@ class CustomerGroupController extends AbstractBaseController
         $dto = CustomerGroupAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int) $this->officialAccountQueryParams->getOfficialAccountId(),
+                (int) $this->officialAccountQueryParams->getPlatformId(),
                 $dto
             )
         )->response();
@@ -96,7 +96,7 @@ class CustomerGroupController extends AbstractBaseController
         $DTO = CustomerGroupAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->createProvider(
-                (int) $this->officialAccountQueryParams->getOfficialAccountId(),
+                (int) $this->officialAccountQueryParams->getPlatformId(),
                 $DTO
             )
         )->response($response->withStatus(201));

@@ -69,17 +69,17 @@ class LoginDTO extends AbstractBaseDTO
     /**
      * @return int
      */
-    public function getOfficialAccountId(): int
+    public function getPlatformId(): int
     {
-        return $this->officialAccountId;
+        return $this->PlatformId;
     }
 
     /**
      * @param int $platformId
      */
-    public function setOfficialAccountId(int $platformId): void
+    public function setPlatformId(int $platformId): void
     {
-        $this->officialAccountId = $platformId;
+        $this->PlatformId = $platformId;
     }
 
     /**

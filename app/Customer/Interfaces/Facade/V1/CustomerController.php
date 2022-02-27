@@ -74,7 +74,7 @@ class CustomerController extends AbstractBaseController
         $dto = CustomerAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getPlatformId(),
                 $dto
             )
         )->response();
@@ -96,7 +96,7 @@ class CustomerController extends AbstractBaseController
         $dto = CustomerAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->createProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getPlatformId(),
                 $dto
             )
         )->response($response->withStatus(201));
@@ -164,7 +164,7 @@ class CustomerController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->scanSubscribeProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
             )
         )->response();
@@ -203,7 +203,7 @@ class CustomerController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->obtainOfflineProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId(),
+                (int)$this->officialAccountQueryParams->getPlatformId(),
                 $ids
             )
         )->response($response->withStatus(204));
@@ -242,7 +242,7 @@ class CustomerController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->obtainFansOfflineProvider(
-                (int)$this->officialAccountQueryParams->getOfficialAccountId()
+                (int)$this->officialAccountQueryParams->getPlatformId()
             )
         )->response();
     }

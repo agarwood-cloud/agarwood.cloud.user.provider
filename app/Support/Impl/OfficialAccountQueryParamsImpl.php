@@ -20,10 +20,10 @@ class OfficialAccountQueryParamsImpl implements OfficialAccountQueryParams
     /**
      * @return int|null
      */
-    public function getOfficialAccountId(): int|null
+    public function getPlatformId(): int|null
     {
         // bugfix: 前端发整型，但接收的变为字符串
-        $platformId = context()->getRequest()->get('officialAccountId');
+        $platformId = context()->getRequest()->get('PlatformId');
         return is_numeric($platformId) ? (int)$platformId : null;
     }
 }

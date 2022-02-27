@@ -63,7 +63,7 @@ class BroadcastingController extends AbstractBaseController
         $dto = BroadcastingAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         )->response();
@@ -83,7 +83,7 @@ class BroadcastingController extends AbstractBaseController
         $dto = BroadcastingAssembler::attributesToSendTextDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->sendTextProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         )->response();
@@ -102,7 +102,7 @@ class BroadcastingController extends AbstractBaseController
         $dto = BroadcastingAssembler::attributesToFansGroupDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->fansGroupProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         )->response();

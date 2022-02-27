@@ -62,7 +62,7 @@ class UserController extends AbstractBaseController
         $dto = UserAssembler::attributesToIndexV3DTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                $this->officialAccountQueryParams->getOfficialAccountId(),
+                $this->officialAccountQueryParams->getPlatformId(),
                 $dto
             )
         )->response();

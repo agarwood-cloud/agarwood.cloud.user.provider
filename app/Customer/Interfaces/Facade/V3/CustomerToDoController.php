@@ -63,7 +63,7 @@ class CustomerToDoController extends AbstractBaseController
     {
         $dto = CustomerToDoAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
-            $this->application->indexProvider((int)$this->parsingToken->getOfficialAccountId(), (int)$this->parsingToken->getCustomerId(), $dto)
+            $this->application->indexProvider((int)$this->parsingToken->getPlatformId(), (int)$this->parsingToken->getCustomerId(), $dto)
         )->response();
     }
 
@@ -82,7 +82,7 @@ class CustomerToDoController extends AbstractBaseController
     {
         $DTO = CustomerToDoAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
-            $this->application->createProvider((int)$this->parsingToken->getOfficialAccountId(), (int)$this->parsingToken->getCustomerId(), $DTO)
+            $this->application->createProvider((int)$this->parsingToken->getPlatformId(), (int)$this->parsingToken->getCustomerId(), $DTO)
         )->response($response->withStatus(201));
     }
 

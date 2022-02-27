@@ -70,7 +70,7 @@ class ChatController extends AbstractBaseController
         $dto = ChatAssembler::attributesToTextMessageDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData([
             'result' => $this->application->textMessageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         ])->response();
@@ -91,7 +91,7 @@ class ChatController extends AbstractBaseController
         $DTO = ChatAssembler::attributesToImageMessageDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData([
             'result' => $this->application->ImageMessageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $DTO
             )
         ])->response();
@@ -111,7 +111,7 @@ class ChatController extends AbstractBaseController
         $DTO = ChatAssembler::attributesToVideoMessageDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData([
             'result' => $this->application->videoMessageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $DTO
             )
         ])->response();
@@ -131,7 +131,7 @@ class ChatController extends AbstractBaseController
         $DTO = ChatAssembler::attributesToVoiceMessageDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData([
             'result' => $this->application->voiceMessageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $DTO
             )
         ])->response();
@@ -151,7 +151,7 @@ class ChatController extends AbstractBaseController
         $DTO = ChatAssembler::attributesToNewsItemMessageDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData([
             'result' => $this->application->newsItemMessageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $DTO
             )
         ])->response();
@@ -169,7 +169,7 @@ class ChatController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->uploadImageProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $request->getUploadedFiles()
             )
         )->response();
@@ -187,7 +187,7 @@ class ChatController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->uploadVideoProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $request->getUploadedFiles()
             )
         )->response();
@@ -209,7 +209,7 @@ class ChatController extends AbstractBaseController
         $dto = ChatAssembler::attributesToChatDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->chatListProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
                 $dto
             )

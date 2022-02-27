@@ -68,7 +68,7 @@ class CompetitiveController extends AbstractBaseController
         $dto = CompetitiveAssembler::attributesToIndexDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->indexProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         )->response();
@@ -91,7 +91,7 @@ class CompetitiveController extends AbstractBaseController
         $dto = CompetitiveAssembler::attributesToCreateDTO((array)$request->getParsedBody());
         return $this->wrapper()->setData(
             $this->application->createProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 $dto
             )
         )->response($response->withStatus(201));

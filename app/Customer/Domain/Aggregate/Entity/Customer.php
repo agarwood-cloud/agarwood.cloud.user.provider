@@ -414,17 +414,17 @@ class Customer extends Model
     /**
      * @return string
      */
-    public function getOfficialAccountId(): string
+    public function getPlatformId(): string
     {
-        return $this->officialAccountId;
+        return $this->PlatformId;
     }
 
     /**
      * @param string $platformId
      */
-    public function setOfficialAccountId(string $platformId): void
+    public function setPlatformId(string $platformId): void
     {
-        $this->officialAccountId = $platformId;
+        $this->PlatformId = $platformId;
     }
 
     /**

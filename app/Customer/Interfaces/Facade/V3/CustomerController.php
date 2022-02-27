@@ -59,7 +59,7 @@ class CustomerController extends AbstractBaseController
     {
         return $this->wrapper()->setData(
             $this->application->scanSubscribeProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId()
             )
         )->response();
@@ -98,7 +98,7 @@ class CustomerController extends AbstractBaseController
         $dto = CustomerAssembler::attributesToChatDTO($request->getQueryParams());
         return $this->wrapper()->setData(
             $this->application->chatProvider(
-                (int)$this->parsingToken->getOfficialAccountId(),
+                (int)$this->parsingToken->getPlatformId(),
                 (int)$this->parsingToken->getCustomerId(),
                 $dto
             )
@@ -137,7 +137,7 @@ class CustomerController extends AbstractBaseController
     public function actionObtainOffline(string $ids, Response $response): ?Response
     {
         return $this->wrapper()->setData(
-            $this->application->obtainOfflineProvider((int)$this->parsingToken->getOfficialAccountId(), $ids)
+            $this->application->obtainOfflineProvider((int)$this->parsingToken->getPlatformId(), $ids)
         )->response($response->withStatus(204));
     }
 
@@ -153,7 +153,7 @@ class CustomerController extends AbstractBaseController
     public function actionObtainStatus(int $id): ?Response
     {
         return $this->wrapper()->setData(
-            $this->application->obtainStatusProvider((int)$this->parsingToken->getOfficialAccountId(), $id)
+            $this->application->obtainStatusProvider((int)$this->parsingToken->getPlatformId(), $id)
         )->response();
     }
 }
