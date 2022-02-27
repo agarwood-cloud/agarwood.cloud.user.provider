@@ -66,7 +66,8 @@ class UserCommandRepositoryImpl implements UserCommandRepository
             $value['qr_scene_str']
         );
 
-        return User::new($value)->save();
+        return DB::table(User::tableName())
+            ->insert($value);
     }
 
     /**
