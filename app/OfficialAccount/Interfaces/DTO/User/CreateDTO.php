@@ -107,9 +107,9 @@ class CreateDTO extends AbstractBaseDTO
     /**
      * 二维码扫码场景（开发者自定义）
      *
-     * @var string
+     * @var int|string
      */
-    public string $qr_scene = '';
+    public int|string $qr_scene = 0;
 
     /**
      * 二维码扫码场景描述（开发者自定义）
@@ -295,17 +295,17 @@ class CreateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return string
+     * @return string|int
      */
-    public function getQrScene(): string
+    public function getQrScene(): string|int
     {
         return $this->qr_scene;
     }
 
     /**
-     * @param string $qr_scene
+     * @param int|string $qr_scene
      */
-    public function setQrScene(string $qr_scene): void
+    public function setQrScene(int|string $qr_scene): void
     {
         $this->qr_scene = $qr_scene;
     }

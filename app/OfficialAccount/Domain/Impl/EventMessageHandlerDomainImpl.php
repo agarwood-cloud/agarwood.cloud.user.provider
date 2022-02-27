@@ -324,7 +324,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     $customerId = $this->assignQueue->popQueue($platformId);
 
                     // todo 关联客服信息
-                    $attributes['customer_id'] = (int)$customerId;
+                    $attributes['customer_id'] = $customerId;
                     // $attributes['customer']    = ''
 
                     // 记录用户信息
