@@ -53,7 +53,7 @@ class GroupRepositoryImpl implements GroupRepository
                 'remark'
             )
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereNotNull('p_id') //是顶级元素
             ->when($filter['group_name'], function ($query, $param) {
                 return $query->where('group_name', 'like', '%' . $param . '%');
@@ -87,7 +87,7 @@ class GroupRepositoryImpl implements GroupRepository
                 'remark'
             )->where([
                 ['deleted_at', '=', StringConstant::DATE_TIME_DEFAULT],  // 未删除
-                ['service_id', '=', $platformId],
+                ['platform_id', '=', $platformId],
                 ['p_id', '=', '']
             ]) //是顶级元素
             ->when($filter['group_name'], function ($query, $param) {
@@ -238,7 +238,7 @@ class GroupRepositoryImpl implements GroupRepository
     {
         return FansGroup::where('p_id', '=', $secondUuid)
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->get([
                 'id',
                 'p_id',
@@ -356,7 +356,7 @@ class GroupRepositoryImpl implements GroupRepository
                 'remark'
             )->where([
                 ['deleted_at', '=', StringConstant::DATE_TIME_DEFAULT],  // 未删除
-                ['service_id', '=', $platformId],
+                ['platform_id', '=', $platformId],
                 ['customer_id', '=', $customerUuid],
                 ['p_id', '=', '']
             ]) //是顶级元素

@@ -39,7 +39,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
             ->when($filter['group_name'], function ($query, $groupName) {
                 return $query->where('group_name', 'like', '%' . $groupName . '%');
             })
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->get()
             ->toArray();
     }
@@ -62,7 +62,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId', // 这里数据有些问题，group_id 没有记录到
                 'openid'
             )
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->get()
@@ -87,7 +87,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId',
             )
             ->selectRaw('COUNT(`openid`) as newFansNum')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->groupBy(['customer_id'])
@@ -114,7 +114,7 @@ class GroupOverviewRpcRepositoryImpl implements GroupOverviewRpcRepository
                 // 'group_id as groupId',
             )
             ->selectRaw('COUNT(`openid`) as newFansSalesNum')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_id', $customerId)
             ->whereIn('openid', $openid)

@@ -58,6 +58,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertTextMessageRecord(ChatTextDTO|CallbackTextDTO $textDTO): InsertOneResult
     {
+        // TODO: Implement insertTextMessageRecord() method.
     }
 
     /**

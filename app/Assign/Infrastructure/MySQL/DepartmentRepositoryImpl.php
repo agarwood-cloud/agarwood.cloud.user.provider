@@ -39,7 +39,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
                 'department',
                 'status',
                 'leader',
-                'service_id as serviceId',
+                'platform_id as platformId',
                 'day_assign as dayAssign',
                 'month_assign as monthAssign',
                 'sort',
@@ -47,7 +47,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->when($filter['department'], function ($query, $department) {
                 return $query->where('department', 'like', '%' . $department . '%');
             })
@@ -151,11 +151,11 @@ class DepartmentRepositoryImpl implements DepartmentRepository
     {
         //  select *
         //      from `user_center_customer_competitive_department`
-        //  where `service_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
+        //  where `platform_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
         //  and `rate` > 0
         //  order by `sort` asc
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('rate', '>', 0) // 进粉速率必须0
             ->where('status', '=', 'usable')
             ->orderBy('sort')
@@ -173,7 +173,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository
     public function getAllDepartments(int $platformId): array
     {
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             // ->where('rate', '>', 0) // 进粉速率必需大于0
             ->where('status', '=', 'usable')
             ->orderBy('sort')

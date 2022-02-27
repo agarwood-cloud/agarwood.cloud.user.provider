@@ -38,7 +38,7 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
     {
         $snowflake                   = new Snowflake;
         $attributes['id']            = (int)$snowflake->id();
-        $attributes['service_id']    = $platformId;
+        $attributes['platform_id']    = $platformId;
         $attributes['customer_id']   = $customerId;
         $attributes['openid']        = $openid;
         $attributes['obtain_status'] = $obtainStatus;
@@ -74,11 +74,11 @@ class AssignSettingRepositoryImpl implements AssignSettingRepository
     {
         //  select *
         //      from `user_center_customer_competitive_department`
-        //  where `service_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
+        //  where `platform_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
         //  and `rate` > 0
         //  order by `sort` asc
         return DB::table(CustomerCompetitiveDepartment::tableName())
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('rate', '>', 0) // 进粉速率必须0
             ->where('status', '=', 'usable')
             ->orderBy('sort')

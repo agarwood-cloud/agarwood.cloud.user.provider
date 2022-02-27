@@ -48,7 +48,7 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
                 'status',
                 'created_at as createdAt'
             )
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->when($filter['content'], function ($query, $param) {
                 return $query->where('content', 'like', '%' . $param . '%');
             })
@@ -124,7 +124,7 @@ class BroadcastingRepositoryImpl implements BroadcastingRepository
             ->selectRaw('COUNT(*) as `number`')
             ->join(User::tableName() . ' as u', 'u.group_id', '=', 'fg.id')
             ->where('u.subscribe', '=', 'subscribe')
-            ->where('fg.service_id', '=', $platformId)
+            ->where('fg.platform_id', '=', $platformId)
             ->where('fg.deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
             ->groupBy(['fg.id'])
             ->when($filter['group_name'], function ($query, $groupName) {

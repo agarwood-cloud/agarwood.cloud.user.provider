@@ -41,7 +41,7 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', 'auto')
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)  // 未删除
@@ -67,7 +67,7 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', 'quick')
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT) // 未删除
@@ -130,7 +130,7 @@ class AutoReplyRepositoryImpl implements AutoReplyRepository
     {
         return DB::table(CustomerAutoReply::tableName())
             ->select()
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('customer_id', '=', $customerId)
             ->where('auto_type', '=', ReplyEnum::AUTO_REPLY_TYPE)
             ->where('event_key', '=', ReplyEnum::EVENT_KEY)

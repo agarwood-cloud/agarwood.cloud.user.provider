@@ -54,7 +54,7 @@ class CustomerToDoApplicationImpl implements CustomerToDoApplication
     {
         //增加部分系统自己添加的参数 i.e: id
         $attributes                  = $DTO->toArrayNotNull([], true);
-        $attributes['service_id']    = $platformId;
+        $attributes['platform_id']    = $platformId;
         $attributes['customer_id']   = $customerId;
         $attributes['status']        = CustomerToDoStatusEnum::STATUS_TODO;
         $collection                  = $this->domain->create($attributes);

@@ -42,7 +42,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
             ->selectRaw('COUNT(`id`) as fans')
             ->where([
                 ['subscribe', '=', 'subscribe'],
-                ['service_id', '=', $platformId]
+                ['platform_id', '=', $platformId]
             ])->firstArray();
     }
 
@@ -59,7 +59,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     {
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayFans`')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->firstArray();
     }
@@ -78,7 +78,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
         return DB::table(User::tableName())
             ->selectRaw('COUNT(`id`) as `theDayUnsubscribeFans`')
             ->where('subscribe', '=', 'unsubscribe')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('unsubscribed_at', [$startAt, $endAt])
             ->firstArray();
     }
@@ -140,7 +140,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
         return DB::table(User::tableName())
             ->select('openid')
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('openid', $openid)
             ->get()
@@ -160,7 +160,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     {
         return DB::table(User::tableName())
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`, count(`openid`) as `value`, "新增粉丝" as category')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->groupBy(['time'])
             ->orderBy('time')
@@ -182,7 +182,7 @@ class UserRpcRepositoryImpl implements UserRpcRepository
     {
         return DB::table(User::tableName())
             ->selectRaw('date_format(`created_at`, \'%m-%d %H\') as `time`, count(`openid`) as `value`, "成交粉丝" as category')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('openid', $openid)
             ->groupBy(['time'])

@@ -50,7 +50,7 @@ class CompetitiveRepositoryImpl implements CompetitiveRepository
                 'co.profit_rate as profitRate'
             )
             ->leftJoin(CustomerCompetitive::tableName() . ' as co', 'c.id', '=', 'co.customer_id')
-            ->where('c.service_id', '=', $platformId)
+            ->where('c.platform_id', '=', $platformId)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
             })

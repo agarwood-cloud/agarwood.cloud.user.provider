@@ -92,7 +92,7 @@ class CustomerAssignRepositoryImpl implements CustomerAssignRepository
         // 优先查找有设置分组的
         $customerIds = DB::table(CustomerCompetitive::tableName())
             ->select('customer_id as id')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -104,7 +104,7 @@ class CustomerAssignRepositoryImpl implements CustomerAssignRepository
         // 如果没有设置，再随机分配
         return DB::table(Customer::tableName())
             ->select('id')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();

@@ -159,16 +159,16 @@ class WeChatDTO extends AbstractBaseDTO
     /**
      * @return int
      */
-    public function getServiceId(): int
+    public function getplatformId(): int
     {
-        return $this->serviceId;
+        return $this->platformId;
     }
 
     /**
      * @param int $platformId
      */
-    public function setServiceId(int $platformId): void
+    public function setplatformId(int $platformId): void
     {
-        $this->serviceId = $platformId;
+        $this->platformId = $platformId;
     }
 }

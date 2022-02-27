@@ -62,7 +62,7 @@ class OAuthController extends AbstractBaseController
         $jwtToken = $this->application->jwtTokenProvider(
             $userOfficialAccount,
             $DTO->getToken(),
-            $user['service_uuid'] ?? $DTO->getServiceId(),
+            $user['service_uuid'] ?? $DTO->getplatformId(),
             $user['customer_uuid'] ?? $DTO->getCustomerId(),
             $user['customer'] ?? $DTO->getCustomer()
         );

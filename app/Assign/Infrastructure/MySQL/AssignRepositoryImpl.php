@@ -94,7 +94,7 @@ class AssignRepositoryImpl implements AssignRepository
         // 优先查找有设置分组的
         $customerIds = DB::table(CustomerCompetitive::tableName())
             ->select('customer_id as id')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -106,7 +106,7 @@ class AssignRepositoryImpl implements AssignRepository
         // 如果没有设置，再随机分配
         return DB::table(Customer::tableName())
             ->select('id')
-            ->where('service_id', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('status', '=', 'usable')
             ->get()
             ->toArray();
@@ -177,7 +177,7 @@ class AssignRepositoryImpl implements AssignRepository
         // from `user_center_customer_obtain_fans` as `user_center_co`
         //         left join `user_center_customer_competitive_department` as `user_center_ccd`
         //                   on `user_center_co`.`department_id` = `user_center_ccd`.`id`
-        // where `user_center_co`.`service_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
+        // where `user_center_co`.`platform_id` = '52ad3f27-f47c-47b1-a240-5cec30fe6086'
         //  and `user_center_co`.`obtain_status` = 'obtain'
         //  and `user_center_co`.`department_id` != ''
         //  and `user_center_ccd`.`rate` > 0
@@ -186,7 +186,7 @@ class AssignRepositoryImpl implements AssignRepository
         return DB::table(CustomerObtainFans::tableName() . ' as co')
             ->select('co.rate', 'co.department_id')
             ->leftJoin(CustomerCompetitiveDepartment::tableName() . ' as ccd', 'co.department_id', '=', 'ccd.id')
-            ->where('co.service_id', '=', $platformId)
+            ->where('co.platform_id', '=', $platformId)
             ->where('co.obtain_status', '=', 'obtain')
             ->where('co.department_id', '!=', '')
             ->where('ccd.rate', '>', 0)
