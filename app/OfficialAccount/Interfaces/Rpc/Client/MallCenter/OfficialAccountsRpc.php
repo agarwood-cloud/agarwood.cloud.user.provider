@@ -49,4 +49,13 @@ interface OfficialAccountsRpc
      * Get the official account application
      */
     public function officialAccountApplication(int $platformId): Application;
+
+    /**
+     * Get the enterprise id
+     *
+     * @param int $platformId
+     *
+     * @return int
+     */
+    public function getEnterpriseId(int $platformId): int;
 }

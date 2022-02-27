@@ -86,4 +86,21 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
 
         return $this->weChat->officialAccount($config);
     }
+
+    /**
+     * Get the enterprise id
+     *
+     * @param int $platformId
+     *
+     * @return int
+     */
+    public function getEnterpriseId(int $platformId): int
+    {
+        // todo 优化: 可以使用缓存
+//        $config = $this->officialAccountsRpc->officialAccountsInfo($platformId);
+//
+//        return $config['enterprise_id'] ?? 0;
+
+        return 0;
+    }
 }
