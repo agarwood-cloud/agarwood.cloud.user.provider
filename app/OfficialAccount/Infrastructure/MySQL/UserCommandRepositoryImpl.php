@@ -41,6 +41,9 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
         $value['union_id']     = $dto->getUnionId();
 
+        // 企业id
+        $value['enterprise_id'] = $attributes['enterprise_id'] ?? 0;
+
         // 雪花id
         $snowflake   = new Snowflake;
         $value['id'] = (int)$snowflake->id();
