@@ -10,15 +10,15 @@
 
 namespace App\OfficialAccount\Domain;
 
-use App\OfficialAccount\Interfaces\DTO\Callback\TextDTO as CallBackChatTextDTO;
-use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO as ChatImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\ImageDTO as CallBackChatImageDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\TextDTO as CallBackChatTextDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO as CallBackChatVideoDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO as CallBackChatVoiceDTO;
+use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO as ChatImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO as ChatTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO as ChatVideoDTO;
-use App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO as CallBackChatVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO as ChatVoiceDTO;
-use App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO as CallBackChatVoiceDTO;
 use MongoDB\InsertManyResult;
 use MongoDB\InsertOneResult;
 use MongoDB\UpdateResult;
@@ -77,7 +77,7 @@ interface MongoMessageRecordDomain
      * 插入一条聊天记录
      *
      * @param string $openid     微信用户openid
-     * @param string $customerId 客服id
+     * @param int    $customerId 客服id
      * @param string $sender     发送者
      * @param string $msgType    消息类型
      * @param array  $data       消息内容
@@ -85,7 +85,7 @@ interface MongoMessageRecordDomain
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult;
+    public function insertOneMessage(string $openid, int $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult;
 
     /**
      * 插入多条聊天记录

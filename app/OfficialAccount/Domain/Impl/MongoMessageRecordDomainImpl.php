@@ -98,7 +98,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      * 插入一条聊天记录
      *
      * @param string $openid     微信用户openid
-     * @param string $customerId 客服id
+     * @param int    $customerId 客服id
      * @param string $sender     发送者
      * @param string $msgType    消息类型
      * @param array  $data       消息内容
@@ -106,9 +106,9 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertOneMessage(string $openid, string $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult
+    public function insertOneMessage(string $openid, int $customerId, string $sender, string $msgType, array $data, bool $isRead = false): InsertOneResult
     {
-        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, (int)$customerId, $sender, $msgType, $data, $isRead);
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, $customerId, $sender, $msgType, $data, $isRead);
     }
 
     /**
@@ -250,19 +250,19 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
                 $temp[$key]['user'] = $user[$value['openid']];
             } else {
                 $temp[$key]['user'] = [
-                    'id'                => 0,
-                    'platformId'        => 0,
-                    'openid'            => $value['openid'],
-                    'customerId'        => $value['customer_id'],
-                    'customer'          => '',
-                    'nickname'          => '',
-                    'headImgUrl'        => [],
-                    'subscribeAt'       => '',
-                    'unsubscribeAt'     => '',
-                    'subscribe'         => '',
-                    'subscribeScene'    => 'ADD_SCENE_OTHERS',
-                    'createdAt'         => '',
-                    'updatedAt'         => '',
+                    'id'             => 0,
+                    'platformId'     => 0,
+                    'openid'         => $value['openid'],
+                    'customerId'     => $value['customer_id'],
+                    'customer'       => '',
+                    'nickname'       => '',
+                    'headImgUrl'     => [],
+                    'subscribeAt'    => '',
+                    'unsubscribeAt'  => '',
+                    'subscribe'      => '',
+                    'subscribeScene' => 'ADD_SCENE_OTHERS',
+                    'createdAt'      => '',
+                    'updatedAt'      => '',
                 ];
             }
         }
