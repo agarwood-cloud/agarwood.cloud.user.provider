@@ -104,6 +104,8 @@ class CallbackApplicationImpl implements CallbackApplication
 
         $app = $this->officialAccountsRpc->officialAccountApplication((int)$platformId);
 
+        $enterpriseIdId = $this->officialAccountsRpc->getEnterpriseId((int)$platformId);
+
         // 关注欢迎语 && 自动回复
         $this->welcomeSubscribeDomain->welcomeSubscribe((int)$platformId, $app);
         $this->welcomeSubscribeDomain->autoReply((int)$platformId, $app);

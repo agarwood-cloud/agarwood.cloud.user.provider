@@ -90,6 +90,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 关注事件领域服务
      *
+     * @param int         $enterpriseId
      * @param int         $platformId
      * @param Application $application
      *
@@ -97,10 +98,10 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventSubscribe(int $platformId, Application $application): void
+    public function eventSubscribe(int $enterpriseId, int $platformId, Application $application): void
     {
         // 记录用户的信息
-        $application->server->push(function ($message) use ($platformId, $application) {
+        $application->server->push(function ($message) use ($enterpriseId, $platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
 
             // 关注事件
@@ -109,8 +110,9 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
 
                 // 获取用户信息
-                $attributes                = (array)$application->user->get($DTO->getFromUserName());
-                $attributes['platform_id'] = $platformId;
+                $attributes                  = (array)$application->user->get($DTO->getFromUserName());
+                $attributes['platform_id']   = $platformId;
+                $attributes['enterprise_id'] = $enterpriseId;
 
                 if (empty($user)) {
                     if ($DTO->getEventKey()) {
@@ -182,6 +184,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 取消关注事件领域服务
      *
+     * @param int         $enterpriseId
      * @param int         $platformId
      * @param Application $application
      *
@@ -189,7 +192,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventUnsubscribe(int $platformId, Application $application): void
+    public function eventUnsubscribe(int $enterpriseId, int $platformId, Application $application): void
     {
         $application->server->push(function ($message) use ($platformId) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
@@ -231,6 +234,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 关注扫码事件领域服务
      *
+     * @param int         $enterpriseId
      * @param int         $platformId
      * @param Application $application
      *
@@ -238,7 +242,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventScan(int $platformId, Application $application): void
+    public function eventScan(int $enterpriseId, int $platformId, Application $application): void
     {
         $application->server->push(function ($message) use ($platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
@@ -293,6 +297,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 点击菜单拉取消息时的事件推送
      *
+     * @param int         $enterpriseId
      * @param int         $platformId
      * @param Application $application
      *
@@ -300,7 +305,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventClick(int $platformId, Application $application): void
+    public function eventClick(int $enterpriseId, int $platformId, Application $application): void
     {
         $application->server->push(function ($message) use ($platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
@@ -357,6 +362,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 点击菜单跳转链接时的事件推送
      *
+     * @param int         $enterpriseId
      * @param int         $platformId
      * @param Application $application
      *
@@ -364,7 +370,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      * @throws ReflectionException
      */
-    public function eventView(int $platformId, Application $application): void
+    public function eventView(int $enterpriseId, int $platformId, Application $application): void
     {
         $application->server->push(function ($message) use ($platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);

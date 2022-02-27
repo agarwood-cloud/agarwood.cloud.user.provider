@@ -122,7 +122,7 @@ class Customer extends Model
      *
      * @var string
      */
-    private $enterpriseId;
+    private $enterpriseIdId;
 
     /**
      * usable:可用,disabled:不可用
@@ -436,10 +436,10 @@ class Customer extends Model
     }
 
     /**
-     * @param string $enterpriseId
+     * @param string $enterpriseIdId
      */
-    public function setEnterpriseId(string $enterpriseId): void
+    public function setEnterpriseId(string $enterpriseIdId): void
     {
-        $this->enterpriseId = $enterpriseId;
+        $this->enterpriseId = $enterpriseIdId;
     }
 }
