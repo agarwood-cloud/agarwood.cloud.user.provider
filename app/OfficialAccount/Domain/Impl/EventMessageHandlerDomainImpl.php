@@ -139,18 +139,18 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 } else {
                     // 如果已关注的，且没有分配客服，则重新分配客服
                     if (empty($user['customer_id'])) {
-                        // 这里是通过分粉的机制来分粉
                         try {
+                            // 这里是通过分粉的机制来分粉
                             $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+
+                            // 重新分配也算是抢粉，记录抢粉信息
+                            $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
                         } catch (Throwable $e) {
                             $attributes['customerId'] = 0;
                             CLog::error('Assign error: ' . $e->getMessage());
                         }
 
                         //  todo 关联客服信息
-
-                        // 重新分配也算是抢粉，记录抢粉信息
-                        $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
                     }
 
                     // 更新用户信息
