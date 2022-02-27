@@ -65,6 +65,7 @@ class UserCommandRepositoryImpl implements UserCommandRepository
             $value['qr_scene'],
             $value['qr_scene_str'],
             $value['language'],
+            $value['remark'],
         );
 
         return DB::table(User::tableName())
