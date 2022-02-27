@@ -29,7 +29,9 @@ use EasyWeChat\OfficialAccount\Application;
 use Godruoyi\Snowflake\Snowflake;
 use JsonException;
 use ReflectionException;
+use Swoft\Log\Helper\CLog;
 use Swoft\Redis\Redis;
+use Throwable;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -106,6 +108,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 用户信息是否存在
                 $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
 
+                // 获取用户信息
                 $attributes                = (array)$application->user->get($DTO->getFromUserName());
                 $attributes['platform_id'] = $platformId;
 
@@ -116,7 +119,12 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                         $attributes['customerId'] = str_replace(UserEnum::SCAN_FROM_CUSTOMER_UNSUBSCRIBE, '', $DTO->getEventKey());
                     } else {
                         // 这里是通过分粉的机制来分粉
-                        $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+                        try {
+                            $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+                        } catch (Throwable $e) {
+                            $attributes['customerId'] = 0;
+                            CLog::error('Assign error: ' . $e->getMessage());
+                        }
 
                         // 重新分配也算是抢粉，记录抢粉信息
                         $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
@@ -124,18 +132,20 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
 
                     // todo 关联客服信息
 
-                    // $attributes['customerId'] && $attributes['customer'] = $this->customerExtendsRepository->findByUuid($attributes['customerUuid'])->getName();
-
                     // 记录用户信息
                     $this->userCommandRepository->addUserFromWeChat($attributes);
                 } else {
                     // 如果已关注的，且没有分配客服，则重新分配客服
                     if (empty($user['customer_id'])) {
                         // 这里是通过分粉的机制来分粉
-                        $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+                        try {
+                            $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+                        } catch (Throwable $e) {
+                            $attributes['customerId'] = 0;
+                            CLog::error('Assign error: ' . $e->getMessage());
+                        }
 
                         //  todo 关联客服信息
-                        // $attributes['customerId'] && $attributes['customer'] = $this->customerExtendsRepository->findByUuid($attributes['customerId'])->getName();
 
                         // 重新分配也算是抢粉，记录抢粉信息
                         $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
