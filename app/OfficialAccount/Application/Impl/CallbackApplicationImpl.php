@@ -111,11 +111,11 @@ class CallbackApplicationImpl implements CallbackApplication
         $this->welcomeSubscribeDomain->autoReply((int)$platformId, $app);
 
         // 事件处理器
-        $this->eventMessageHandlerDomain->eventSubscribe((int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventUnsubscribe((int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventClick((int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventScan((int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventView((int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventSubscribe($enterpriseIdId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventUnsubscribe($enterpriseIdId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventClick($enterpriseIdId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventScan($enterpriseIdId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventView($enterpriseIdId, (int)$platformId, $app);
 
         // 默认事件处理器, 缓存粉丝信息
         // $this->defaultMessageHandlerDomain->defaultMessage((int)$platformId, $app);
