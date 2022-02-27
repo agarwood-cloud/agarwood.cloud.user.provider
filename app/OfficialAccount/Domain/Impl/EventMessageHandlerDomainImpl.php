@@ -120,16 +120,17 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                         // 扫码过来的，不算是抢粉的
                         $attributes['customerId'] = str_replace(UserEnum::SCAN_FROM_CUSTOMER_UNSUBSCRIBE, '', $DTO->getEventKey());
                     } else {
-                        // 这里是通过分粉的机制来分粉
                         try {
+                            // 这里是通过分粉的机制来分粉
                             $attributes['customerId'] = $this->assignQueue->popQueue($platformId);
+
+                            // 重新分配也算是抢粉，记录抢粉信息
+                            $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
+
                         } catch (Throwable $e) {
                             $attributes['customerId'] = 0;
                             CLog::error('Assign error: ' . $e->getMessage());
                         }
-
-                        // 重新分配也算是抢粉，记录抢粉信息
-                        $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
                     }
 
                     // todo 关联客服信息
