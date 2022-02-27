@@ -63,7 +63,8 @@ class UserCommandRepositoryImpl implements UserCommandRepository
             $value['tagid_list'],
             $value['groupid'],
             $value['qr_scene'],
-            $value['qr_scene_str']
+            $value['qr_scene_str'],
+            $value['language'],
         );
 
         return DB::table(User::tableName())
