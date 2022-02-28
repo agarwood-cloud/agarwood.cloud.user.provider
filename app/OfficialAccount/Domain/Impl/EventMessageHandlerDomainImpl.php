@@ -126,7 +126,6 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
 
                             // 重新分配也算是抢粉，记录抢粉信息
                             $this->assignSettingRepository->recordAssignFans($platformId, $attributes['customerId'], $DTO->getFromUserName());
-
                         } catch (Throwable $e) {
                             $attributes['customerId'] = 0;
                             CLog::error('Assign error: ' . $e->getMessage());
@@ -259,52 +258,15 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      */
     public function eventScan(int $enterpriseId, int $platformId, Application $application): void
     {
-        $application->server->push(function ($message) use ($platformId, $application) {
+        $application->server->push(function ($message) use ($enterpriseId, $platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::SCAN) {
                 // 如果存在则，更新所属的客服
                 //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
                 $customerId = str_replace(UserEnum::SCAN_FROM_CUSTOMER_SUBSCRIBE, '', (string)$DTO->getEventKey());
 
-                $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
-
-                if ($user) {
-                    $attributes = [
-                        'platform_id' => $platformId,
-                        'customer_id' => (int)$customerId,
-                        // todo 关联客服信息 'customer'   =>  $customer;
-                    ];
-                    $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
-                } else {
-                    // 当用户信息不存在数据库时
-                    $attributes = (array)$application->user->get($DTO->getFromUserName());
-
-                    // todo 关联客服信息
-                    $attributes['customer_id'] = (int)$customerId;
-                    // $attributes['customer']    = ''
-
-                    // 记录用户信息
-                    $this->userCommandRepository->addUserFromWeChat($attributes);
-                }
-
-                $content = 'User subscribes to the official account by scanning the code!';
-
-                // 转发给客服
-                if (isset($user['customerId'])) {
-                    $this->publishTextMessage(
-                        $user['customerId'],
-                        $message['FromUserName'],
-                        $content
-                    );
-                }
-                // 消息记录
-                $this->mongoMessageRecordDomain->insertOneMessage(
-                    $DTO->getFromUserName(),
-                    $user['customerId'] ?? 0,
-                    'user',
-                    WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content],
-                );
+                $content = 'User triggered scan event!';
+                $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content, $customerId);
             }
         }, Message::EVENT);
     }
@@ -322,54 +284,11 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      */
     public function eventClick(int $enterpriseId, int $platformId, Application $application): void
     {
-        $application->server->push(function ($message) use ($platformId, $application) {
+        $application->server->push(function ($message) use ($enterpriseId, $platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::CLICK) {
-                // 如果存在则，更新所属的客服
-                //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
-                $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
-                if ($user && $user['customer_id']) {
-                    // 这里是通过分粉的机制来分粉
-                    $customerId = $this->assignQueue->popQueue($platformId);
-
-                    $attributes = [
-                        'platform_id' => $platformId,
-                        'customer_id' => $customerId,
-                        // todo 关联客服信息 'customer'   =>  $customer;
-                    ];
-                    $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
-                } else {
-                    // 当用户信息不存在数据库时
-                    $attributes = (array)$application->user->get($DTO->getFromUserName());
-                    $customerId = $this->assignQueue->popQueue($platformId);
-
-                    // todo 关联客服信息
-                    $attributes['customer_id'] = $customerId;
-                    // $attributes['customer']    = ''
-
-                    // 记录用户信息
-                    $this->userCommandRepository->addUserFromWeChat($attributes);
-                }
-
-                $content = 'User clicks on the official account menu!';
-
-                // 转发给客服
-                if (isset($user['customerId'])) {
-                    $this->publishTextMessage(
-                        $user['customerId'],
-                        $message['FromUserName'],
-                        $content
-                    );
-                }
-
-                // 消息记录
-                $this->mongoMessageRecordDomain->insertOneMessage(
-                    $DTO->getFromUserName(),
-                    $user['customerId'] ?? 0,
-                    'user',
-                    WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content]
-                );
+                $content = 'User triggered click event!';
+                $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content);
             }
         }, Message::EVENT);
     }
@@ -387,56 +306,11 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      */
     public function eventView(int $enterpriseId, int $platformId, Application $application): void
     {
-        $application->server->push(function ($message) use ($platformId, $application) {
+        $application->server->push(function ($message) use ($enterpriseId, $platformId, $application) {
             $DTO = CallbackAssembler::attributesToEventDTO((array)$message);
             if ($DTO->getEvent() === WeChatCallbackEvent::VIEW) {
-                // 如果存在则，更新所属的客服
-                //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
-                $user = $this->userQueryRepository->findByOpenid($DTO->getFromUserName());
-
-                if ($user && $user['customer_id']) {
-
-                    // 这里是通过分粉的机制来分粉
-                    $customerId = $this->assignQueue->popQueue($platformId);
-
-                    $attributes = [
-                        'platform_id' => $platformId,
-                        'customer_id' => $customerId,
-                        // todo 关联客服信息 'customer'   =>  $customer;
-                    ];
-                    $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
-                } else {
-                    // 当用户信息不存在数据库时
-                    $attributes = (array)$application->user->get($DTO->getFromUserName());
-                    $customerId = $this->assignQueue->popQueue($platformId);
-
-                    // todo 关联客服信息
-                    $attributes['customer_id'] = $customerId;
-                    // $attributes['customer']    = ''
-
-                    // 记录用户信息
-                    $this->userCommandRepository->addUserFromWeChat($attributes);
-                }
-
-                $content = 'User browses the contents of the official account menu!';
-
-                // 转发给客服，写入到 redis的channel里面去
-                if (isset($user['customerId'])) {
-                    $this->publishTextMessage(
-                        $user['customerId'],
-                        $message['FromUserName'],
-                        $content
-                    );
-                }
-
-                // 消息记录
-                $this->mongoMessageRecordDomain->insertOneMessage(
-                    $DTO->getFromUserName(),
-                    $user['customerId'] ?? 0,
-                    'user',
-                    WebSocketMessage::TEXT_MESSAGE,
-                    ['content' => $content]
-                );
+                $content = 'User triggered view event!';
+                $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content);
             }
         }, Message::EVENT);
     }
@@ -465,5 +339,69 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
         ];
 
         return Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @param string                                  $openid
+     * @param int                                     $enterpriseId
+     * @param int                                     $platformId
+     * @param \EasyWeChat\OfficialAccount\Application $application
+     * @param string                                  $content
+     * @param string|null                             $customer
+     *
+     * @return void
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws JsonException
+     */
+    protected function insertOrUpdateUserForEvent(string $openid, int $enterpriseId, int $platformId, Application $application, string $content, ?string $customer = null): void
+    {
+        // 如果存在则，更新所属的客服
+        //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
+        $user = $this->userQueryRepository->findByOpenid($openid);
+
+        if ($user && $user['customer_id']) {
+
+            // 这里是通过分粉的机制来分粉
+            $customerId = $customer ?: $this->assignQueue->popQueue($platformId);
+
+            $attributes = [
+                'platform_id' => $platformId,
+                'customer_id' => $customerId,
+                // todo 关联客服信息 'customer'   =>  $customer;
+            ];
+            $this->userCommandRepository->updateByOpenid($openid, $attributes);
+        } else {
+            // 当用户信息不存在数据库时
+            $attributes = (array)$application->user->get($openid);
+            $customerId = $this->assignQueue->popQueue($platformId);
+
+            // 企业信息
+            $attributes['enterprise_id'] = $enterpriseId;
+
+            // todo 关联客服信息
+            $attributes['customer_id']   = $customerId;
+            // $attributes['customer']    = ''
+
+            // 记录用户信息
+            $this->userCommandRepository->addUserFromWeChat($attributes);
+        }
+
+        // 转发给客服，写入到 redis的channel里面去
+        if (isset($user['customerId'])) {
+            $this->publishTextMessage(
+                $user['customerId'],
+                $openid,
+                $content
+            );
+        }
+
+        // 消息记录
+        $this->mongoMessageRecordDomain->insertOneMessage(
+            $openid,
+            $user['customerId'] ?? 0,
+            'user',
+            WebSocketMessage::TEXT_MESSAGE,
+            ['content' => $content]
+        );
     }
 }

@@ -53,11 +53,11 @@ class CustomerToDoApplicationImpl implements CustomerToDoApplication
     public function createProvider(int $platformId, int $customerId, CreateDTO $DTO): Collection
     {
         //增加部分系统自己添加的参数 i.e: id
-        $attributes                  = $DTO->toArrayNotNull([], true);
+        $attributes                   = $DTO->toArrayNotNull([], true);
         $attributes['platform_id']    = $platformId;
-        $attributes['customer_id']   = $customerId;
-        $attributes['status']        = CustomerToDoStatusEnum::STATUS_TODO;
-        $collection                  = $this->domain->create($attributes);
+        $attributes['customer_id']    = $customerId;
+        $attributes['status']         = CustomerToDoStatusEnum::STATUS_TODO;
+        $collection                   = $this->domain->create($attributes);
         //这里可以设置更多的返回值
         return Collection::make($collection);
     }
