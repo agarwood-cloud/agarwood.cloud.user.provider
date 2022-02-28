@@ -63,9 +63,9 @@ class CreateDTO extends AbstractBaseDTO
     /**
      * 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
      *
-     * @var string
+     * @var string | int
      */
-    public string $unionid = '';
+    public string | int $unionid = '';
 
     /**
      * 公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
@@ -215,17 +215,17 @@ class CreateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return string
+     * @return string|int
      */
-    public function getUnionid(): string
+    public function getUnionid(): string| int
     {
         return $this->unionid;
     }
 
     /**
-     * @param string $unionid
+     * @param string|int $unionid
      */
-    public function setUnionid(string $unionid): void
+    public function setUnionid(string|int $unionid): void
     {
         $this->unionid = $unionid;
     }
