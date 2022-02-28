@@ -82,13 +82,6 @@ class CreateDTO extends AbstractBaseDTO
     public int $groupid = 0;
 
     /**
-     * 用户被打上的标签ID列表
-     *
-     * @var array
-     */
-    public array $tagid_list = [];
-
-    /**
      * 返回用户关注的渠道来源，
      *      ADD_SCENE_SEARCH 公众号搜索，
      *      ADD_SCENE_ACCOUNT_MIGRATION 公众号迁移，
@@ -103,6 +96,13 @@ class CreateDTO extends AbstractBaseDTO
      * @var string
      */
     public string $subscribe_scene = 'VISITOR';
+
+    /**
+     * 用户被打上的标签ID列表
+     *
+     * @var array
+     */
+    public array $tagid_list = [];
 
     /**
      * 二维码扫码场景（开发者自定义）
