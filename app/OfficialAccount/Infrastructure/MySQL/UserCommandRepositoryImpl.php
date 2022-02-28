@@ -37,11 +37,12 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value = $dto->toArrayLine();
 
         //将时间修改为日期格式
-        $value['head_img_url'] = $dto->getHeadimgurl();
-        $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
-        $value['union_id']     = $dto->getUnionid();
-        $value['created_at']   = Carbon::now()->toDateTimeString();
-        $value['updated_at']   = Carbon::now()->toDateTimeString();
+        $value['head_img_url']    = $dto->getHeadimgurl();
+        $value['subscribe']       = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
+        $value['union_id']        = $dto->getUnionid();
+        $value['subscribe_scene'] = $attributes['subscribe_scene'];
+        $value['created_at']      = Carbon::now()->toDateTimeString();
+        $value['updated_at']      = Carbon::now()->toDateTimeString();
 
         // 企业id
         $value['enterprise_id'] = $attributes['enterprise_id'] ?? 0;
