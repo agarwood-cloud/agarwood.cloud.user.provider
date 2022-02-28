@@ -37,9 +37,9 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value = $dto->toArrayNotNull([], true);
 
         //将时间修改为日期格式
-        $value['head_img_url'] = $dto->getHeadImgUrl();
+        $value['head_img_url'] = $dto->getHeadimgurl();
         $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
-        $value['union_id']     = $dto->getUnionId();
+        $value['union_id']     = $dto->getUnionid();
         $value['created_at']   = Carbon::now()->toDateTimeString();
         $value['updated_at']   = Carbon::now()->toDateTimeString();
 
@@ -91,7 +91,9 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value = $dto->toArrayNotNull([], true);
 
         // 处理不对应的字段
-        $value['head_img_url'] = $dto->getHeadImgUrl() ?? '';
+        $value['head_img_url'] = $attributes['headimgurl'];
+        $value['union_id']     = $attributes['unionid'];
+        $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
 
         // 删除不必要的字段
         unset(
@@ -101,7 +103,9 @@ class UserCommandRepositoryImpl implements UserCommandRepository
             $value['tagid_list'],
             $value['groupid'],
             $value['qr_scene'],
-            $value['qr_scene_str']
+            $value['qr_scene_str'],
+            $value['language'],
+            $value['remark'],
         );
 
         return User::where('openid', '=', $openid)->update($value);

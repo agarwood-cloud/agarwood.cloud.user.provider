@@ -205,6 +205,13 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                     'unsubscribe_at' => Carbon::now()->toDateTimeString(),
                     'enterprise_id'  => $enterpriseId,
                 ];
+
+                try {
+                    // 取消关注，则把用户从分配队列中移除
+                    $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
+                } catch (Throwable $e) {
+                    CLog::error('Update Error: ' . $e->getMessage());
+                }
                 $this->userCommandRepository->updateByOpenid($DTO->getFromUserName(), $attributes);
 
                 // todo 获取用户信息
@@ -220,7 +227,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 转发给客服
                 if (isset($user['customerId'])) {
                     $this->publishTextMessage(
-                        $user['customerId'],
+                        (string)$user['customerId'],
                         $message['FromUserName'],
                         $content
                     );
@@ -229,7 +236,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 消息记录
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
-                    $user['customerId'] ?? 0,
+                    (int)$user['customerId'],
                     'user',
                     WebSocketMessage::TEXT_MESSAGE,
                     ['content' => $content]

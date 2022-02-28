@@ -36,7 +36,7 @@ class UpdateDTO extends AbstractBaseDTO
      *
      * @var string|null
      */
-    public ?string $headImgUrl = null;
+    public ?string $headimgurl = null;
 
     /**
      * @\Swoft\Validator\Annotation\Mapping\IsString()
@@ -55,9 +55,9 @@ class UpdateDTO extends AbstractBaseDTO
     /**
      * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
-     * @var string|null
+     * @var int|null
      */
-    public ?string $subscribe = null;
+    public ?int $subscribe = null;
 
     /**
      * 返回用户关注的渠道来源，
@@ -79,27 +79,11 @@ class UpdateDTO extends AbstractBaseDTO
     public ?string $subscribeScene = null;
 
     /**
-     * 关注时间
-     *
-     * @\Swoft\Validator\Annotation\Mapping\IsString()
-     *
-     * @var string|null
-     */
-    public ?string $subscribeAt = null;
-
-    /**
      * @\Swoft\Validator\Annotation\Mapping\IsString()
      *
      * @var ?string
      */
-    public ?string $unionId = null;
-
-    /**
-     * @\Swoft\Validator\Annotation\Mapping\IsString()
-     *
-     * @var string|null
-     */
-    public ?string $unsubscribeAt = null;
+    public ?string $unionid = null;
 
     /**
      * @return int|null
@@ -136,17 +120,17 @@ class UpdateDTO extends AbstractBaseDTO
     /**
      * @return string|null
      */
-    public function getHeadImgUrl(): ?string
+    public function getHeadimgurl(): ?string
     {
-        return $this->headImgUrl;
+        return $this->headimgurl;
     }
 
     /**
-     * @param string|null $headImgUrl
+     * @param string|null $headimgurl
      */
-    public function setHeadImgUrl(?string $headImgUrl): void
+    public function setHeadimgurl(?string $headimgurl): void
     {
-        $this->headImgUrl = $headImgUrl;
+        $this->headimgurl = $headimgurl;
     }
 
     /**
@@ -182,17 +166,17 @@ class UpdateDTO extends AbstractBaseDTO
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
-    public function getSubscribe(): ?string
+    public function getSubscribe(): ?int
     {
         return $this->subscribe;
     }
 
     /**
-     * @param string|null $subscribe
+     * @param int|null $subscribe
      */
-    public function setSubscribe(?string $subscribe): void
+    public function setSubscribe(?int $subscribe): void
     {
         $this->subscribe = $subscribe;
     }
@@ -216,48 +200,16 @@ class UpdateDTO extends AbstractBaseDTO
     /**
      * @return string|null
      */
-    public function getSubscribeAt(): ?string
+    public function getUnionid(): ?string
     {
-        return $this->subscribeAt;
+        return $this->unionid;
     }
 
     /**
-     * @param string|null $subscribeAt
+     * @param string|null $unionid
      */
-    public function setSubscribeAt(?string $subscribeAt): void
+    public function setUnionid(?string $unionid): void
     {
-        $this->subscribeAt = $subscribeAt;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUnionId(): ?string
-    {
-        return $this->unionId;
-    }
-
-    /**
-     * @param string|null $unionId
-     */
-    public function setUnionId(?string $unionId): void
-    {
-        $this->unionId = $unionId;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUnsubscribeAt(): ?string
-    {
-        return $this->unsubscribeAt;
-    }
-
-    /**
-     * @param string|null $unsubscribeAt
-     */
-    public function setUnsubscribeAt(?string $unsubscribeAt): void
-    {
-        $this->unsubscribeAt = $unsubscribeAt;
+        $this->unionid = $unionid;
     }
 }
