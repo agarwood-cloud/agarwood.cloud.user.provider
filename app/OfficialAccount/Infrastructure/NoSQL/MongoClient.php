@@ -32,10 +32,10 @@ class MongoClient
                     env('MONGODB_HOST', '127.0.0.1'),
                     env('MONGODB_PORT', '27017')
                 ),
-//                [
-//                    'username' => env('MONGODB_USERNAME', 'admin'),
-//                    'password' => env('MONGODB_PASSWORD', ''),
-//                ]
+                [
+                    'username' => env('MONGODB_USERNAME', 'admin'),
+                    'password' => env('MONGODB_PASSWORD', 'admin'),
+                ]
             );
         }
         return self::$singleton;

@@ -235,6 +235,17 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 }
 
                 // 消息记录
+                try {
+                    $this->mongoMessageRecordDomain->insertOneMessage(
+                        $DTO->getFromUserName(),
+                        (int)$user['customerId'],
+                        'user',
+                        WebSocketMessage::TEXT_MESSAGE,
+                        ['content' => $content]
+                    );
+                } catch (Throwable $e) {
+                    CLog::error('Insert Error: ' . $e->getMessage());
+                }
                 $this->mongoMessageRecordDomain->insertOneMessage(
                     $DTO->getFromUserName(),
                     (int)$user['customerId'],
