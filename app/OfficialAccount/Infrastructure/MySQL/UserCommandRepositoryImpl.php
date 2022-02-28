@@ -122,7 +122,9 @@ class UserCommandRepositoryImpl implements UserCommandRepository
      */
     public function updateByOpenid(string $openid, array $attributes): int
     {
-        return User::where('openid', '=', $openid)->update($attributes);
+        return DB::table(User::tableName())
+            ->where('openid', '=', $openid)
+            ->update($attributes);
     }
 
     /**

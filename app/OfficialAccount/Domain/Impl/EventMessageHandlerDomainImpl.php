@@ -201,9 +201,10 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 取消关注事件
                 $attributes = [
                     'platform_id'    => $platformId,
-                    'subscribe'      => 'unsubscribe',
+                    'subscribe'      => WeChatCallbackEvent::UNSUBSCRIBE,
                     'unsubscribe_at' => Carbon::now()->toDateTimeString(),
                     'enterprise_id'  => $enterpriseId,
+                    'updated_at'     => Carbon::now()->toDateTimeString(),
                 ];
 
                 try {
