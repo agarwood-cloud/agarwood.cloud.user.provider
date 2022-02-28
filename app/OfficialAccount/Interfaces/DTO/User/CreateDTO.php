@@ -97,12 +97,12 @@ class CreateDTO extends AbstractBaseDTO
      */
     public string $subscribe_scene = 'VISITOR';
 
-//    /**
-//     * 用户被打上的标签ID列表
-//     *
-//     * @var array
-//     */
-//    public array $tagid_list = [];
+    /**
+     * 用户被打上的标签ID列表
+     *
+     * @var array
+     */
+    public array $tagid_list = [];
 
     /**
      * 二维码扫码场景（开发者自定义）
@@ -262,21 +262,21 @@ class CreateDTO extends AbstractBaseDTO
         $this->groupid = $groupid;
     }
 
-//    /**
-//     * @return array
-//     */
-//    public function getTagidList(): array
-//    {
-//        return $this->tagid_list;
-//    }
-//
-//    /**
-//     * @param array $tagid_list
-//     */
-//    public function setTagidList(array $tagid_list): void
-//    {
-//        $this->tagid_list = $tagid_list;
-//    }
+    /**
+     * @return array
+     */
+    public function getTagidList(): array
+    {
+        return $this->tagid_list;
+    }
+
+    /**
+     * @param array $tagid_list
+     */
+    public function setTagidList(array $tagid_list): void
+    {
+        $this->tagid_list = $tagid_list;
+    }
 
     /**
      * @return string

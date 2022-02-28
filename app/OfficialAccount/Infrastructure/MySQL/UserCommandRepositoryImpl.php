@@ -34,7 +34,7 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $dto = UserAssembler::attributesToCreateDTO($attributes);
 
         // 转
-        $value = $dto->toArrayNotNull([], true);
+        $value = $dto->toArrayLine();
 
         //将时间修改为日期格式
         $value['head_img_url'] = $dto->getHeadimgurl();
