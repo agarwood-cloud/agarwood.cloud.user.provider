@@ -5,8 +5,8 @@ UserCenter is a part of Agarwood. UserCenter is a user management service develo
 
 ### Requirements
 
-- PHP 8.0
-- Swoole 8.4.1+
+- PHP 8.1
+- Swoole 8.4.7+
 - Composer
 
 ### Install

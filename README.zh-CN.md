@@ -5,8 +5,8 @@ UserCenter 是 Agarwood 的一部分，UserCenter是基础微信公众号平台�
 
 ### 环境要求
 
-- PHP 8.0
-- Swoole 8.4.1+
+- PHP 8.1
+- Swoole 8.4.7+
 - Composer
 
 ### 安装
@@ -20,6 +20,7 @@ composer install
 ### 配置
 
 - 数据库链接、RPC、Redis等详细配置请看.env文件
+- 如果是使用docker-compose，请配置docker-compose.yml/.env.docker.example(去掉.docker.example后缀)文件
 
 ### 运行
 
