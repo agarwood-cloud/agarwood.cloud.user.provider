@@ -266,7 +266,8 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 $customerId = str_replace(UserEnum::SCAN_FROM_CUSTOMER_SUBSCRIBE, '', (string)$DTO->getEventKey());
 
                 $content = 'User triggered scan event!';
-                $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content, $customerId);
+                $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content, (int)$customerId);
+                // todo: 其它的处理
             }
         }, Message::EVENT);
     }
@@ -289,6 +290,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
             if ($DTO->getEvent() === WeChatCallbackEvent::CLICK) {
                 $content = 'User triggered click event!';
                 $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content);
+                // todo: 其它的处理
             }
         }, Message::EVENT);
     }
@@ -311,6 +313,8 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
             if ($DTO->getEvent() === WeChatCallbackEvent::VIEW) {
                 $content = 'User triggered view event!';
                 $this->insertOrUpdateUserForEvent($DTO->getToUserName(), $enterpriseId, $platformId, $application, $content);
+
+                // todo: 其它的处理
             }
         }, Message::EVENT);
     }
@@ -321,11 +325,12 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
      * @param string $toUserName 客服的uuid
      * @param string $fromUserId 粉丝的openid
      * @param string $content    转发的消息
+     * @param string $sender
      *
      * @return int
      * @throws JsonException
      */
-    public function publishTextMessage(string $toUserName, string $fromUserId, string $content): int
+    public function publishTextMessage(string $toUserName, string $fromUserId, string $content, string $sender = 'user'): int
     {
         $snowflake = new Snowflake;
         $message   = [
@@ -333,7 +338,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
             'fromUserId' => $fromUserId,
             'content'    => $content,
             'id'         => (int)$snowflake->id(),
-            'sender'     => 'user',
+            'sender'     => $sender,
             'createdAt'  => Carbon::now()->toDateTimeString(),
             'msgType'    => WebSocketMessage::TEXT_MESSAGE,
         ];
@@ -342,32 +347,41 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     }
 
     /**
+     * 1. 如果存在则，更新所属的客服
+     * 2. 如果不存在，则插入新的客服
+     * 3. 更新后，发送消息并记录到mongo
+     *
      * @param string                                  $openid
      * @param int                                     $enterpriseId
      * @param int                                     $platformId
      * @param \EasyWeChat\OfficialAccount\Application $application
      * @param string                                  $content
-     * @param string|null                             $customer
+     * @param int|null                                $customer
      *
      * @return void
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws JsonException
      */
-    protected function insertOrUpdateUserForEvent(string $openid, int $enterpriseId, int $platformId, Application $application, string $content, ?string $customer = null): void
+    protected function insertOrUpdateUserForEvent(string $openid, int $enterpriseId, int $platformId, Application $application, string $content, ?int $customer = 0): void
     {
         // 如果存在则，更新所属的客服
         //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
         $user = $this->userQueryRepository->findByOpenid($openid);
 
         if ($user && $user['customer_id']) {
-
-            // 这里是通过分粉的机制来分粉
-            $customerId = $customer ?: $this->assignQueue->popQueue($platformId);
+            try {
+                // 这里是通过分粉的机制来分粉
+                $customerId = $customer ?? $this->assignQueue->popQueue($platformId);
+            } catch (Throwable $e) {
+                $customerId = 0;
+                CLog::error('AssignQueue error:'. $e->getMessage());
+            }
 
             $attributes = [
                 'platform_id' => $platformId,
                 'customer_id' => $customerId,
-                // todo 关联客服信息 'customer'   =>  $customer;
+                // todo 关联客服信息
+                // 'customer'   =>  $customer;
             ];
             $this->userCommandRepository->updateByOpenid($openid, $attributes);
         } else {
