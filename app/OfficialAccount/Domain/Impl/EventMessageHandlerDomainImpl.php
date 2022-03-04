@@ -322,15 +322,15 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
     /**
      * 构建文本消息的格式，推送到redis channel
      *
-     * @param string $toUserName 客服的uuid
-     * @param string $fromUserId 粉丝的openid
-     * @param string $content    转发的消息
-     * @param string $sender
+     * @param int|string $toUserName 客服的uuid
+     * @param string     $fromUserId 粉丝的openid
+     * @param string     $content    转发的消息
+     * @param string     $sender
      *
      * @return int
      * @throws JsonException
      */
-    public function publishTextMessage(string $toUserName, string $fromUserId, string $content, string $sender = 'user'): int
+    public function publishTextMessage(int|string $toUserName, string $fromUserId, string $content, string $sender = 'user'): int
     {
         $snowflake = new Snowflake;
         $message   = [
@@ -374,7 +374,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 $customerId = $customer ?? $this->assignQueue->popQueue($platformId);
             } catch (Throwable $e) {
                 $customerId = 0;
-                CLog::error('AssignQueue error:'. $e->getMessage());
+                CLog::error('AssignQueue error:' . $e->getMessage());
             }
 
             $attributes = [
@@ -393,7 +393,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
             $attributes['enterprise_id'] = $enterpriseId;
 
             // todo 关联客服信息
-            $attributes['customer_id']   = $customerId;
+            $attributes['customer_id'] = $customerId;
             // $attributes['customer']    = ''
 
             // 记录用户信息

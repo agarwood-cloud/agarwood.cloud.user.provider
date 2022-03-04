@@ -92,8 +92,8 @@ class UserCommandRepositoryImpl implements UserCommandRepository
         $value = $dto->toArrayNotNull([], true);
 
         // 处理不对应的字段
-        $value['head_img_url'] = $attributes['headimgurl'];
-        $value['union_id']     = $attributes['unionid'];
+        $value['head_img_url'] = $attributes['headimgurl'] ?? '';
+        $value['union_id']     = $attributes['unionid']    ?? '';
         $value['subscribe']    = $attributes['subscribe'] ? 'subscribe' : 'unsubscribe';
 
         // 删除不必要的字段
