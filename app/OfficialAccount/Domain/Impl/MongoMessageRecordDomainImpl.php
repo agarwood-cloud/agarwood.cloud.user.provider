@@ -80,8 +80,8 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 腾讯发过来的消息
         if (method_exists($textDTO, 'getMsgType') && $textDTO->getMsgType() === 'text') {
-            $openid     = $textDTO->getToUserName();
-            $customerId = $textDTO->getFromUserName();
+            $openid     = $textDTO->getFromUserName();
+            $customerId = $textDTO->getToUserName();
             $sender     = 'user';
         }
 
@@ -90,7 +90,14 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             'content' => $textDTO->getContent(),
         ];
 
-        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, (int)$customerId, $sender, WebSocketMessage::TEXT_MESSAGE, $data, false);
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::TEXT_MESSAGE,
+            $data,
+            false
+        );
     }
 
     /**
