@@ -46,4 +46,14 @@ class WebSocketMessage
      * 系统消息
      */
     public const SYSTEM_MESSAGE = 'system.message';
+
+    /**
+     * 坐标信息
+     */
+    public const LOCATION_MESSAGE = 'location.message';
+
+    /**
+     * 链接消息
+     */
+    public const LINK_MESSAGE = 'link.message';
 }

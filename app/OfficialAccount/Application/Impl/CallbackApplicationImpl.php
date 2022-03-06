@@ -13,6 +13,8 @@ namespace App\OfficialAccount\Application\Impl;
 use App\OfficialAccount\Application\CallbackApplication;
 use App\OfficialAccount\Domain\EventMessageHandlerDomain;
 use App\OfficialAccount\Domain\ImageMessageHandlerDomain;
+use App\OfficialAccount\Domain\LinkMessageHandlerDomain;
+use App\OfficialAccount\Domain\LocationMessageHandlerDomain;
 use App\OfficialAccount\Domain\SendToNodeDomain;
 use App\OfficialAccount\Domain\TextMessageHandlerDomain;
 use App\OfficialAccount\Domain\VideoMessageHandlerDomain;
@@ -83,6 +85,20 @@ class CallbackApplicationImpl implements CallbackApplication
     public SendToNodeDomain $sendToNodeDomain;
 
     /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\OfficialAccount\Domain\LocationMessageHandlerDomain
+     */
+    public LocationMessageHandlerDomain $locationMessageHandlerDomain;
+
+    /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\OfficialAccount\Domain\LinkMessageHandlerDomain
+     */
+    public LinkMessageHandlerDomain $linkMessageHandlerDomain;
+
+    /**
      * 微信事件回调
      *
      * @param int|string $platformId
@@ -135,6 +151,10 @@ class CallbackApplicationImpl implements CallbackApplication
         // todo 文件消息
 
         // todo 地理位置消息
+        $this->locationMessageHandlerDomain->locationMessage((int)$platformId, $app);
+
+        // todo 链接
+        $this->linkMessageHandlerDomain->linkMessage((int)$platformId, $app);
 
         // todo 其它消息
 

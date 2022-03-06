@@ -37,7 +37,7 @@ class LinkDTO extends AbstractBaseDTO
     /**
      * @var string
      */
-    public string $MsgType = ''; //	消息类型，链接为link
+    public string $MsgType = 'link'; //	消息类型，链接为link
 
     /**
      * @var string

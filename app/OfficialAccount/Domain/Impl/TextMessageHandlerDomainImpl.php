@@ -77,13 +77,13 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
             if (isset($user['customerId'])) {
                 $snowflake = new Snowflake;
                 $message   = [
-                    'toUserName' => $user['customerId'],
-                    'fromUserId' => $payload['FromUserName'],
-                    'content'    => $payload['Content'],
-                    'id'         => $snowflake->id(),
-                    'sender'     => 'user',
-                    'createdAt'  => Carbon::now()->toDateTimeString(),
-                    'msgType'    => WebSocketMessage::TEXT_MESSAGE,
+                    'toUserName'   => $user['customerId'],
+                    'fromUserName' => $payload['FromUserName'],
+                    'content'      => $payload['Content'],
+                    'id'           => $snowflake->id(),
+                    'sender'       => 'user',
+                    'createdAt'    => Carbon::now()->toDateTimeString(),
+                    'msgType'      => WebSocketMessage::TEXT_MESSAGE,
                 ];
 
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));

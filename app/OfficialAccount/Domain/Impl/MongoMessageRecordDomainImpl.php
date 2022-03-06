@@ -17,6 +17,8 @@ use App\OfficialAccount\Domain\Aggregate\Repository\ChatMessageRecordMongoComman
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
 use App\OfficialAccount\Domain\MongoMessageRecordDomain;
 use App\OfficialAccount\Interfaces\DTO\Callback\ImageDTO as CallBackChatImageDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\LinkDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\LocationDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\TextDTO as CallbackTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO as CallbackVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO as CallBackChatVoiceDTO;
@@ -142,7 +144,6 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             'image_url' => $imageUrl
         ];
 
-
         // 记录消息
         return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
             $openid,
@@ -198,7 +199,6 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             'description' => $videoDTO->getDescription(),
         ];
 
-
         // 记录消息
         return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
             $openid,
@@ -252,7 +252,6 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             'voice_url' => $voiceUrl
         ];
 
-
         // 记录消息
         return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
             $openid,
@@ -303,7 +302,112 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult
     {
-        // TODO: Implement insertNewsItemMessageRecord() method.
+        // return $this->chatMessageRecordMongoCommandRepository->insertNewsItemMessageRecord($DTO);
+    }
+
+    /**
+     * @param \App\OfficialAccount\Interfaces\DTO\Callback\LocationDTO $DTO
+     *
+     * @return \MongoDB\InsertOneResult
+     */
+    public function insertLocationMessageRecord(LocationDTO $DTO): InsertOneResult
+    {
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+
+        // 客服发送给用户的消息
+        if (method_exists($DTO, 'getSender') && $DTO->getSender() === 'user') {
+            $openid     = $DTO->getFromUserName();
+            $sender     = $DTO->getSender();
+            $customerId = $DTO->getToUserName();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($DTO, 'getSender') && $DTO->getSender() === 'customer') {
+            $openid     = $DTO->getToUserName();
+            $customerId = $DTO->getFromUserName();
+            $sender     = $DTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link') {
+            $openid     = $DTO->getFromUserName();
+            $customerId = $DTO->getToUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        $data = [
+            'content'    => '[坐标]',
+            'location_x' => $DTO->getLocationX(),
+            'location_y' => $DTO->getLocationY(),
+            'scale'      => $DTO->getScale(),
+            'label'      => $DTO->getLabel(),
+        ];
+
+        // 记录消息
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::LINK_MESSAGE,
+            $data,
+            false
+        );
+    }
+
+    /**
+     * @param \App\OfficialAccount\Interfaces\DTO\Callback\LinkDTO $DTO
+     *
+     * @return \MongoDB\InsertOneResult
+     */
+    public function insertLinkMessageRecord(LinkDTO $DTO): InsertOneResult
+    {
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+
+        // 客服发送给用户的消息
+        if (method_exists($DTO, 'getSender') && $DTO->getSender() === 'user') {
+            $openid     = $DTO->getFromUserName();
+            $sender     = $DTO->getSender();
+            $customerId = $DTO->getToUserName();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($DTO, 'getSender') && $DTO->getSender() === 'customer') {
+            $openid     = $DTO->getToUserName();
+            $customerId = $DTO->getFromUserName();
+            $sender     = $DTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link') {
+            $openid     = $DTO->getFromUserName();
+            $customerId = $DTO->getToUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        $data = [
+            'content'     => '[链接]',
+            'url'         => $DTO->getUrl(),
+            'title'       => $DTO->getTitle(),
+            'description' => $DTO->getDescription()
+        ];
+
+        // 记录消息
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::LINK_MESSAGE,
+            $data,
+            false
+        );
     }
 
     /**

@@ -11,6 +11,8 @@
 namespace App\OfficialAccount\Domain;
 
 use App\OfficialAccount\Interfaces\DTO\Callback\ImageDTO as CallBackChatImageDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\LinkDTO;
+use App\OfficialAccount\Interfaces\DTO\Callback\LocationDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\TextDTO as CallBackChatTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO as CallBackChatVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO as CallBackChatVoiceDTO;
@@ -75,6 +77,24 @@ interface MongoMessageRecordDomain
      * @return \MongoDB\InsertOneResult
      */
     public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult;
+
+    /**
+     * 记录坐标消息
+     *
+     * @param \App\OfficialAccount\Interfaces\DTO\Callback\LocationDTO $DTO
+     *
+     * @return \MongoDB\InsertOneResult
+     */
+    public function insertLocationMessageRecord(LocationDTO $DTO): InsertOneResult;
+
+    /**
+     * 链接消息
+     *
+     * @param \App\OfficialAccount\Interfaces\DTO\Callback\LinkDTO $DTO
+     *
+     * @return \MongoDB\InsertOneResult
+     */
+    public function insertLinkMessageRecord(LinkDTO $DTO): InsertOneResult;
 
     /**
      * 插入一条聊天记录

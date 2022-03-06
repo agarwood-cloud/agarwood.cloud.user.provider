@@ -89,14 +89,14 @@ class VoiceMessageHandlerDomainImpl implements VoiceMessageHandlerDomain
             if ($user['customerId']) {
                 $snowflake = new Snowflake;
                 $message =  [
-                    'toUserName'     => $user['customerId'],
-                    'fromUserId'     => $message['FromUserName'],
-                    'mediaId'        => $message['MediaId'],
-                    'voiceUrl'       => $voiceUrl,
-                    'id'             => (int)$snowflake->id(),
-                    'sender'         => 'user',
-                    'createdAt'      => Carbon::now()->toDateTimeString(),
-                    'msgType'        => WebSocketMessage::VOICE_MESSAGE,
+                    'toUserName'       => $user['customerId'],
+                    'fromUserName'     => $message['FromUserName'],
+                    'mediaId'          => $message['MediaId'],
+                    'voiceUrl'         => $voiceUrl,
+                    'id'               => (int)$snowflake->id(),
+                    'sender'           => 'user',
+                    'createdAt'        => Carbon::now()->toDateTimeString(),
+                    'msgType'          => WebSocketMessage::VOICE_MESSAGE,
                 ];
 
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
