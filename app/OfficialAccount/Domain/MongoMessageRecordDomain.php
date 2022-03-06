@@ -69,14 +69,14 @@ interface MongoMessageRecordDomain
      */
     public function insertVoiceMessageRecord(ChatVoiceDTO|CallBackChatVoiceDTO $voiceDTO, string $voiceUrl): InsertOneResult;
 
-    /**
-     * 记录图文消息
-     *
-     * @param \App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO $DTO
-     *
-     * @return \MongoDB\InsertOneResult
-     */
-    public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult;
+//    /**
+//     * 记录图文消息
+//     *
+//     * @param \App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO $DTO
+//     *
+//     * @return \MongoDB\InsertOneResult
+//     */
+//    public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult;
 
     /**
      * 记录坐标消息

@@ -293,17 +293,17 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         return $this->chatMessageRecordMongoCommandRepository->insertManyMessage($document, $options);
     }
 
-    /**
-     * 记录图文消息
-     *
-     * @param \App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO $DTO
-     *
-     * @return \MongoDB\InsertOneResult
-     */
-    public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult
-    {
-        // return $this->chatMessageRecordMongoCommandRepository->insertNewsItemMessageRecord($DTO);
-    }
+//    /**
+//     * 记录图文消息
+//     *
+//     * @param \App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO $DTO
+//     *
+//     * @return \MongoDB\InsertOneResult
+//     */
+//    public function insertNewsItemMessageRecord(NewsItemDTO $DTO): InsertOneResult
+//    {
+//        // return $this->chatMessageRecordMongoCommandRepository->insertNewsItemMessageRecord($DTO);
+//    }
 
     /**
      * @param \App\OfficialAccount\Interfaces\DTO\Callback\LocationDTO $DTO
