@@ -13,41 +13,6 @@ namespace App\OfficialAccount\Domain\Aggregate\Enum;
 class WebSocketMessage
 {
     /**
-     * 系统消息
-     */
-    public const SYSTEM_MESSAGE = '【系统消息】';
-
-    /**
-     * 文本消息
-     */
-    public const SERVER_TEXT_MESSAGE = 'server.text.message';
-
-    /**
-     * 视频消息
-     */
-    public const SERVER_VIDEO_MESSAGE = 'server.video.message';
-
-    /**
-     * 声音消息
-     */
-    public const SERVER_VOICE_MESSAGE = 'server.voice.message';
-
-    /**
-     * 图片消息
-     */
-    public const SERVER_IMAGE_MESSAGE = 'server.image.message';
-
-    /**
-     * 图文消息
-     */
-    public const SERVER_NEWS_ITEM_MESSAGE = 'server.news.item.message';
-
-    /**
-     * 错误提示消息
-     */
-    public const SERVER_ERROR_MESSAGE = 'server.error.message';
-
-    /**
      * 文本消息
      */
     public const TEXT_MESSAGE = 'text.message';
@@ -76,4 +41,9 @@ class WebSocketMessage
      * 错误提示消息
      */
     public const ERROR_MESSAGE = 'error.message';
+
+    /**
+     * 系统消息
+     */
+    public const SYSTEM_MESSAGE = 'system.message';
 }

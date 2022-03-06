@@ -20,14 +20,14 @@ use Swoft\Validator\Annotation\Mapping\Validator;
 class TextDTO extends AbstractBaseDTO
 {
     /**
-     * @var string $ToUserName openid
+     * @var string $ToUserName appid
      */
     protected string $ToUserName = ''; // 接收方帐号（该公众号 ID）
 
     /**
      * @var string $FromUserName openid
      */
-    protected string $FromUserName = ''; // 发送方帐号（OpenID, 代表用户的唯一标识）
+    protected string $FromUserName = ''; // 发送方的帐号（OpenID, 代表用户的唯一标识）
 
     /**
      * @var int $CreateTime

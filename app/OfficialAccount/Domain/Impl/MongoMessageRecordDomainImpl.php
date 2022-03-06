@@ -12,6 +12,7 @@ namespace App\OfficialAccount\Domain\Impl;
 
 use Agarwood\Core\Util\ArrayHelper;
 use Agarwood\Core\Util\StringUtil;
+use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\Aggregate\Repository\ChatMessageRecordMongoCommandRepository;
 use App\OfficialAccount\Domain\Aggregate\Repository\UserQueryRepository;
 use App\OfficialAccount\Domain\MongoMessageRecordDomain;
@@ -58,7 +59,38 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertTextMessageRecord(ChatTextDTO|CallbackTextDTO $textDTO): InsertOneResult
     {
-        // TODO: Implement insertTextMessageRecord() method.
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+
+        // 客服发送给用户的消息
+        if (method_exists($textDTO, 'getSender') && $textDTO->getSender() === 'user') {
+            $openid     = $textDTO->getFromUserName();
+            $customerId = $textDTO->getToUserName();
+            $sender     = $textDTO->getSender();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($textDTO, 'getSender') && $textDTO->getSender() === 'customer') {
+            $openid     = $textDTO->getToUserName();
+            $customerId = $textDTO->getFromUserName();
+            $sender     = $textDTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($textDTO, 'getMsgType') && $textDTO->getMsgType() === 'text') {
+            $openid     = $textDTO->getToUserName();
+            $customerId = $textDTO->getFromUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        $data = [
+            'content' => $textDTO->getContent(),
+        ];
+
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage($openid, (int)$customerId, $sender, WebSocketMessage::TEXT_MESSAGE, $data, false);
     }
 
     /**

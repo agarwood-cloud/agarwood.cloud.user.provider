@@ -24,6 +24,7 @@ class TextDTO extends AbstractBaseDTO
      * @\Swoft\Validator\Annotation\Mapping\Required()
      * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
+     * @deprecated
      * @var string
      */
     public string $fromUserId = '';
@@ -95,6 +96,7 @@ class TextDTO extends AbstractBaseDTO
     public string $content = '';
 
     /**
+     * @deprecated
      * @return string
      */
     public function getFromUserId(): string
@@ -103,6 +105,7 @@ class TextDTO extends AbstractBaseDTO
     }
 
     /**
+     * @deprecated
      * @param string $fromUserId
      */
     public function setFromUserId(string $fromUserId): void
