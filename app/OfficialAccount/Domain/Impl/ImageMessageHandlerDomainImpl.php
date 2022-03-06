@@ -78,12 +78,12 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
             $filename = '';
             if ($stream instanceof StreamResponse) {
                 // 以内容 md5 为文件名存到本地
-                $path     = env('MEDIA_SERVER_PATH', '/var/www/www.cdn.xxx.com/');
-                $filename = $stream->save($path . '/wechat/media/image/');
+                $path     = env('MEDIA_SERVER_PATH', '/var/www/agarwood/app/public/media');
+                $filename = $stream->save($path . '/wechat/image/');
             }
 
             // 文件的路径
-            $imageUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/media/image/' . $filename;
+            $imageUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/image/' . $filename;
 
             // 转发给客服
             if ($user['customerId']) {
@@ -96,7 +96,7 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
                     'id'           => (int)$snowflake->id(),
                     'send'         => 'customer',
                     'createdAt'    => Carbon::now()->toDateTimeString(),
-                    'msgType'      => WebSocketMessage::SERVER_VOICE_MESSAGE,
+                    'msgType'      => WebSocketMessage::IMAGE_MESSAGE,
                 ];
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
             }
