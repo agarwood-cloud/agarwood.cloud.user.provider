@@ -78,7 +78,7 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
             $filename = '';
             if ($stream instanceof StreamResponse) {
                 // 以内容 md5 为文件名存到本地
-                $path     = env('MEDIA_SERVER_PATH', '/var/www/agarwood/app/public/media');
+                $path     = env('MEDIA_SERVER_PATH', '/var/www/media/');
                 $filename = $stream->save($path . '/wechat/image/');
             }
 
@@ -101,7 +101,7 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
             }
 
-            // todo 记录客服的消息到mongo
+            // 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToImageDTO($message);
             $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO, $imageUrl);
         }, Message::IMAGE);

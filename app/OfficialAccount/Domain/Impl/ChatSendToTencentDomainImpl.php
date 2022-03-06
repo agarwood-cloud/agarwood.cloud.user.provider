@@ -215,7 +215,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             $mediaType = end($array);
 
             // 路径的前缘
-            $basePath = env('MEDIA_SERVER_PATH', '/data/www/www.cdn.xxx.com/');
+            $basePath = env('MEDIA_SERVER_PATH', '/var/www/media/');
 
             // 保存的路径
             $filePath = 'upload/media/image/' . date('Y-m-d') . '/';
@@ -271,7 +271,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             $mediaType = end($array);
 
             // 路径的前缘
-            $basePath = env('MEDIA_SERVER_PATH', '/var/www/www.cdn.xxx.com/');
+            $basePath = env('MEDIA_SERVER_PATH', '/var/www/media/');
 
             // 保存的路径
             $filePath = 'upload/media/video/' . date('Y-m-d') . '/';

@@ -158,22 +158,108 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      * 记录视频消息
      *
      * @param \App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO|\App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO $videoDTO
+     * @param string                                                                                                  $videoUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertVideoMessageRecord(CallbackVideoDTO|ChatVideoDTO $videoDTO): InsertOneResult
+    public function insertVideoMessageRecord(CallbackVideoDTO|ChatVideoDTO $videoDTO, string $videoUrl): InsertOneResult
     {
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+
+        // 客服发送给用户的消息
+        if (method_exists($videoDTO, 'getSender') && $videoDTO->getSender() === 'user') {
+            $openid     = $videoDTO->getFromUserName();
+            $sender     = $videoDTO->getSender();
+            $customerId = $videoDTO->getToUserName();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($videoDTO, 'getSender') && $videoDTO->getSender() === 'customer') {
+            $openid     = $videoDTO->getToUserName();
+            $customerId = $videoDTO->getFromUserName();
+            $sender     = $videoDTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($videoDTO, 'getMsgType') && $videoDTO->getMsgType() === 'video') {
+            $openid     = $videoDTO->getFromUserName();
+            $customerId = $videoDTO->getToUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        $data = [
+            'content'   => '[视频]',
+            'video_url' => $videoUrl
+        ];
+
+
+        // 记录消息
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::VIDEO_MESSAGE,
+            $data,
+            false
+        );
     }
 
     /**
      * 记录语音消息
      *
      * @param \App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO|\App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO $voiceDTO
+     * @param string                                                                                                  $voiceUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertVoiceMessageRecord(CallBackChatVoiceDTO|ChatVoiceDTO $voiceDTO): InsertOneResult
+    public function insertVoiceMessageRecord(CallBackChatVoiceDTO|ChatVoiceDTO $voiceDTO, string $voiceUrl): InsertOneResult
     {
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+
+        // 客服发送给用户的消息
+        if (method_exists($voiceDTO, 'getSender') && $voiceDTO->getSender() === 'user') {
+            $openid     = $voiceDTO->getFromUserName();
+            $sender     = $voiceDTO->getSender();
+            $customerId = $voiceDTO->getToUserName();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($voiceDTO, 'getSender') && $voiceDTO->getSender() === 'customer') {
+            $openid     = $voiceDTO->getToUserName();
+            $customerId = $voiceDTO->getFromUserName();
+            $sender     = $voiceDTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($voiceDTO, 'getMsgType') && $voiceDTO->getMsgType() === 'video') {
+            $openid     = $voiceDTO->getFromUserName();
+            $customerId = $voiceDTO->getToUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        $data = [
+            'content'   => '[语音]',
+            'video_url' => $voiceUrl
+        ];
+
+
+        // 记录消息
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::VOICE_MESSAGE,
+            $data,
+            false
+        );
     }
 
     /**
@@ -203,7 +289,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertManyMessage(array $document, array $options = []): InsertManyResult
     {
-        // TODO: Implement insertNewsItemMessageRecord() method.
+        return $this->chatMessageRecordMongoCommandRepository->insertManyMessage($document, $options);
     }
 
     /**
@@ -229,7 +315,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function updateOneMessageToReadByOpenid(string $openid, bool $isRead = true, array $options = []): UpdateResult
     {
-        // TODO: Implement insertNewsItemMessageRecord() method.
+        return $this->chatMessageRecordMongoCommandRepository->updateOneMessageToReadByOpenid($openid, $isRead, $options);
     }
 
     /**
@@ -243,7 +329,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function updateManyToReadByOpenid(string $openid, bool $isRead = true, array $options = []): UpdateResult
     {
-        // TODO: Implement insertNewsItemMessageRecord() method.
+        return $this->chatMessageRecordMongoCommandRepository->updateManyToReadByOpenid($openid, $isRead, $options);
     }
 
     /**

@@ -78,12 +78,12 @@ class VideoMessageHandlerDomainImpl implements VideoMessageHandlerDomain
             $filename = '';
             if ($stream instanceof StreamResponse) {
                 // 以内容 md5 为文件名存到本地
-                $path     = env('MEDIA_SERVER_PATH', '/var/www/www.cdn.xxx.com/');
-                $filename = $stream->save($path . '/wechat/media/video/');
+                $path     = env('MEDIA_SERVER_PATH', '/var/www/media/');
+                $filename = $stream->save($path . '/wechat/video/');
             }
 
             // 文件的路径
-            $videoUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/media/video/' . $filename;
+            $videoUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/video/' . $filename;
 
             // 转发给客服
             if ($user['customerId']) {
@@ -99,14 +99,14 @@ class VideoMessageHandlerDomainImpl implements VideoMessageHandlerDomain
                     'id'             => (int)$snowflake->id(),
                     'sender'         => 'user',
                     'createdAt'      => Carbon::now()->toDateTimeString(),
-                    'msgType'        => WebSocketMessage::SERVER_VIDEO_MESSAGE,
+                    'msgType'        => WebSocketMessage::VIDEO_MESSAGE,
                 ];
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
             }
 
-            // todo 记录客服的消息到mongo
+            // 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToVideoDTO($message);
-            $this->mongoMessageRecordDomain->insertVideoMessageRecord($DTO);
+            $this->mongoMessageRecordDomain->insertVideoMessageRecord($DTO, $videoUrl);
         }, Message::VIDEO);
     }
 }

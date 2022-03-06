@@ -51,19 +51,21 @@ interface MongoMessageRecordDomain
      * 记录视频消息
      *
      * @param ChatVideoDTO | CallBackChatVideoDTO $videoDTO
+     * @param string                              $videoUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertVideoMessageRecord(ChatVideoDTO|CallBackChatVideoDTO $videoDTO): InsertOneResult;
+    public function insertVideoMessageRecord(ChatVideoDTO|CallBackChatVideoDTO $videoDTO, string $videoUrl): InsertOneResult;
 
     /**
      * 记录语音消息
      *
      * @param ChatVoiceDTO | CallBackChatVoiceDTO $voiceDTO
+     * @param string                              $voiceUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertVoiceMessageRecord(ChatVoiceDTO|CallBackChatVoiceDTO $voiceDTO): InsertOneResult;
+    public function insertVoiceMessageRecord(ChatVoiceDTO|CallBackChatVoiceDTO $voiceDTO, string $voiceUrl): InsertOneResult;
 
     /**
      * 记录图文消息

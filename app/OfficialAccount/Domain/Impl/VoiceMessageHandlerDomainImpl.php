@@ -78,12 +78,12 @@ class VoiceMessageHandlerDomainImpl implements VoiceMessageHandlerDomain
             $filename = '';
             if ($stream instanceof StreamResponse) {
                 // 以内容 md5 为文件名存到本地
-                $path     = env('MEDIA_SERVER_PATH', '/var/www/www.cdn.xxx.com/');
-                $filename = $stream->save($path . '/wechat/media/audio/');
+                $path     = env('MEDIA_SERVER_PATH', '/var/www/media');
+                $filename = $stream->save($path . '/wechat/audio/');
             }
 
             // 文件的路径
-            $voiceUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/media/audio/' . $filename;
+            $voiceUrl = env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com') . '/wechat/audio/' . $filename;
 
             // 转发给客服
             if ($user['customerId']) {
@@ -96,15 +96,15 @@ class VoiceMessageHandlerDomainImpl implements VoiceMessageHandlerDomain
                     'id'             => (int)$snowflake->id(),
                     'sender'         => 'user',
                     'createdAt'      => Carbon::now()->toDateTimeString(),
-                    'msgType'        => WebSocketMessage::SERVER_VOICE_MESSAGE,
+                    'msgType'        => WebSocketMessage::VOICE_MESSAGE,
                 ];
 
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));
             }
 
-            // todo 记录客服的消息到mongo
-            $DTO = CallbackAssembler::attributesToVideoDTO($message);
-            $this->mongoMessageRecordDomain->insertVideoMessageRecord($DTO);
+            // 记录客服的消息到mongo
+            $DTO = CallbackAssembler::attributesToVoiceDTO($message);
+            $this->mongoMessageRecordDomain->insertVoiceMessageRecord($DTO, $voiceUrl);
         }, Message::VOICE);
     }
 }
