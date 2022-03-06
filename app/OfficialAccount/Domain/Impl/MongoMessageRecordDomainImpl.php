@@ -139,11 +139,13 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         // 消息内容
         if (method_exists($imageDTO, 'getPicUrl')) {
             $data = [
+                'content'   => '[图片]',
                 'image_url' => $imageDTO->getPicUrl()
             ];
         }
         if (method_exists($imageDTO, 'getImageUrl')) {
             $data = [
+                'content'   => '[图片]',
                 'image_url' => $imageDTO->getImageUrl()
             ];
         }
