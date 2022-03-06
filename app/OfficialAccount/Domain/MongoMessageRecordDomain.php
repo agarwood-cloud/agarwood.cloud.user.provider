@@ -41,10 +41,11 @@ interface MongoMessageRecordDomain
      * 记录图片消息
      *
      * @param ChatImageDTO | CallBackChatImageDTO $imageDTO
+     * @param string                              $imageUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertImageMessageRecord(ChatImageDTO|CallBackChatImageDTO $imageDTO): InsertOneResult;
+    public function insertImageMessageRecord(ChatImageDTO|CallBackChatImageDTO $imageDTO, string $imageUrl): InsertOneResult;
 
     /**
      * 记录视频消息

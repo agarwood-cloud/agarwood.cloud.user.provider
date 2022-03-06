@@ -103,7 +103,7 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
 
             // todo 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToImageDTO($message);
-            $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO);
+            $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO, $imageUrl);
         }, Message::IMAGE);
     }
 }

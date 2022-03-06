@@ -104,16 +104,16 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      * 记录图片消息
      *
      * @param \App\OfficialAccount\Interfaces\DTO\Callback\ImageDTO|\App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO $imageDTO
+     * @param string                                                                                                  $imageUrl
      *
      * @return \MongoDB\InsertOneResult
      */
-    public function insertImageMessageRecord(CallBackChatImageDTO|ChatImageDTO $imageDTO): InsertOneResult
+    public function insertImageMessageRecord(CallBackChatImageDTO|ChatImageDTO $imageDTO, string $imageUrl): InsertOneResult
     {
         // 判断消息的类型
         $openid     = '';
         $customerId = '';
         $sender     = '';
-        $data       = [];
 
         // 客服发送给用户的消息
         if (method_exists($imageDTO, 'getSender') && $imageDTO->getSender() === 'user') {
@@ -137,18 +137,10 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 消息内容
-        if (method_exists($imageDTO, 'getPicUrl')) {
-            $data = [
-                'content'   => '[图片]',
-                'image_url' => $imageDTO->getPicUrl()
-            ];
-        }
-        if (method_exists($imageDTO, 'getImageUrl')) {
-            $data = [
-                'content'   => '[图片]',
-                'image_url' => $imageDTO->getImageUrl()
-            ];
-        }
+        $data = [
+            'content'   => '[图片]',
+            'image_url' => $imageUrl
+        ];
 
 
         // 记录消息

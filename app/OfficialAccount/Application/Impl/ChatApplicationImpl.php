@@ -131,7 +131,7 @@ class ChatApplicationImpl implements ChatApplication
                 );
 
                 // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO);
+                $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO, $DTO->getImageUrl());
             }
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
