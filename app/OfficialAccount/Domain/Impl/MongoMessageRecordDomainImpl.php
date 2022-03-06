@@ -192,8 +192,10 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'   => '[视频]',
-            'video_url' => $videoUrl
+            'content'     => '[视频]',
+            'video_url'   => $videoUrl,
+            'title'       => $videoDTO->getTitle(),
+            'description' => $videoDTO->getDescription(),
         ];
 
 
@@ -247,7 +249,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         // 消息内容
         $data = [
             'content'   => '[语音]',
-            'video_url' => $voiceUrl
+            'voice_url' => $voiceUrl
         ];
 
 

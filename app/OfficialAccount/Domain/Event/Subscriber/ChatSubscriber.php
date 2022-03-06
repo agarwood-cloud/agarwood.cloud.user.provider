@@ -115,14 +115,14 @@ class ChatSubscriber extends UserProcess
                     // Send to customer
                     $this->chatSendToCustomerDomain->textMessage(
                         $DTO->getToUserName(),
-                        $DTO->getFromUserId(),
+                        $DTO->getFromUserName(),
                         $DTO->getContent()
                     );
 
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
                         $DTO->getToUserName(),
-                        (int)$DTO->getFromUserId(),
+                        (int)$DTO->getFromUserName(),
                         'customer',
                         WebSocketMessage::TEXT_MESSAGE,
                         ['content' => $DTO->getContent()],
@@ -142,10 +142,11 @@ class ChatSubscriber extends UserProcess
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
                         $DTO->getToUserName(),
-                        (int)$DTO->getFromUserId(),
+                        (int)$DTO->getFromUserName(),
                         'customer',
                         WebSocketMessage::IMAGE_MESSAGE,
                         [
+                            'content'   => '[图片]',
                             'image_url' => $DTO->getImageUrl(),
                         ],
                         true
@@ -168,6 +169,7 @@ class ChatSubscriber extends UserProcess
                         'customer',
                         WebSocketMessage::VIDEO_MESSAGE,
                         [
+                            'content'     => '[视频]',
                             'video_url'   => $DTO->getVideoUrl(),
                             'title'       => $DTO->getTitle(),
                             'description' => $DTO->getDescription(),
@@ -192,6 +194,7 @@ class ChatSubscriber extends UserProcess
                         'customer',
                         WebSocketMessage::VOICE_MESSAGE,
                         [
+                            'content'   => '[语音]',
                             'voice_url' => $DTO->getVoiceUrl(),
                         ],
                         true
@@ -214,6 +217,7 @@ class ChatSubscriber extends UserProcess
                         'customer',
                         WebSocketMessage::NEWS_ITEM_MESSAGE,
                         [
+                            'content'       => '[图文]',
                             'news_item_url' => $DTO->getNewItemUrl(),
                             'title'         => $DTO->getTitle(),
                             'description'   => $DTO->getDescription(),

@@ -18,17 +18,6 @@ use Agarwood\Core\Support\Impl\AbstractBaseDTO;
 class ImageDTO extends AbstractBaseDTO
 {
     /**
-     * 发送人
-     *
-     * @\Swoft\Validator\Annotation\Mapping\IsString()
-     * @\Swoft\Validator\Annotation\Mapping\Required()
-     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
-     *
-     * @var string
-     */
-    public string $fromUserId = '';
-
-    /**
      * 腾讯公众号平台的多媒体 MediaId
      *
      * @\Swoft\Validator\Annotation\Mapping\IsString()
@@ -104,22 +93,6 @@ class ImageDTO extends AbstractBaseDTO
      * @var string
      */
     public string $sender = '';
-
-    /**
-     * @return string
-     */
-    public function getFromUserId(): string
-    {
-        return $this->fromUserId;
-    }
-
-    /**
-     * @param string $fromUserId
-     */
-    public function setFromUserId(string $fromUserId): void
-    {
-        $this->fromUserId = $fromUserId;
-    }
 
     /**
      * @return string
