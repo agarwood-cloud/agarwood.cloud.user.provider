@@ -24,18 +24,6 @@ class TextDTO extends AbstractBaseDTO
      * @\Swoft\Validator\Annotation\Mapping\Required()
      * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
      *
-     * @deprecated
-     * @var string
-     */
-    public string $fromUserId = '';
-
-    /**
-     * 发送人
-     *
-     * @\Swoft\Validator\Annotation\Mapping\IsString()
-     * @\Swoft\Validator\Annotation\Mapping\Required()
-     * @\Swoft\Validator\Annotation\Mapping\NotEmpty()
-     *
      * @var string
      */
     public string $fromUserName = '';
@@ -94,24 +82,6 @@ class TextDTO extends AbstractBaseDTO
      * @var string
      */
     public string $content = '';
-
-    /**
-     * @deprecated
-     * @return string
-     */
-    public function getFromUserId(): string
-    {
-        return $this->fromUserId;
-    }
-
-    /**
-     * @deprecated
-     * @param string $fromUserId
-     */
-    public function setFromUserId(string $fromUserId): void
-    {
-        $this->fromUserId = $fromUserId;
-    }
 
     /**
      * @return string

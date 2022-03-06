@@ -109,7 +109,55 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
      */
     public function insertImageMessageRecord(CallBackChatImageDTO|ChatImageDTO $imageDTO): InsertOneResult
     {
-        // TODO: Implement insertImageMessageRecord() method.
+        // 判断消息的类型
+        $openid     = '';
+        $customerId = '';
+        $sender     = '';
+        $data       = [];
+
+        // 客服发送给用户的消息
+        if (method_exists($imageDTO, 'getSender') && $imageDTO->getSender() === 'user') {
+            $openid     = $imageDTO->getFromUserName();
+            $sender     = $imageDTO->getSender();
+            $customerId = $imageDTO->getToUserName();
+        }
+
+        // 客服发送给用户的消息，转发回来给客服的消息
+        if (method_exists($imageDTO, 'getSender') && $imageDTO->getSender() === 'customer') {
+            $openid     = $imageDTO->getToUserName();
+            $customerId = $imageDTO->getFromUserName();
+            $sender     = $imageDTO->getSender();
+        }
+
+        // 腾讯发过来的消息
+        if (method_exists($imageDTO, 'getMsgType') && $imageDTO->getMsgType() === 'image') {
+            $openid     = $imageDTO->getFromUserName();
+            $customerId = $imageDTO->getToUserName();
+            $sender     = 'user';
+        }
+
+        // 消息内容
+        if (method_exists($imageDTO, 'getPicUrl')) {
+            $data = [
+                'image_url' => $imageDTO->getPicUrl()
+            ];
+        }
+        if (method_exists($imageDTO, 'getImageUrl')) {
+            $data = [
+                'image_url' => $imageDTO->getImageUrl()
+            ];
+        }
+
+
+        // 记录消息
+        return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+            $openid,
+            (int)$customerId,
+            $sender,
+            WebSocketMessage::IMAGE_MESSAGE,
+            $data,
+            false
+        );
     }
 
     /**
