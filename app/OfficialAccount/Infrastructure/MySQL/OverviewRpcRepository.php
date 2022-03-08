@@ -39,13 +39,13 @@ class OverviewRpcRepository
                 'account',
                 'phone',
                 'status',
-                'service_uuid as serviceUuid',
+                'platform_id as serviceUuid',
                 'group_name as groupName',
                 'group_uuid as groupUuid',
                 'created_at as createdAt',
                 'updated_at as updatedAt'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('deleted_at', '=', StringConstant::DATE_TIME_DEFAULT)
             ->when($filter['name'], function ($query, $name) {
                 return $query->where('name', 'like', '%' . $name . '%');
@@ -73,9 +73,9 @@ class OverviewRpcRepository
             ->selectRaw(
                 'COUNT(`id`) as `obtainFansNum`,
                 `customer_uuid` as `customerUuid`,
-                `service_uuid` as `serviceUuid`'
+                `platform_id` as `serviceUuid`'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereBetween('created_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
             ->groupBy(['customer_uuid'])
@@ -98,10 +98,10 @@ class OverviewRpcRepository
         return DB::table(User::tableName())
             ->selectRaw(
                 '`customer_uuid` as `customerUuid`,
-                `service_uuid` as `serviceUuid`,
+                `platform_id` as `serviceUuid`,
                 COUNT(`id`) as `fansNum`'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             //这里做关注时间也可以统计未关注的，因为关注时间取关后不会消失的
             ->whereBetween('subscribe_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
@@ -125,10 +125,10 @@ class OverviewRpcRepository
         return DB::table(User::tableName())
             ->selectRaw(
                 '`customer_uuid` as `customerUuid`,
-                `service_uuid` as `serviceUuid`,
+                `platform_id` as `serviceUuid`,
                 COUNT(`id`) as `unsubFansNum`'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             //取消关注的时间
             ->whereBetween('unsubscribed_at', [$startAt, $endAt])
             ->whereIn('customer_uuid', $customerId)
@@ -155,7 +155,7 @@ class OverviewRpcRepository
                 'openid',
                 'customer_uuid as customerUuid'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereIn('openid', $openid)
             ->whereIn('customer_uuid', $customerId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])
@@ -181,7 +181,7 @@ class OverviewRpcRepository
                 'COUNT(`openid`) as `newFansCashNum`,
                 `customer_uuid` as `customerUuid`'
             )
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->whereIn('openid', $openid)
             ->whereIn('customer_uuid', $customerId)
             ->whereBetween('subscribe_at', [$startAt, $endAt])

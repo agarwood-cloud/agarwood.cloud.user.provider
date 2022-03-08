@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------------------------
 # @build-example docker build . -f Dockerfile -t agarwood/user:2.0
 #
-FROM phpswoole/swoole:4.8.7-php8.1
+FROM phpswoole/swoole:4.8.7-php8.0
 
 LABEL maintainer="676786620@qq.com>" version="2.0"
 

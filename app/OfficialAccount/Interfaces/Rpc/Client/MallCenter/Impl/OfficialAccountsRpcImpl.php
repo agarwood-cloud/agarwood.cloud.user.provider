@@ -88,6 +88,26 @@ class OfficialAccountsRpcImpl implements OfficialAccountsRpc
     }
 
     /**
+     * @param int $platformId
+     *
+     * @return \EasyWeChat\OfficialAccount\Application
+     */
+    public function officialAccountApplicationConsole(int $platformId): Application
+    {
+        // todo 优化: 可以使用缓存
+        // $config = $this->officialAccountsRpc->officialAccountsConfig($platformId);
+
+        $config = [
+            'app_id'  => 'wx3d4726296a65e6aa',                    // AppID
+            'secret'  => '2f1358264dd78d1f603a123e5ec3c653',                   // AppSecret
+            'token'   => '123456789',                    // Token
+            'aes_key' => 'CE3oQoWW8BCbfotuhiixmXgLwQ5ypZ2hQ6s1mNYZ0Xc',
+        ];
+
+        return $this->weChat->officialAccountConsole($config);
+    }
+
+    /**
      * Get the enterprise id
      *
      * @param int $platformId

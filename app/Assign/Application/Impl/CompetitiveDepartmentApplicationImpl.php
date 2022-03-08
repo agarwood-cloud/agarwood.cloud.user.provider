@@ -46,7 +46,7 @@ class CompetitiveDepartmentApplicationImpl implements CompetitiveDepartmentAppli
     public function createProvider(int $platformId, CreateDTO $DTO): Collection
     {
         $attributes                 = $DTO->toArrayLine();
-        $attributes['service_uuid'] = $platformId;
+        $attributes['platform_id'] = $platformId;
         $this->domain->create($attributes);
         //这里可以设置更多的返回值
         return Collection::make($DTO);

@@ -17,14 +17,12 @@ use App\OfficialAccount\Domain\ChatSendToCustomerDomain;
 use App\OfficialAccount\Domain\ChatSendToTencentDomain;
 use App\OfficialAccount\Interfaces\Assembler\ChatAssembler;
 use App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc;
-use GuzzleHttp\DefaultHandler;
 use Swoft\Log\Helper\CLog;
 use Swoft\Process\Process;
 use Swoft\Process\UserProcess;
 use Swoft\Redis\Redis;
 use Swoole\Timer;
 use Throwable;
-use Yurun\Util\Swoole\Guzzle\SwooleHandler;
 
 /**
  * @\Swoft\Process\Annotation\Mapping\Process()
@@ -67,7 +65,7 @@ class ChatSubscriber extends UserProcess
     public function run(Process $process): void
     {
         // Guzzle 支持协程
-        DefaultHandler::setDefaultHandler(SwooleHandler::class);
+        // \GuzzleHttp\DefaultHandler::setDefaultHandler(\Yurun\Util\Swoole\Guzzle\SwooleHandler::class);
 
         // Don't delete this line, init: set socket timeout
         Timer::after(1000, static function () {
@@ -95,7 +93,7 @@ class ChatSubscriber extends UserProcess
 
                 // Get EasyWeChat OfficialAccount
                 try {
-                    $app = $this->officialAccountsRpc->officialAccountApplication((int)$message['PlatformId']);
+                    $app = $this->officialAccountsRpc->officialAccountApplicationConsole((int)$message['platformId']);
                 } catch (Throwable $e) {
                     CLog::error('Failed to get official account application: %s', $e->getMessage());
                     return;

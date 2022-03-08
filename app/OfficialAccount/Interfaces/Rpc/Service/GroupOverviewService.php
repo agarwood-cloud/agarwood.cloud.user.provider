@@ -15,6 +15,7 @@ use App\Customer\Domain\Aggregate\Repository\GroupOverviewRpcRepository;
 
 /**
  * @\Swoft\Rpc\Server\Annotation\Mapping\Service()
+ * @deprecated 暂时不用
  */
 class GroupOverviewService implements UserCenterGroupOverviewRpcInterface
 {

@@ -18,6 +18,7 @@ use JsonException;
 
 /**
  * @\Swoft\Rpc\Server\Annotation\Mapping\Service()
+ * @deprecated 暂时不用
  */
 class UserCenterOrderEventRpc implements UserCenterOrderEventRpcInterface
 {
@@ -128,7 +129,7 @@ class UserCenterOrderEventRpc implements UserCenterOrderEventRpcInterface
         $todo = '用户[' . $order['receiverName'] . ']的订单[' . $orderNo . ']已发货，待跟进物流并指导产品的使用';
 
         $attributes = [
-            'service_uuid'  => $order['serviceUuid'],
+            'platform_id'  => $order['serviceUuid'],
             'customer_uuid' => $order['customerUuid'],
             'openid'        => $order['openid'],
             'nickname'      => $order['nickname'] ?? '',
@@ -166,7 +167,7 @@ class UserCenterOrderEventRpc implements UserCenterOrderEventRpcInterface
         $todo = '用户[' . $order['receiverName'] . ']已签收，待回访客户并指导产品的使用';
 
         $attributes = [
-            'service_uuid'  => $order['serviceUuid'],
+            'platform_id'  => $order['serviceUuid'],
             'customer_uuid' => $order['customerUuid'],
             'openid'        => $order['openid'],
             'nickname'      => $order['nickname'] ?? '',

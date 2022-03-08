@@ -79,7 +79,7 @@ class BroadcastingDomainServiceImpl implements BroadcastingDomainService
                     'group_name'   => $item['groupName'],
                     'number'       => count($openid),
                     'status'       => $status,
-                    'service_uuid' => $platformId,
+                    'platform_id' => $platformId,
                     'msg_id'       => $msgId ?? 0
                 ];
 

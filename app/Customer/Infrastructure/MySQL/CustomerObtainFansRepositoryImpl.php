@@ -93,7 +93,7 @@ class CustomerObtainFansRepositoryImpl implements CustomerObtainFansRepository
         return DB::table(CustomerObtainFans::tableName() . ' as co')
             ->select('co.rate', 'co.department_uuid')
             ->leftJoin(CustomerCompetitiveDepartment::tableName() . ' as ccd', 'co.department_uuid', '=', 'ccd.uuid')
-            ->where('co.service_uuid', '=', $platformId)
+            ->where('co.platform_id', '=', $platformId)
             ->where('co.obtain_status', '=', 'obtain')
             ->where('co.department_uuid', '!=', '')
             ->where('ccd.rate', '>', 0)

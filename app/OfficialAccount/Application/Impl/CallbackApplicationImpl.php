@@ -150,10 +150,10 @@ class CallbackApplicationImpl implements CallbackApplication
 
         // todo 文件消息
 
-        // todo 地理位置消息
+        // 地理位置消息
         $this->locationMessageHandlerDomain->locationMessage((int)$platformId, $app);
 
-        // todo 链接
+        // 链接
         $this->linkMessageHandlerDomain->linkMessage((int)$platformId, $app);
 
         // todo 其它消息

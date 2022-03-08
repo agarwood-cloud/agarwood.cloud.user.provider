@@ -33,7 +33,7 @@ class OAuthController extends AbstractBaseController
      *
      * @var \App\OfficialAccount\Application\OAuthApplication
      */
-    protected OAuthApplication $application;
+    public OAuthApplication $application;
 
     /**
      * 微信授权回调接口
@@ -62,8 +62,8 @@ class OAuthController extends AbstractBaseController
         $jwtToken = $this->application->jwtTokenProvider(
             $userOfficialAccount,
             $DTO->getToken(),
-            $user['service_uuid'] ?? $DTO->getplatformId(),
-            $user['customer_uuid'] ?? $DTO->getCustomerId(),
+            $user['platform_id'] ?? $DTO->getplatformId(),
+            $user['customer_id'] ?? $DTO->getCustomerId(),
             $user['customer'] ?? $DTO->getCustomer()
         );
 

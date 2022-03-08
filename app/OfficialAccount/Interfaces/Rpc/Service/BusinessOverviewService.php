@@ -17,6 +17,7 @@ use Swoft\Rpc\Server\Annotation\Mapping\Service;
 
 /**
  * @Service()
+ * @deprecated 暂时不用
  */
 class BusinessOverviewService implements UserCenterBusinessRpcInterface
 {

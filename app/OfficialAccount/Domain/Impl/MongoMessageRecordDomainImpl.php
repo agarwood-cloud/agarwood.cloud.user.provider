@@ -352,7 +352,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             $openid,
             (int)$customerId,
             $sender,
-            WebSocketMessage::LINK_MESSAGE,
+            WebSocketMessage::LOCATION_MESSAGE,
             $data,
             false
         );

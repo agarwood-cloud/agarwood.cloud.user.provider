@@ -51,6 +51,11 @@ interface OfficialAccountsRpc
     public function officialAccountApplication(int $platformId): Application;
 
     /**
+     * Get the official account application
+     */
+    public function officialAccountApplicationConsole(int $platformId): Application;
+
+    /**
      * Get the enterprise id
      *
      * @param int $platformId

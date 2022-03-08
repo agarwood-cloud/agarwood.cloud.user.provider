@@ -12,7 +12,7 @@
   "description": "Each organization has its own private domain traffic",
   "license": "GPL-3.0",
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.0",
     "ext-pdo": "*",
     "ext-redis": "*",
     "ext-json": "*",

@@ -82,6 +82,7 @@ return [
             // 'monitor' => bean(\App\Process\MonitorProcess::class)
             // 'crontab' => bean(CrontabProcess::class)
             'crontab'    => bean(CrontabProcess::class),
+            // custom process for subscribers
             'subscriber' => bean(\App\OfficialAccount\Domain\Event\Subscriber\ChatSubscriber::class)
         ],
         'on'       => [
@@ -102,7 +103,7 @@ return [
     'httpDispatcher'       => [
         // Add global http middleware
         'middlewares'      => [
-            \Agarwood\Core\Middleware\GuzzleHeaderMiddleware::class, //Guzzle 支持协程
+            // \Agarwood\Core\Middleware\GuzzleHeaderMiddleware::class, //Guzzle 支持协程
             // \Agarwood\Core\Middleware\CorsMiddleware::class,
             //            \App\Http\Middleware\FavIconMiddleware::class,
             //            \Swoft\Whoops\WhoopsMiddleware::class,

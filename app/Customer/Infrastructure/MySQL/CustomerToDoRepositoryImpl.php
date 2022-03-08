@@ -46,7 +46,7 @@ class CustomerToDoRepositoryImpl implements CustomerToDoRepository
                 'remark'
             )
             ->orderBy('deadline_at')
-            ->where('service_uuid', '=', $platformId)
+            ->where('platform_id', '=', $platformId)
             ->where('customer_uuid', '=', $customerId)
             ->when($filter['status'], function ($query, $status) {
                 return $query->where('status', '=', $status);

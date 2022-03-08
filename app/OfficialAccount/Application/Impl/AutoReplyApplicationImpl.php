@@ -56,7 +56,7 @@ class AutoReplyApplicationImpl implements AutoReplyApplication
     {
         //增加部分系统自己添加的参数 i.e: uuid
         $attributes                  = $DTO->toArrayLine();
-        $attributes['service_uuid']  = $platformId;
+        $attributes['platform_id']  = $platformId;
         $attributes['customer_uuid'] = $customerId;
         $attributes['auto_type']     = ReplyEnum::QUICK_REPLY_TYPE;
         $collection                  = $this->domain->create($attributes);
@@ -91,7 +91,7 @@ class AutoReplyApplicationImpl implements AutoReplyApplication
     public function saveProvider(int $platformId, int $customerId, SaveDTO $DTO): Collection
     {
         // 是否存在
-        $attributes['service_uuid']  = $platformId;
+        $attributes['platform_id']  = $platformId;
         $attributes['customer_uuid'] = $customerId;
         $attributes['auto_type']     = ReplyEnum::AUTO_REPLY_TYPE;
 
