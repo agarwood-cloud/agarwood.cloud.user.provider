@@ -5,9 +5,9 @@ UserCenter 是 Agarwood 的一部分，UserCenter是基础微信公众号平台�
 
 ### 环境要求
 
-- PHP 8.1
-- Swoole 8.4.7+
-- Composer
+- PHP 8.0+
+- Swoole 4.8.6+
+- Composer 2.0+
 
 ### 安装
 

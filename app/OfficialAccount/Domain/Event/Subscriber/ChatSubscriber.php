@@ -72,7 +72,7 @@ class ChatSubscriber extends UserProcess
             Redis::publish(SubscriberEnum::REDIS_PUBLISH_WECHAT_CHAT_CHANNEL, 'hello world!');
         });
         // set socket timeout -1
-        ini_set('default_socket_timeout', '-1');
+        // ini_set('default_socket_timeout', '-1');
         // always true
         while (true) {
             $subscriber = function (\Redis $redis, string $chan, string $msg) {
