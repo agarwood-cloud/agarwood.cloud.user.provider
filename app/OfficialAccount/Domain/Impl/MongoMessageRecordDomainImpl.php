@@ -521,7 +521,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
             // 加入用户信息
             if (isset($user[$value['openid']])) {
-                $temp[$key]['user'] = $user[$value['openid']];
+                $temp[$key]['user'] = $user[$value['openid']][0];
             } else {
                 $temp[$key]['user'] = [
                     'id'             => 0,
