@@ -88,13 +88,13 @@ class ImageMessageHandlerDomainImpl implements ImageMessageHandlerDomain
             // 转发给客服
             if ($user['customerId']) {
                 $snowflake = new Snowflake;
-                $message = [
-                    'toUserName'   => $user['customerId'],
-                    'fromUserId'   => $message['FromUserName'],
+                $message   = [
+                    'toUserName'   => (string)$user['customerId'],
+                    'fromUserName' => $message['FromUserName'],
                     'mediaId'      => $message['MediaId'],
                     'imageUrl'     => $imageUrl,
                     'id'           => (int)$snowflake->id(),
-                    'send'         => 'customer',
+                    'sender'       => 'user',
                     'createdAt'    => Carbon::now()->toDateTimeString(),
                     'msgType'      => WebSocketMessage::IMAGE_MESSAGE,
                 ];

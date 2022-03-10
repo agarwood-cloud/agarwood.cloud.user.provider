@@ -11,53 +11,51 @@
 namespace App\OfficialAccount\Interfaces\DTO\Callback;
 
 use Agarwood\Core\Support\Impl\AbstractBaseDTO;
-use Swoft\Validator\Annotation\Mapping\Validator;
 
 /**
- *
- * @Validator()
+ * @\Swoft\Validator\Annotation\Mapping\Validator()
  */
 class ImageDTO extends AbstractBaseDTO
 {
     /**
-     * @var string $ToUserName 接收方帐号（该公众号 ID）
+     * @var string $ToUserName 接收方的账号（appid）
      */
-    protected string $ToUserName = '';
+    public string $ToUserName = '';
 
     /**
-     * @var string $FromUserName 发送方帐号（OpenID, 代表用户的唯一标识）
+     * @var string $FromUserName 发送方的账号（OpenID, 代表用户的唯一标识）
      */
-    protected string $FromUserName = '';
+    public string $FromUserName = '';
 
     /**
      * @var int $CreateTime 消息创建时间（时间戳）
      */
-    protected int $CreateTime = 0;
+    public int $CreateTime = 0;
 
     /**
      * @var string $MsgType
      */
-    protected string $MsgType = 'image';
+    public string $MsgType = 'image';
 
     /**
      * @var string
      */
-    protected string $PicUrl = '';
+    public string $PicUrl = '';
 
     /**
      * @var int $MsgId
      */
-    protected int $MsgId = 0;
+    public int $MsgId = 0;
 
     /**
      * @var string $MediaId
      */
-    protected string $MediaId = '';
+    public string $MediaId = '';
 
     /**
      * @var string $Encrypt
      */
-    protected string $Encrypt = '';
+    public string $Encrypt = '';
 
     /**
      * @return string

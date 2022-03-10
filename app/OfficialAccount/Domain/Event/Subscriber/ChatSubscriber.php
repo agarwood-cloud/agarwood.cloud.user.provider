@@ -110,12 +110,18 @@ class ChatSubscriber extends UserProcess
                         return;
                     }
 
-                    // Send to customer
-                    $this->chatSendToCustomerDomain->textMessage(
-                        $DTO->getToUserName(),
-                        $DTO->getFromUserName(),
-                        $DTO->getContent()
-                    );
+                    try {
+                        // Send to customer
+                        $this->chatSendToCustomerDomain->textMessage(
+                            $DTO->getToUserName(),
+                            $DTO->getFromUserName(),
+                            $DTO->getContent()
+                        );
+                    } catch (Throwable $e) {
+                        CLog::error('Failed to return text message: %s', $e->getMessage());
+                        // todo: 发送消息回客户端
+                    }
+
 
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
@@ -158,12 +164,13 @@ class ChatSubscriber extends UserProcess
                         $this->chatSendToTencentDomain->videoMessage($app, $DTO);
                     } catch (Throwable $e) {
                         CLog::error('Failed to send video message to tencent: %s', $e->getMessage());
+                        // todo: 发送消息回客户端
                         return;
                     }
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
                         $DTO->getToUserName(),
-                        (int)$DTO->getFromUserId(),
+                        (int)$DTO->getFromUserName(),
                         'customer',
                         WebSocketMessage::VIDEO_MESSAGE,
                         [
@@ -183,12 +190,13 @@ class ChatSubscriber extends UserProcess
                         $this->chatSendToTencentDomain->voiceMessage($app, $DTO);
                     } catch (Throwable $e) {
                         CLog::error('Failed to send voice message to tencent: %s', $e->getMessage());
+                        // todo: 发送消息回客户端
                         return;
                     }
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
                         $DTO->getToUserName(),
-                        (int)$DTO->getFromUserId(),
+                        (int)$DTO->getFromUserName(),
                         'customer',
                         WebSocketMessage::VOICE_MESSAGE,
                         [
@@ -206,12 +214,13 @@ class ChatSubscriber extends UserProcess
                         $this->chatSendToTencentDomain->newsItemMessage($app, $DTO);
                     } catch (Throwable $e) {
                         CLog::error('Failed to send news item message to tencent: %s', $e->getMessage());
+                        // todo: 发送消息回客户端
                         return;
                     }
                     // record message
                     $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
                         $DTO->getToUserName(),
-                        (int)$DTO->getFromUserId(),
+                        (int)$DTO->getFromUserName(),
                         'customer',
                         WebSocketMessage::NEWS_ITEM_MESSAGE,
                         [

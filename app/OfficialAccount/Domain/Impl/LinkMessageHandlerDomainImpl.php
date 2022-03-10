@@ -67,7 +67,7 @@ class LinkMessageHandlerDomainImpl implements LinkMessageHandlerDomain
      */
     public function linkMessage(int $platformId, Application $application): void
     {
-        $application->server->push(function ($message) use ($application) {
+        $application->server->push(function ($message) {
 
             // 获取到所属的客服
             $user = $this->userQueryRepository->findByOpenid($message['FromUserName']);
@@ -78,12 +78,13 @@ class LinkMessageHandlerDomainImpl implements LinkMessageHandlerDomain
                 $message   = [
                     'toUserName'   => $user['customerId'],
                     'fromUserName' => $message['FromUserName'],
-                    'mediaId'      => $message['MediaId'],
-                    'voiceUrl'     => $voiceUrl,
+                    'title'        => $message['Title'],
+                    'url'          => $message['Url'],
+                    'description'  => $message['Description'],
                     'id'           => (int)$snowflake->id(),
                     'sender'       => 'user',
                     'createdAt'    => Carbon::now()->toDateTimeString(),
-                    'msgType'      => WebSocketMessage::LOCATION_MESSAGE,
+                    'msgType'      => WebSocketMessage::LINK_MESSAGE,
                 ];
 
                 Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_WECHAT_CHAT_CHANNEL, json_encode($message, JSON_THROW_ON_ERROR));

@@ -79,7 +79,7 @@ class ChatApplicationImpl implements ChatApplication
             $result = $this->chatSendToTencentDomain->textMessage($app, $DTO);
             if ($result) {
                 $this->sendToNodeDomain->textMessage(
-                    $DTO->getFromUserId(),
+                    $DTO->getFromUserName(),
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getContent(),
@@ -91,7 +91,7 @@ class ChatApplicationImpl implements ChatApplication
             }
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserId(),
+                $DTO->getFromUserName(),
                 $DTO->getToUserName(),
                 $DTO->getToUserName(),
                 $exception->getSubMsg(),
@@ -122,7 +122,7 @@ class ChatApplicationImpl implements ChatApplication
             if ($result) {
                 // 重新转发回去给客服, 转发消息给node
                 $this->sendToNodeDomain->imageMessage(
-                    $DTO->getFromUserId(),
+                    $DTO->getFromUserName(),
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getMediaId(),
@@ -135,7 +135,7 @@ class ChatApplicationImpl implements ChatApplication
             }
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserId(),
+                $DTO->getFromUserName(),
                 $DTO->getToUserName(),
                 $DTO->getToUserName(),
                 $exception->getSubMsg(),
@@ -167,7 +167,7 @@ class ChatApplicationImpl implements ChatApplication
 
                 // 转发回去给 node
                 $this->sendToNodeDomain->videoMessage(
-                    $DTO->getFromUserId(),
+                    $DTO->getFromUserName(),
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getTitle(),
@@ -183,7 +183,7 @@ class ChatApplicationImpl implements ChatApplication
             }
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserId(),
+                $DTO->getFromUserName(),
                 $DTO->getToUserName(),
                 $DTO->getToUserName(),
                 $exception->getSubMsg(),
@@ -214,7 +214,7 @@ class ChatApplicationImpl implements ChatApplication
             if ($result) {
                 // 转发回去给 node
                 $this->sendToNodeDomain->voiceMessage(
-                    $DTO->getFromUserId(),
+                    $DTO->getFromUserName(),
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getMediaId(),
@@ -227,7 +227,7 @@ class ChatApplicationImpl implements ChatApplication
             }
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserId(),
+                $DTO->getFromUserName(),
                 $DTO->getToUserName(),
                 $DTO->getToUserName(),
                 $exception->getSubMsg(),
@@ -258,7 +258,7 @@ class ChatApplicationImpl implements ChatApplication
             if ($result) {
                 // 重新转发回去给客服, 转发消息给node
                 $this->sendToNodeDomain->newsItemMessage(
-                    $DTO->getFromUserId(),
+                    $DTO->getFromUserName(),
                     $DTO->getToUserName(),
                     $DTO->getToUserName(),
                     $DTO->getTitle(),
@@ -274,7 +274,7 @@ class ChatApplicationImpl implements ChatApplication
             return true;
         } catch (BusinessException $exception) {
             $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserId(),
+                $DTO->getFromUserName(),
                 $DTO->getToUserName(),
                 $DTO->getToUserName(),
                 $exception->getSubMsg(),

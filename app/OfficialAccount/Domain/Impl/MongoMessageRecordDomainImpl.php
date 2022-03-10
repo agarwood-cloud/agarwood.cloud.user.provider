@@ -32,6 +32,7 @@ use JsonException;
 use MongoDB\InsertManyResult;
 use MongoDB\InsertOneResult;
 use MongoDB\UpdateResult;
+use Swoft\Log\Helper\CLog;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -81,7 +82,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($textDTO, 'getMsgType') && $textDTO->getMsgType() === 'text') {
+        if (method_exists($textDTO, 'getMsgType') && $textDTO->getMsgType() === 'text.message') {
             $openid     = $textDTO->getFromUserName();
             $customerId = $textDTO->getToUserName();
             $sender     = 'user';
@@ -132,7 +133,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($imageDTO, 'getMsgType') && $imageDTO->getMsgType() === 'image') {
+        if (method_exists($imageDTO, 'getMsgType') && $imageDTO->getMsgType() === 'image.message') {
             $openid     = $imageDTO->getFromUserName();
             $customerId = $imageDTO->getToUserName();
             $sender     = 'user';
@@ -140,9 +141,22 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'   => '[图片]',
+            'content'   => '[图片消息]',
             'image_url' => $imageUrl
         ];
+
+        try {
+            $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
+                $openid,
+                (int)$customerId,
+                $sender,
+                WebSocketMessage::IMAGE_MESSAGE,
+                $data,
+                false
+            );
+        } catch (\Throwable $e) {
+            CLog::error('insert image error:', $e->getMessage());
+        }
 
         // 记录消息
         return $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
@@ -185,7 +199,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($videoDTO, 'getMsgType') && $videoDTO->getMsgType() === 'video') {
+        if (method_exists($videoDTO, 'getMsgType') && $videoDTO->getMsgType() === 'video.message') {
             $openid     = $videoDTO->getFromUserName();
             $customerId = $videoDTO->getToUserName();
             $sender     = 'user';
@@ -193,7 +207,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'     => '[视频]',
+            'content'     => '[视频消息]',
             'video_url'   => $videoUrl,
             'title'       => $videoDTO->getTitle(),
             'description' => $videoDTO->getDescription(),
@@ -240,7 +254,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($voiceDTO, 'getMsgType') && $voiceDTO->getMsgType() === 'video') {
+        if (method_exists($voiceDTO, 'getMsgType') && $voiceDTO->getMsgType() === 'video.message') {
             $openid     = $voiceDTO->getFromUserName();
             $customerId = $voiceDTO->getToUserName();
             $sender     = 'user';
@@ -248,7 +262,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'   => '[语音]',
+            'content'   => '[语音消息]',
             'voice_url' => $voiceUrl
         ];
 
@@ -332,7 +346,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link') {
+        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link.message') {
             $openid     = $DTO->getFromUserName();
             $customerId = $DTO->getToUserName();
             $sender     = 'user';
@@ -340,7 +354,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'    => '[坐标]',
+            'content'    => '[坐标消息]',
             'location_x' => $DTO->getLocationX(),
             'location_y' => $DTO->getLocationY(),
             'scale'      => $DTO->getScale(),
@@ -385,7 +399,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         }
 
         // 腾讯发过来的消息
-        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link') {
+        if (method_exists($DTO, 'getMsgType') && $DTO->getMsgType() === 'link.message') {
             $openid     = $DTO->getFromUserName();
             $customerId = $DTO->getToUserName();
             $sender     = 'user';
@@ -393,7 +407,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
 
         // 消息内容
         $data = [
-            'content'     => '[链接]',
+            'content'     => '[链接消息]',
             'url'         => $DTO->getUrl(),
             'title'       => $DTO->getTitle(),
             'description' => $DTO->getDescription()
