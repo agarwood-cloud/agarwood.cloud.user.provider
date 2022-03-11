@@ -62,9 +62,9 @@ class CustomerCompetitive extends Model
     private $customPower;
 
     /**
-     * 微医生uuid
+     * 客服id
      *
-     * @Column(name="customer_uuid", prop="customerUuid")
+     * @Column(name="customer_id", prop="customerId")
      *
      * @var string
      */

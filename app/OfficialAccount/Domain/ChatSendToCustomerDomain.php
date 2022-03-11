@@ -19,14 +19,14 @@ interface ChatSendToCustomerDomain
      * 转发文本消息到 node
      *
      * @param string $toUserName 客服的uuid
-     * @param string $fromUserId 粉丝的openid
+     * @param string $fromUserName 粉丝的openid
      * @param string $content    转发的消息
      *
      * @return void
      */
     public function textMessage(
         string $toUserName,
-        string $fromUserId,
+        string $fromUserName,
         string $content
     ): void;
 
@@ -34,7 +34,6 @@ interface ChatSendToCustomerDomain
      * 转发图片消息到 node
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $mediaId
      * @param string $imageUrl
@@ -43,7 +42,6 @@ interface ChatSendToCustomerDomain
      */
     public function imageMessage(
         string $toUserName,
-        string $fromUserId,
         string $fromUserName,
         string $mediaId,
         string $imageUrl
@@ -53,7 +51,6 @@ interface ChatSendToCustomerDomain
      * 转发视频信息到node
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $title
      * @param string $mediaId
@@ -65,7 +62,6 @@ interface ChatSendToCustomerDomain
      */
     public function videoMessage(
         string $toUserName,
-        string $fromUserId,
         string $fromUserName,
         string $title,
         string $mediaId,
@@ -78,7 +74,6 @@ interface ChatSendToCustomerDomain
      * 转发视频信息到node
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $mediaId
      * @param string $voiceUrl
@@ -87,7 +82,6 @@ interface ChatSendToCustomerDomain
      */
     public function voiceMessage(
         string $toUserName,
-        string $fromUserId,
         string $fromUserName,
         string $mediaId,
         string $voiceUrl
@@ -97,7 +91,6 @@ interface ChatSendToCustomerDomain
      * 转发图发消息
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $title
      * @param string $description
@@ -108,7 +101,6 @@ interface ChatSendToCustomerDomain
      */
     public function newsItemMessage(
         string $toUserName,
-        string $fromUserId,
         string $fromUserName,
         string $title,
         string $description,
@@ -120,7 +112,7 @@ interface ChatSendToCustomerDomain
      * 将错误的异常消息全部转发给node
      *
      * @param string $toUserName 客服的uuid
-     * @param string $fromUserId 粉丝的openid
+     * @param string $fromUserName 粉丝的openid
      * @param string $content    转发的消息
      * @param int    $errorCode
      *
@@ -128,7 +120,7 @@ interface ChatSendToCustomerDomain
      */
     public function errorMessage(
         string $toUserName,
-        string $fromUserId,
+        string $fromUserName,
         string $content,
         int    $errorCode
     ): void;

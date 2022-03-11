@@ -15,8 +15,8 @@ use App\OfficialAccount\Domain\Aggregate\Enum\WebSocketMessage;
 use App\OfficialAccount\Domain\ChatSendToCustomerDomain;
 use Carbon\Carbon;
 use Godruoyi\Snowflake\Snowflake;
-use Swoft\Redis\Redis;
 use JsonException;
+use Swoft\Redis\Redis;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -26,20 +26,20 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
     /**
      * 发送 textMessage 到 node 服务器
      *
-     * @param string $toUserName 客服的uuid
-     * @param string $fromUserId 粉丝的openid
-     * @param string $content    转发的消息
+     * @param string $toUserName   客服的id
+     * @param string $fromUserName 粉丝的openid
+     * @param string $content      转发的消息
      *
      * @return void
      * @throws JsonException
      */
-    public function textMessage(string $toUserName, string $fromUserId, string $content): void
+    public function textMessage(string $toUserName, string $fromUserName, string $content): void
     {
         $snowflake = new Snowflake();
 
         $body = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
+            'fromUserName' => $fromUserName,
             'content'      => $content,
             'id'           => $snowflake->id(),
             'sender'       => 'customer',
@@ -55,7 +55,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * 发送图片
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $mediaId
      * @param string $imageUrl
@@ -63,12 +62,11 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @return void
      * @throws JsonException
      */
-    public function imageMessage(string $toUserName, string $fromUserId, string $fromUserName, string $mediaId, string $imageUrl): void
+    public function imageMessage(string $toUserName, string $fromUserName, string $mediaId, string $imageUrl): void
     {
         $snowflake = new Snowflake();
         $body      = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
             'fromUserName' => $fromUserName,
             'mediaId'      => $mediaId,
             'imageUrl'     => $imageUrl,
@@ -86,7 +84,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * 发送视频消息
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $title
      * @param string $mediaId
@@ -99,18 +96,17 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      */
     public function videoMessage(
         string $toUserName,
-        string $fromUserId,
         string $fromUserName,
         string $title,
         string $mediaId,
         string $description,
         string $thumbMediaId,
         string $videoUrl
-    ): void {
+    ): void
+    {
         $snowflake = new Snowflake();
         $body      = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
             'fromUserName' => $fromUserName,
             'title'        => $title,
             'description'  => $description,
@@ -130,7 +126,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * 发送声音消息
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $mediaId
      * @param string $voiceUrl
@@ -138,13 +133,12 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @return void
      * @throws JsonException
      */
-    public function voiceMessage(string $toUserName, string $fromUserId, string $fromUserName, string $mediaId, string $voiceUrl): void
+    public function voiceMessage(string $toUserName, string $fromUserName, string $mediaId, string $voiceUrl): void
     {
         $snowflake = new Snowflake();
 
         $body = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
             'fromUserName' => $fromUserName,
             'mediaId'      => $mediaId,
             'voiceUrl'     => $voiceUrl,
@@ -162,7 +156,6 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * 转发图发消息
      *
      * @param string $toUserName
-     * @param string $fromUserId
      * @param string $fromUserName
      * @param string $title
      * @param string $description
@@ -170,14 +163,13 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @param string $image
      *
      * @return void
-     * @throws JsonException
+     * @throws \JsonException
      */
-    public function newsItemMessage(string $toUserName, string $fromUserId, string $fromUserName, string $title, string $description, string $url, string $image): void
+    public function newsItemMessage(string $toUserName, string $fromUserName, string $title, string $description, string $url, string $image): void
     {
         $snowflake = new Snowflake();
         $body      = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
             'fromUserName' => $fromUserName,
             'title'        => $title,
             'description'  => $description,
@@ -196,17 +188,17 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * 错误的消息
      *
      * @param string $toUserName
-     * @param string $fromUserId
+     * @param string $fromUserName
      * @param string $content
      * @param int    $errorCode
      *
      * @throws JsonException
      */
-    public function errorMessage(string $toUserName, string $fromUserId, string $content, int $errorCode): void
+    public function errorMessage(string $toUserName, string $fromUserName, string $content, int $errorCode): void
     {
         $body = [
             'toUserName'   => $toUserName,
-            'fromUserId'   => $fromUserId,
+            'fromUserName' => $fromUserName,
             'content'      => $content,
             'sender'       => 'customer',
             'errorCode'    => $errorCode,
