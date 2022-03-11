@@ -77,7 +77,7 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
             if (isset($user['customerId'])) {
                 $snowflake = new Snowflake;
                 $message   = [
-                    'toUserName'   => $user['customerId'],
+                    'toUserName'   => (string)$user['customerId'],
                     'fromUserName' => $payload['FromUserName'],
                     'content'      => $payload['Content'],
                     'id'           => $snowflake->id(),

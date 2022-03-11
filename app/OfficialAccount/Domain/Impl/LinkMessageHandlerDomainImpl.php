@@ -76,7 +76,7 @@ class LinkMessageHandlerDomainImpl implements LinkMessageHandlerDomain
             if ($user['customerId']) {
                 $snowflake = new Snowflake;
                 $message   = [
-                    'toUserName'   => $user['customerId'],
+                    'toUserName'   => (string)$user['customerId'],
                     'fromUserName' => $message['FromUserName'],
                     'title'        => $message['Title'],
                     'url'          => $message['Url'],

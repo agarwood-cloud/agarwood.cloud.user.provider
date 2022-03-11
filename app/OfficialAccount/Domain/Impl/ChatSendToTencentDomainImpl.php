@@ -17,6 +17,7 @@ use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO;
+use Carbon\Carbon;
 use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
@@ -231,13 +232,20 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
 
             //上传到微信服务器
             $mediaInfo = $app->media->uploadImage($imageUrl);
-            $result[]  = [
+            // 转换驼峰
+            $mediaInfoTemp = [
+                'type'      => $mediaInfo['type'],
+                'mediaId'   => $mediaInfo['media_id'],
+                'createdAt' => Carbon::createFromTimestamp($mediaInfo['created_at'], 'PRC')->toDateTimeString(),
+                'item'      => $mediaInfo['item'],
+            ];
+            $result[]      = [
                 'imageUrl'  => str_replace(
                     env('MEDIA_SERVER_PATH'),
                     rtrim(env('MEDIA_SERVER_DOMAIN', 'https://www.cdn.xxx.com/'), '/') . '/',
                     $imageUrl
                 ),
-                'mediaInfo' => $mediaInfo,
+                'mediaInfo' => $mediaInfoTemp,
             ];
         }
         return $result;

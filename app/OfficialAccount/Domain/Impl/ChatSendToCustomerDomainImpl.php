@@ -118,6 +118,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
             'msgType'      => WebSocketMessage::VIDEO_MESSAGE,
             'videoUrl'     => $videoUrl
         ];
+        var_dump('$body', $body);
         // send to customer
         Redis::publish(SubscriberEnum::REDIS_SUBSCRIBER_CUSTOMER_CHAT_CHANNEL, json_encode($body, JSON_THROW_ON_ERROR));
     }

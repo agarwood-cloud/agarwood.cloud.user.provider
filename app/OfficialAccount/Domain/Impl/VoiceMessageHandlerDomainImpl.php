@@ -89,7 +89,7 @@ class VoiceMessageHandlerDomainImpl implements VoiceMessageHandlerDomain
             if ($user['customerId']) {
                 $snowflake = new Snowflake;
                 $message =  [
-                    'toUserName'       => $user['customerId'],
+                    'toUserName'       => (string)$user['customerId'],
                     'fromUserName'     => $message['FromUserName'],
                     'mediaId'          => $message['MediaId'],
                     'voiceUrl'         => $voiceUrl,
