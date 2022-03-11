@@ -195,7 +195,6 @@ class ChatSubscriber extends UserProcess
             return;
         }
 
-
         // send to customer
         try {
             $this->chatSendToCustomerDomain->videoMessage(
@@ -211,7 +210,6 @@ class ChatSubscriber extends UserProcess
             CLog::error('Failed to return text message: %s', $e->getMessage());
             // todo: 发送消息回客户端
         }
-
 
         // record message
         $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
@@ -257,7 +255,6 @@ class ChatSubscriber extends UserProcess
         } catch (Throwable $e) {
             CLog::error('Failed to return image message: %s', $e->getMessage());
         }
-
 
         // record message
         $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
@@ -305,7 +302,6 @@ class ChatSubscriber extends UserProcess
             CLog::error('Failed to return voice message: %s', $e->getMessage());
         }
 
-
         // record message
         $this->chatMessageRecordMongoCommandRepository->insertOneMessage(
             $DTO->getToUserName(),
@@ -352,7 +348,6 @@ class ChatSubscriber extends UserProcess
         } catch (Throwable $e) {
             CLog::error('Failed to return news item message: %s', $e->getMessage());
         }
-
 
         // record message
         $this->chatMessageRecordMongoCommandRepository->insertOneMessage(

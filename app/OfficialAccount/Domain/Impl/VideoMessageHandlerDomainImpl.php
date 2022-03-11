@@ -88,7 +88,7 @@ class VideoMessageHandlerDomainImpl implements VideoMessageHandlerDomain
             // 转发给客服
             if ($user['customerId']) {
                 $snowflake = new Snowflake;
-                $message = [
+                $message   = [
                     'toUserName'       => (string)$user['customerId'],
                     'fromUserName'     => $message['FromUserName'],
                     'title'            => $message['Title'],

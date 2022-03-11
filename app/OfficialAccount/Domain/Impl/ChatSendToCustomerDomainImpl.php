@@ -102,8 +102,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
         string $description,
         string $thumbMediaId,
         string $videoUrl
-    ): void
-    {
+    ): void {
         $snowflake = new Snowflake();
         $body      = [
             'toUserName'   => $toUserName,
@@ -164,7 +163,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
      * @param string $image
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function newsItemMessage(string $toUserName, string $fromUserName, string $title, string $description, string $url, string $image): void
     {

@@ -46,7 +46,7 @@ class CustomerGroupApplicationImpl implements CustomerGroupApplication
     {
         //增加部分系统自己添加的参数 i.e: uuid
         $attributes                 = $DTO->toArrayLine();
-        $attributes['platform_id'] = $platformId;
+        $attributes['platform_id']  = $platformId;
         $this->domain->customerCreate($attributes);
         //这里可以设置更多的返回值
         return Collection::make($DTO);

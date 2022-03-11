@@ -33,6 +33,7 @@ use MongoDB\InsertManyResult;
 use MongoDB\InsertOneResult;
 use MongoDB\UpdateResult;
 use Swoft\Log\Helper\CLog;
+use Throwable;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
@@ -154,7 +155,7 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
                 $data,
                 false
             );
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             CLog::error('insert image error:', $e->getMessage());
         }
 

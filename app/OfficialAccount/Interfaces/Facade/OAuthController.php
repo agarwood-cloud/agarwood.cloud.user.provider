@@ -64,7 +64,7 @@ class OAuthController extends AbstractBaseController
             $DTO->getToken(),
             $user['platform_id'] ?? $DTO->getplatformId(),
             $user['customer_id'] ?? $DTO->getCustomerId(),
-            $user['customer'] ?? $DTO->getCustomer()
+            $user['customer']    ?? $DTO->getCustomer()
         );
 
         // 获取跳转的目标域名，这里跳回前端页面
