@@ -93,6 +93,6 @@ class LinkMessageHandlerDomainImpl implements LinkMessageHandlerDomain
             // 记录客服的消息到mongo
             $DTO = CallbackAssembler::attributesToLinkDTO($message);
             $this->mongoMessageRecordDomain->insertLinkMessageRecord($DTO);
-        }, Message::LOCATION);
+        }, Message::LINK);
     }
 }
