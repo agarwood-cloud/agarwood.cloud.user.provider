@@ -69,17 +69,17 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
      */
     public function textMessage(int $platformId, Application $application): void
     {
-        $application->server->push(function ($payload) {
+        $application->server->push(function ($message) {
             // todo 获取到所属的客服
-            $user = $this->userQueryRepository->findByOpenid($payload['FromUserName']);
+            $user = $this->userQueryRepository->findByOpenid($message['FromUserName']);
 
             // 转发给客服
             if (isset($user['customerId'])) {
                 $snowflake = new Snowflake;
                 $message   = [
                     'toUserName'   => (string)$user['customerId'],
-                    'fromUserName' => $payload['FromUserName'],
-                    'content'      => $payload['Content'],
+                    'fromUserName' => $message['FromUserName'],
+                    'content'      => $message['Content'],
                     'id'           => $snowflake->id(),
                     'sender'       => 'user',
                     'createdAt'    => Carbon::now()->toDateTimeString(),
@@ -90,7 +90,7 @@ class TextMessageHandlerDomainImpl implements TextMessageHandlerDomain
             }
 
             // 记录客服的消息到mongo
-            $DTO = CallbackAssembler::attributesToTextDTO((array)$payload);
+            $DTO = CallbackAssembler::attributesToTextDTO((array)$message);
             $this->mongoMessageRecordDomain->insertTextMessageRecord($DTO);
         }, Message::TEXT);
     }
