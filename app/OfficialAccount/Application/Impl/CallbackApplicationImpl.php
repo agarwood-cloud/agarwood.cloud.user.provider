@@ -141,7 +141,7 @@ class CallbackApplicationImpl implements CallbackApplication
         $this->eventMessageHandlerDomain->eventScan($enterpriseIdId, (int)$platformId, $app);
         $this->eventMessageHandlerDomain->eventView($enterpriseIdId, (int)$platformId, $app);
 
-        // 默认事件处理器, 缓存粉丝信息
+        // 默认事件处理器, 检查用户信息是否存在，缓存粉丝信息
         $this->defaultMessageHandlerDomain->defaultMessage($enterpriseIdId, (int)$platformId, $app);
 
         // 文本消息

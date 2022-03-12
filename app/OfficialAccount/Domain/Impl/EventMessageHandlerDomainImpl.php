@@ -384,7 +384,9 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                 // 'customer'   =>  $customer;
             ];
             $this->userCommandRepository->updateByOpenid($openid, $attributes);
-        } else {
+        }
+
+        if (empty($user)) {
             // 当用户信息不存在数据库时
             $attributes = (array)$application->user->get($openid);
             try {
