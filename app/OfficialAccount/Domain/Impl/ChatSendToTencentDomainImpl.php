@@ -41,26 +41,18 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @param Application $app
      * @param TextDTO     $DTO
      *
-     * @return bool
-     * @throws InvalidConfigException
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
      */
-    public function textMessage(Application $app, TextDTO $DTO): bool
+    public function textMessage(Application $app, TextDTO $DTO): array
     {
         $message  = new Text($DTO->getContent());
-        $response = (array)$app->customer_service
+        return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
             ->send();
-
-        if ($response['errcode'] === 0) {
-            // 这里是发送成功的逻辑
-            return true;
-        }
-
-        // 返回发送错误的信息
-        throw new BusinessException($response['errmsg'], $response['errcode']);
     }
 
     /**
@@ -69,26 +61,18 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @param Application $app
      * @param ImageDTO    $DTO
      *
-     * @return bool
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     * @throws RuntimeException
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
      */
-    public function imageMessage(Application $app, ImageDTO $DTO): bool
+    public function imageMessage(Application $app, ImageDTO $DTO): array
     {
         $message  = new Image($DTO->getMediaId());
-        $response = (array)$app->customer_service
+        return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
             ->send();
-
-        if ($response['errcode'] === 0) {
-            // 这里是发送成功的逻辑
-            return true;
-        }
-
-        // 返回发送错误的信息
-        throw new BusinessException($response['errmsg'], $response['errcode']);
     }
 
     /**
@@ -97,29 +81,21 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @param Application $app
      * @param VideoDTO    $DTO
      *
-     * @return bool
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     * @throws RuntimeException
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
      */
-    public function videoMessage(Application $app, VideoDTO $DTO): bool
+    public function videoMessage(Application $app, VideoDTO $DTO): array
     {
         $message  = new Video($DTO->getMediaId(), [
             'title'       => $DTO->getTitle(),
             'description' => $DTO->getDescription(),
         ]);
-        $response = (array)$app->customer_service
+        return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
             ->send();
-
-        if ($response['errcode'] === 0) {
-            // 这里是发送成功的逻辑
-            return true;
-        }
-
-        // 返回发送错误的信息
-        throw new BusinessException($response['errmsg'], $response['errcode']);
     }
 
     /**
@@ -128,26 +104,18 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @param Application $app
      * @param VoiceDTO    $DTO
      *
-     * @return bool
+     * @return array
      * @throws InvalidArgumentException
      * @throws InvalidConfigException
      * @throws RuntimeException
      */
-    public function voiceMessage(Application $app, VoiceDTO $DTO): bool
+    public function voiceMessage(Application $app, VoiceDTO $DTO): array
     {
         $message  = new Voice($DTO->getMediaId());
-        $response = (array)$app->customer_service
+        return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
             ->send();
-
-        if ($response['errcode'] === 0) {
-            // 这里是发送成功的逻辑
-            return true;
-        }
-
-        // 返回发送错误的信息
-        throw new BusinessException($response['errmsg'], $response['errcode']);
     }
 
     /**
@@ -156,12 +124,12 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      * @param Application $app
      * @param NewsItemDTO $DTO
      *
-     * @return bool
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     * @throws RuntimeException
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
      */
-    public function newsItemMessage(Application $app, NewsItemDTO $DTO): bool
+    public function newsItemMessage(Application $app, NewsItemDTO $DTO): array
     {
         $items    = [
             new NewsItem([
@@ -172,18 +140,11 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             ]),
         ];
         $message  = new News($items);
-        $response = (array)$app->customer_service
+
+        return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
             ->send();
-
-        if ($response['errcode'] === 0) {
-            // 这里是发送成功的逻辑
-            return true;
-        }
-
-        // 返回发送错误的信息
-        throw new BusinessException($response['errmsg'], $response['errcode']);
     }
 
     /**

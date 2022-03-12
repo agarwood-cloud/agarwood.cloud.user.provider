@@ -200,7 +200,7 @@ class ChatSendToCustomerDomainImpl implements ChatSendToCustomerDomain
             'toUserName'   => $toUserName,
             'fromUserName' => $fromUserName,
             'content'      => $content,
-            'sender'       => 'customer',
+            'sender'       => 'system',
             'errorCode'    => $errorCode,
             'createdAt'    => Carbon::now()->toDateTimeString(),
             'msgType'      => WebSocketMessage::ERROR_MESSAGE,

@@ -145,10 +145,27 @@ class ChatSubscriber extends UserProcess
         // send to tencent
         $DTO = ChatAssembler::attributesToTextMessageDTO($message);
         try {
-            $this->chatSendToTencentDomain->textMessage($app, $DTO);
+            $response = $this->chatSendToTencentDomain->textMessage($app, $DTO);
+
+            if ($response['errcode'] !== 0) {
+                $this->chatSendToCustomerDomain->errorMessage(
+                    $DTO->getToUserName(),
+                    $DTO->getFromUserName(),
+                    $response['errmsg'],
+                    $response['errcode']
+                );
+                return;
+            }
         } catch (Throwable $e) {
-            CLog::error('Failed to send text message to tencent: %s', $e->getMessage());
             // todo: 发送消息回客户端
+            $this->chatSendToCustomerDomain->errorMessage(
+                $DTO->getToUserName(),
+                $DTO->getFromUserName(),
+                $e->getMessage(),
+                $e->getCode()
+            );
+
+            CLog::error('Failed to send text message to tencent: %s', $e->getMessage());
             return;
         }
 
@@ -188,10 +205,26 @@ class ChatSubscriber extends UserProcess
         // send to tencent
         $DTO = ChatAssembler::attributesToVideoMessageDTO($message);
         try {
-            $this->chatSendToTencentDomain->videoMessage($app, $DTO);
+            $response = $this->chatSendToTencentDomain->videoMessage($app, $DTO);
+
+            if ($response['errcode'] !== 0) {
+                $this->chatSendToCustomerDomain->errorMessage(
+                    $DTO->getToUserName(),
+                    $DTO->getFromUserName(),
+                    $response['errmsg'],
+                    $response['errcode']
+                );
+                return;
+            }
         } catch (Throwable $e) {
             CLog::error('Failed to send video message to tencent: %s', $e->getMessage());
             // todo: 发送消息回客户端
+            $this->chatSendToCustomerDomain->errorMessage(
+                $DTO->getToUserName(),
+                $DTO->getFromUserName(),
+                $e->getMessage(),
+                $e->getCode()
+            );
             return;
         }
 
@@ -239,9 +272,25 @@ class ChatSubscriber extends UserProcess
     {
         $DTO = ChatAssembler::attributesToImageMessageDTO($message);
         try {
-            $this->chatSendToTencentDomain->imageMessage($app, $DTO);
+            $response = $this->chatSendToTencentDomain->imageMessage($app, $DTO);
+
+            if ($response['errcode'] !== 0) {
+                $this->chatSendToCustomerDomain->errorMessage(
+                    $DTO->getToUserName(),
+                    $DTO->getFromUserName(),
+                    $response['errmsg'],
+                    $response['errcode']
+                );
+                return;
+            }
         } catch (Throwable $e) {
             CLog::error('Failed to send image message to tencent: %s', $e->getMessage());
+            $this->chatSendToCustomerDomain->errorMessage(
+                $DTO->getToUserName(),
+                $DTO->getFromUserName(),
+                $e->getMessage(),
+                $e->getCode()
+            );
             return;
         }
         // send to customer
@@ -283,10 +332,26 @@ class ChatSubscriber extends UserProcess
         // send to tencent
         $DTO = ChatAssembler::attributesToVoiceMessageDTO($message);
         try {
-            $this->chatSendToTencentDomain->voiceMessage($app, $DTO);
+            $response = $this->chatSendToTencentDomain->voiceMessage($app, $DTO);
+
+            if ($response['errcode'] !== 0) {
+                $this->chatSendToCustomerDomain->errorMessage(
+                    $DTO->getToUserName(),
+                    $DTO->getFromUserName(),
+                    $response['errmsg'],
+                    $response['errcode']
+                );
+                return;
+            }
         } catch (Throwable $e) {
             CLog::error('Failed to send voice message to tencent: %s', $e->getMessage());
             // todo: 发送消息回客户端
+            $this->chatSendToCustomerDomain->errorMessage(
+                $DTO->getToUserName(),
+                $DTO->getFromUserName(),
+                $e->getMessage(),
+                $e->getCode()
+            );
             return;
         }
 
@@ -328,10 +393,28 @@ class ChatSubscriber extends UserProcess
     {
         $DTO = ChatAssembler::attributesToNewsItemMessageDTO($message);
         try {
-            $this->chatSendToTencentDomain->newsItemMessage($app, $DTO);
+            $response = $this->chatSendToTencentDomain->newsItemMessage($app, $DTO);
+
+            if ($response['errcode'] !== 0) {
+                $this->chatSendToCustomerDomain->errorMessage(
+                    $DTO->getToUserName(),
+                    $DTO->getFromUserName(),
+                    $response['errmsg'],
+                    $response['errcode']
+                );
+
+                return;
+            }
         } catch (Throwable $e) {
-            CLog::error('Failed to send news item message to tencent: %s', $e->getMessage());
             // todo: 发送消息回客户端
+            $this->chatSendToCustomerDomain->errorMessage(
+                $DTO->getToUserName(),
+                $DTO->getFromUserName(),
+                $e->getMessage(),
+                $e->getCode()
+            );
+
+            CLog::error('Failed to send news item message to tencent: %s', $e->getMessage());
             return;
         }
 

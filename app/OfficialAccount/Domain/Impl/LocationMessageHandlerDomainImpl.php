@@ -78,8 +78,8 @@ class LocationMessageHandlerDomainImpl implements LocationMessageHandlerDomain
                 $message   = [
                     'toUserName'   => (string)$user['customerId'],
                     'fromUserName' => $message['FromUserName'],
-                    'location_X'   => $message['Location_X'],
-                    'location_Y'   => $message['Location_Y'],
+                    'locationX'    => $message['Location_X'],
+                    'locationY'    => $message['Location_Y'],
                     'scale'        => $message['Scale'],
                     'label'        => $message['Label'],
                     'id'           => (int)$snowflake->id(),

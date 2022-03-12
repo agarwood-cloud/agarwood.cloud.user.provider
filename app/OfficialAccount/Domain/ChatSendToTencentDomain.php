@@ -28,9 +28,9 @@ interface ChatSendToTencentDomain
      * @param Application $app
      * @param TextDTO     $DTO
      *
-     * @return bool
+     * @return array
      */
-    public function textMessage(Application $app, TextDTO $DTO): bool;
+    public function textMessage(Application $app, TextDTO $DTO): array;
 
     /**
      * 回复图片消息
@@ -38,9 +38,9 @@ interface ChatSendToTencentDomain
      * @param Application $app
      * @param ImageDTO    $DTO
      *
-     * @return bool
+     * @return array
      */
-    public function imageMessage(Application $app, ImageDTO $DTO): bool;
+    public function imageMessage(Application $app, ImageDTO $DTO): array;
 
     /**
      * 回复视频信息
@@ -48,9 +48,9 @@ interface ChatSendToTencentDomain
      * @param Application $app
      * @param VideoDTO    $DTO
      *
-     * @return bool
+     * @return array
      */
-    public function videoMessage(Application $app, VideoDTO $DTO): bool;
+    public function videoMessage(Application $app, VideoDTO $DTO): array;
 
     /**
      * 回复音频信息
@@ -58,9 +58,9 @@ interface ChatSendToTencentDomain
      * @param Application $app
      * @param VoiceDTO    $DTO
      *
-     * @return bool
+     * @return array
      */
-    public function voiceMessage(Application $app, VoiceDTO $DTO): bool;
+    public function voiceMessage(Application $app, VoiceDTO $DTO): array;
 
     /**
      * 回复图文消息
@@ -68,9 +68,9 @@ interface ChatSendToTencentDomain
      * @param Application $app
      * @param NewsItemDTO $DTO
      *
-     * @return bool
+     * @return array
      */
-    public function newsItemMessage(Application $app, NewsItemDTO $DTO): bool;
+    public function newsItemMessage(Application $app, NewsItemDTO $DTO): array;
 
     /**
      * 上传图片
