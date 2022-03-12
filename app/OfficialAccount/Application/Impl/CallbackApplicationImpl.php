@@ -11,6 +11,7 @@
 namespace App\OfficialAccount\Application\Impl;
 
 use App\OfficialAccount\Application\CallbackApplication;
+use App\OfficialAccount\Domain\DefaultMessageHandlerDomain;
 use App\OfficialAccount\Domain\EventMessageHandlerDomain;
 use App\OfficialAccount\Domain\ImageMessageHandlerDomain;
 use App\OfficialAccount\Domain\LinkMessageHandlerDomain;
@@ -99,6 +100,13 @@ class CallbackApplicationImpl implements CallbackApplication
     public LinkMessageHandlerDomain $linkMessageHandlerDomain;
 
     /**
+     * @\Swoft\Bean\Annotation\Mapping\Inject()
+     *
+     * @var \App\OfficialAccount\Domain\DefaultMessageHandlerDomain
+     */
+    public DefaultMessageHandlerDomain $defaultMessageHandlerDomain;
+
+    /**
      * 微信事件回调
      *
      * @param int|string $platformId
@@ -134,7 +142,7 @@ class CallbackApplicationImpl implements CallbackApplication
         $this->eventMessageHandlerDomain->eventView($enterpriseIdId, (int)$platformId, $app);
 
         // 默认事件处理器, 缓存粉丝信息
-        // $this->defaultMessageHandlerDomain->defaultMessage((int)$platformId, $app);
+        $this->defaultMessageHandlerDomain->defaultMessage($enterpriseIdId, (int)$platformId, $app);
 
         // 文本消息
         $this->textMessageHandlerDomain->textMessage((int)$platformId, $app);

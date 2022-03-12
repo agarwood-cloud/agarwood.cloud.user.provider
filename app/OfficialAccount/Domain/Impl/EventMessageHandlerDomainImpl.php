@@ -368,7 +368,7 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
         //这里是记录，这里要注意，如果有多种扫码事件，我们就应该要有不同的处理
         $user = $this->userQueryRepository->findByOpenid($openid);
 
-        if ($user && $user['customer_id']) {
+        if ($user && !$user['customer_id']) {
             try {
                 // 这里是通过分粉的机制来分粉
                 $customerId = $customer ?? $this->assignQueue->popQueue($platformId);
@@ -387,7 +387,13 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
         } else {
             // 当用户信息不存在数据库时
             $attributes = (array)$application->user->get($openid);
-            $customerId = $this->assignQueue->popQueue($platformId);
+            try {
+                // 这里是通过分粉的机制来分粉
+                $customerId = $this->assignQueue->popQueue($platformId);
+            } catch (Throwable $e) {
+                $customerId = 0;
+                CLog::error('AssignQueue Error: %s', $e->getMessage());
+            }
 
             // 企业信息
             $attributes['enterprise_id'] = $enterpriseId;
