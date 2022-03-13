@@ -89,7 +89,7 @@ class ChatAssembler
      */
     public static function attributesToChatDTO(array $attributes): ChatDTO
     {
-        return ObjectHelper::init(new ChatDTO(), $attributes);
+        return ObjectHelper::init(new ChatDTO(), ArrayHelper::numericToInt($attributes, ['perPage', 'page']));
     }
 
     /**

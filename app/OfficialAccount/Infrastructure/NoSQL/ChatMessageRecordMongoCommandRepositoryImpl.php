@@ -181,7 +181,9 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
      */
     public function getLastMessageChatList(int $customerId, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array
     {
-        return MongoClient::getInstance()->{$this->database}->{$this->collection}
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
             ->aggregate([
                 [
                     '$match' => [
@@ -208,6 +210,43 @@ class ChatMessageRecordMongoCommandRepositoryImpl implements ChatMessageRecordMo
                 ],
                 [
                     '$limit' => $pageSize,
+                ]
+            ])
+            ->toArray();
+    }
+
+    /**
+     * @param int    $customerId
+     * @param string $startAt
+     * @param string $endAt
+     *
+     * @return array
+     */
+    public function getLastMessageChatListCount(int $customerId, string $startAt, string $endAt): array
+    {
+        return MongoClient::getInstance()
+            ->selectDatabase($this->database)
+            ->selectCollection($this->collection)
+            ->aggregate([
+                [
+                    '$match' => [
+                        'customer_id' => $customerId,
+                    ],
+                ],
+                [
+                    '$group' => [
+                        '_id'         => '$openid',
+                        'openid'      => ['$last' => '$openid'],
+                        'customer_id' => ['$last' => '$customer_id'],
+                        'created_at'  => ['$last' => '$created_at'],
+                        'sender'      => ['$last' => '$sender'],
+                        'msg_type'    => ['$last' => '$msg_type'],
+                        'is_read'     => ['$last' => '$is_read'],
+                        'data'        => ['$last' => '$data'],
+                    ]
+                ],
+                [
+                    '$count' => 'total'
                 ]
             ])
             ->toArray();

@@ -23,7 +23,6 @@ use App\OfficialAccount\Interfaces\DTO\Callback\TextDTO as CallbackTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VideoDTO as CallbackVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Callback\VoiceDTO as CallBackChatVoiceDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO as ChatImageDTO;
-use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO as ChatTextDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VideoDTO as ChatVideoDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\VoiceDTO as ChatVoiceDTO;
@@ -511,6 +510,10 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
     {
         $lastMessage = $this->chatMessageRecordMongoCommandRepository->getLastMessageChatList($customerId, $startAt, $endAt, $page, $pageSize);
 
+        $countResult = $this->chatMessageRecordMongoCommandRepository->getLastMessageChatListCount($customerId, $startAt, $endAt);
+
+        $count = (array)current($countResult);
+
         // 查找需要的openid
         $openid = array_column($lastMessage, 'openid');
 
@@ -556,6 +559,13 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
             }
         }
 
-        return $temp;
+        // 分页的数据处理
+        return [
+            'list'      => $temp,
+            'count'     => $count['total'],
+            'page'      => $page,
+            'perPage'   => $pageSize,
+            'pageCount' => ceil($count['total'] / $pageSize),
+        ];
     }
 }

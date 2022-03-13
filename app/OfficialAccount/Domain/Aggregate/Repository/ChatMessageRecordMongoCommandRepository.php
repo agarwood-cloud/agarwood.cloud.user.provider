@@ -90,4 +90,15 @@ interface ChatMessageRecordMongoCommandRepository
      * @return array
      */
     public function getLastMessageChatList(int $customerId, string $startAt, string $endAt, int $page = 1, int $pageSize = 20): array;
+
+    /**
+     * 获取聊天列表的总数
+     *
+     * @param int    $customerId
+     * @param string $startAt
+     * @param string $endAt
+     *
+     * @return array
+     */
+    public function getLastMessageChatListCount(int $customerId, string $startAt, string $endAt): array;
 }
