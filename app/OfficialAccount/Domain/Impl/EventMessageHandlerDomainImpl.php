@@ -153,8 +153,6 @@ class EventMessageHandlerDomainImpl implements EventMessageHandlerDomain
                         //  todo 关联客服信息
                     }
 
-                    var_dump('$attributes', $attributes);
-
                     // 更新用户信息
                     $this->userCommandRepository->updateByOpenidFromWeChat($DTO->getFromUserName(), $attributes);
                 }
