@@ -128,21 +128,21 @@ class CallbackApplicationImpl implements CallbackApplication
 
         $app = $this->officialAccountsRpc->officialAccountApplication((int)$platformId);
 
-        $enterpriseIdId = $this->officialAccountsRpc->getEnterpriseId((int)$platformId);
+        $enterpriseId = $this->officialAccountsRpc->getEnterpriseId((int)$platformId);
 
         // 关注欢迎语 && 自动回复
         $this->welcomeSubscribeDomain->welcomeSubscribe((int)$platformId, $app);
         $this->welcomeSubscribeDomain->autoReply((int)$platformId, $app);
 
         // 事件处理器
-        $this->eventMessageHandlerDomain->eventSubscribe($enterpriseIdId, (int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventUnsubscribe($enterpriseIdId, (int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventClick($enterpriseIdId, (int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventScan($enterpriseIdId, (int)$platformId, $app);
-        $this->eventMessageHandlerDomain->eventView($enterpriseIdId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventSubscribe($enterpriseId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventUnsubscribe($enterpriseId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventClick($enterpriseId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventScan($enterpriseId, (int)$platformId, $app);
+        $this->eventMessageHandlerDomain->eventView($enterpriseId, (int)$platformId, $app);
 
         // 默认事件处理器, 检查用户信息是否存在，缓存粉丝信息
-        $this->defaultMessageHandlerDomain->defaultMessage($enterpriseIdId, (int)$platformId, $app);
+        $this->defaultMessageHandlerDomain->defaultMessage($enterpriseId, (int)$platformId, $app);
 
         // 文本消息
         $this->textMessageHandlerDomain->textMessage((int)$platformId, $app);

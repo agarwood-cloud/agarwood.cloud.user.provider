@@ -30,6 +30,7 @@ interface ChatApplication
      * @param TextDTO $DTO
      *
      * @return bool
+     * @deprecated
      */
     public function textMessageProvider(int $platformId, TextDTO $DTO): bool;
 
@@ -50,6 +51,7 @@ interface ChatApplication
      * @param VideoDTO $DTO
      *
      * @return bool
+     * @deprecated
      */
     public function videoMessageProvider(int $platformId, VideoDTO $DTO): bool;
 
@@ -60,6 +62,7 @@ interface ChatApplication
      * @param VoiceDTO $DTO
      *
      * @return bool
+     * @deprecated
      */
     public function voiceMessageProvider(int $platformId, VoiceDTO $DTO): bool;
 
@@ -70,6 +73,7 @@ interface ChatApplication
      * @param NewsItemDTO $DTO
      *
      * @return bool
+     * @deprecated
      */
     public function newsItemMessageProvider(int $platformId, NewsItemDTO $DTO): bool;
 

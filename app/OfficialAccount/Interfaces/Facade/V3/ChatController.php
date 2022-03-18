@@ -64,6 +64,7 @@ class ChatController extends AbstractBaseController
      * @param Request $request
      *
      * @return Response|null
+     * @deprecated
      */
     public function actionTextMessage(Request $request): ?Response
     {
@@ -85,6 +86,7 @@ class ChatController extends AbstractBaseController
      * @RequestMapping(route="chat/image-message", method={ RequestMethod::POST })
      *
      * @return Response|null
+     * @deprecated
      */
     public function actionImageMessage(Request $request): ?Response
     {
@@ -105,6 +107,7 @@ class ChatController extends AbstractBaseController
      * @param Request $request
      *
      * @return Response|null
+     * @deprecated
      */
     public function actionVideoMessage(Request $request): ?Response
     {
@@ -125,6 +128,7 @@ class ChatController extends AbstractBaseController
      * @param Request $request
      *
      * @return Response|null
+     * @deprecated
      */
     public function actionVoiceMessage(Request $request): ?Response
     {
@@ -145,6 +149,7 @@ class ChatController extends AbstractBaseController
      * @param Request $request
      *
      * @return Response|null
+     * @deprecated
      */
     public function actionNewsItemMessage(Request $request): ?Response
     {

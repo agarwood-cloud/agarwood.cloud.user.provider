@@ -72,35 +72,7 @@ class ChatApplicationImpl implements ChatApplication
      */
     public function textMessageProvider(int $platformId, TextDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($platformId);
-
-        try {
-            // 发送消息给用户
-            $result = $this->chatSendToTencentDomain->textMessage($app, $DTO);
-            if ($result) {
-                $this->sendToNodeDomain->textMessage(
-                    $DTO->getFromUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getContent(),
-                    'customer'
-                );
-
-                // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertTextMessageRecord($DTO);
-            }
-        } catch (BusinessException $exception) {
-            $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserName(),
-                $DTO->getToUserName(),
-                $DTO->getToUserName(),
-                $exception->getSubMsg(),
-                $exception->getCode(),
-                'system'
-            );
-            return false;
-        }
-        return true;
+        // todo 发送消息给用户
     }
 
     /**
@@ -113,38 +85,7 @@ class ChatApplicationImpl implements ChatApplication
      */
     public function ImageMessageProvider(int $platformId, ImageDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($platformId);
-
-        try {
-            // 发送消息给用户
-            $result = $this->chatSendToTencentDomain->imageMessage($app, $DTO);
-
-            if ($result) {
-                // 重新转发回去给客服, 转发消息给node
-                $this->sendToNodeDomain->imageMessage(
-                    $DTO->getFromUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getMediaId(),
-                    $DTO->getImageUrl(),
-                    'customer'
-                );
-
-                // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertImageMessageRecord($DTO, $DTO->getImageUrl());
-            }
-        } catch (BusinessException $exception) {
-            $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserName(),
-                $DTO->getToUserName(),
-                $DTO->getToUserName(),
-                $exception->getSubMsg(),
-                $exception->getCode(),
-                'system'
-            );
-            return false;
-        }
-        return true;
+        // todo 发送消息给用户
     }
 
     /**
@@ -157,42 +98,7 @@ class ChatApplicationImpl implements ChatApplication
      */
     public function videoMessageProvider(int $platformId, VideoDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($platformId);
-
-        try {
-            // 发送消息给用户
-            $result = $this->chatSendToTencentDomain->videoMessage($app, $DTO);
-
-            if ($result) {
-
-                // 转发回去给 node
-                $this->sendToNodeDomain->videoMessage(
-                    $DTO->getFromUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getTitle(),
-                    $DTO->getMediaId(),
-                    $DTO->getDescription(),
-                    $DTO->getThumbMediaId(),
-                    $DTO->getVideoUrl(),
-                    'customer'
-                );
-
-                // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertVideoMessageRecord($DTO);
-            }
-        } catch (BusinessException $exception) {
-            $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserName(),
-                $DTO->getToUserName(),
-                $DTO->getToUserName(),
-                $exception->getSubMsg(),
-                $exception->getCode(),
-                'system'
-            );
-            return false;
-        }
-        return true;
+        // todo 发送消息给用户
     }
 
     /**
@@ -205,38 +111,7 @@ class ChatApplicationImpl implements ChatApplication
      */
     public function voiceMessageProvider(int $platformId, VoiceDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($platformId);
-
-        try {
-            // 发送消息给用户
-            $result = $this->chatSendToTencentDomain->voiceMessage($app, $DTO);
-
-            if ($result) {
-                // 转发回去给 node
-                $this->sendToNodeDomain->voiceMessage(
-                    $DTO->getFromUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getMediaId(),
-                    $DTO->getVoiceUrl(),
-                    'customer'
-                );
-
-                // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertVoiceMessageRecord($DTO);
-            }
-        } catch (BusinessException $exception) {
-            $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserName(),
-                $DTO->getToUserName(),
-                $DTO->getToUserName(),
-                $exception->getSubMsg(),
-                $exception->getCode(),
-                'system'
-            );
-            return false;
-        }
-        return true;
+        // todo 发送消息给用户
     }
 
     /**
@@ -249,40 +124,7 @@ class ChatApplicationImpl implements ChatApplication
      */
     public function newsItemMessageProvider(int $platformId, NewsItemDTO $DTO): bool
     {
-        $app = $this->officialAccountsRpc->officialAccountApplication($platformId);
-
-        try {
-            // 发送消息给用户
-            $result = $this->chatSendToTencentDomain->newsItemMessage($app, $DTO);
-
-            if ($result) {
-                // 重新转发回去给客服, 转发消息给node
-                $this->sendToNodeDomain->newsItemMessage(
-                    $DTO->getFromUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getToUserName(),
-                    $DTO->getTitle(),
-                    $DTO->getDescription(),
-                    $DTO->getNewItemUrl(),
-                    $DTO->getImageUrl(),
-                    'customer'
-                );
-
-                // 保存到 mongodb
-                $this->mongoMessageRecordDomain->insertNewsItemMessageRecord($DTO);
-            }
-            return true;
-        } catch (BusinessException $exception) {
-            $this->sendToNodeDomain->errorMessage(
-                $DTO->getFromUserName(),
-                $DTO->getToUserName(),
-                $DTO->getToUserName(),
-                $exception->getSubMsg(),
-                $exception->getCode(),
-                'system'
-            );
-            return false;
-        }
+        // todo 发送消息给用户
     }
 
     /**
