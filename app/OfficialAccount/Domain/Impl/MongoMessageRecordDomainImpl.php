@@ -562,10 +562,10 @@ class MongoMessageRecordDomainImpl implements MongoMessageRecordDomain
         // 分页的数据处理
         return [
             'list'      => $temp,
-            'count'     => $count['total'],
+            'count'     => $count['total'] ?? 0,
             'page'      => $page,
             'perPage'   => $pageSize,
-            'pageCount' => ceil($count['total'] / $pageSize),
+            'pageCount' => isset($count['total']) ? ceil($count['total'] / $pageSize): 0,
         ];
     }
 }

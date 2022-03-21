@@ -51,7 +51,7 @@ class CustomerGroupController extends AbstractBaseController
      *
      * @var \App\Customer\Application\CustomerGroupApplication
      */
-    protected CustomerGroupApplication $application;
+    public CustomerGroupApplication $application;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
