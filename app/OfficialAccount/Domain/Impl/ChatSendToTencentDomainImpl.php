@@ -48,7 +48,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      */
     public function textMessage(Application $app, TextDTO $DTO): array
     {
-        $message  = new Text($DTO->getContent());
+        $message = new Text($DTO->getContent());
         return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
@@ -68,7 +68,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      */
     public function imageMessage(Application $app, ImageDTO $DTO): array
     {
-        $message  = new Image($DTO->getMediaId());
+        $message = new Image($DTO->getMediaId());
         return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
@@ -88,7 +88,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      */
     public function videoMessage(Application $app, VideoDTO $DTO): array
     {
-        $message  = new Video($DTO->getMediaId(), [
+        $message = new Video($DTO->getMediaId(), [
             'title'       => $DTO->getTitle(),
             'description' => $DTO->getDescription(),
         ]);
@@ -111,7 +111,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      */
     public function voiceMessage(Application $app, VoiceDTO $DTO): array
     {
-        $message  = new Voice($DTO->getMediaId());
+        $message = new Voice($DTO->getMediaId());
         return (array)$app->customer_service
             ->message($message)
             ->to($DTO->getToUserName())
@@ -131,7 +131,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
      */
     public function newsItemMessage(Application $app, NewsItemDTO $DTO): array
     {
-        $items    = [
+        $items   = [
             new NewsItem([
                 'title'       => $DTO->getTitle(),
                 'description' => $DTO->getDescription(),
@@ -139,7 +139,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
                 'image'       => $DTO->getImageUrl(),
             ]),
         ];
-        $message  = new News($items);
+        $message = new News($items);
 
         return (array)$app->customer_service
             ->message($message)
@@ -192,7 +192,7 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             $file->moveTo($imageUrl);
 
             //上传到微信服务器
-            $mediaInfo = $app->media->uploadImage($imageUrl);
+            $mediaInfo = (array)$app->media->uploadImage($imageUrl);
             // 转换驼峰
             $mediaInfoTemp = [
                 'type'      => $mediaInfo['type'],
@@ -249,16 +249,22 @@ class ChatSendToTencentDomainImpl implements ChatSendToTencentDomain
             $fileName = sha1(time() . uniqid('', true)) . '.' . $mediaType;
 
             // 文件路径
-            $imageUrl = $basePath . $filePath . $fileName;
+            $videoUrl = $basePath . $filePath . $fileName;
 
             // 移动文件
-            $file->moveTo($basePath . $filePath);
+            $file->moveTo($videoUrl);
 
             //上传到微信服务器
-            $mediaInfo = $app->media->uploadVideo($imageUrl);
-            $result[]  = [
-                'img_url'    => str_replace(env('MEDIA_SERVER_PATH'), '', $imageUrl),
-                'media_info' => $mediaInfo
+            $mediaInfo = (array)$app->media->uploadVideo($videoUrl);
+            // 转换驼峰
+            $result[] = [
+                'videoUrl'  => str_replace(env('MEDIA_SERVER_PATH'), '', $videoUrl),
+                'mediaInfo' => [
+                    'createdAt' => $mediaInfo['created_at'],
+                    'item'      => $mediaInfo['item'],
+                    'mediaId'   => $mediaInfo['media_id'],
+                    'type'      => $mediaInfo['type'],
+                ]
             ];
         }
         return $result;
