@@ -69,6 +69,21 @@ class UserController extends AbstractBaseController
     }
 
     /**
+     * view user info
+     *
+     * @RequestMapping(route="user/{openid}", method={ RequestMethod::GET })
+     * @param string $openid
+     *
+     * @return \Swoft\Http\Message\Response|null
+     */
+    public function actionView(string $openid): ?Response
+    {
+        return $this->wrapper()->setData(
+            $this->application->viewProvider($openid)
+        )->response();
+    }
+
+    /**
      * User activity records based on time
      *
      * @RequestMapping(route="user/timeline/{openid}", method={ RequestMethod::GET })
