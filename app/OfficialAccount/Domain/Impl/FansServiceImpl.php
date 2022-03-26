@@ -20,6 +20,7 @@ use App\OfficialAccount\Interfaces\DTO\Fans\UpdateDTO;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
+ * @deprecated
  */
 class FansServiceImpl implements FansService
 {

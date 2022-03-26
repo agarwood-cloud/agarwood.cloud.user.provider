@@ -16,6 +16,7 @@ use App\OfficialAccount\Interfaces\DTO\Fans\UpdateDTO;
 
 /**
  * @\Swoft\Bean\Annotation\Mapping\Bean()
+ * @deprecated
  */
 interface FansService
 {
