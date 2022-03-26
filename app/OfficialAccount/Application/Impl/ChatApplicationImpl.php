@@ -10,13 +10,11 @@
 
 namespace App\OfficialAccount\Application\Impl;
 
-use Agarwood\Core\Exception\BusinessException;
 use App\OfficialAccount\Interfaces\DTO\Chat\ChatDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\ChatRecordDTO;
 use App\OfficialAccount\Application\ChatApplication;
 use App\OfficialAccount\Domain\ChatSendToTencentDomain;
 use App\OfficialAccount\Domain\MongoMessageRecordDomain;
-use App\OfficialAccount\Domain\SendToNodeDomain;
 use App\OfficialAccount\Interfaces\DTO\Chat\ImageDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\NewsItemDTO;
 use App\OfficialAccount\Interfaces\DTO\Chat\TextDTO;
@@ -43,15 +41,6 @@ class ChatApplicationImpl implements ChatApplication
      * @var \App\OfficialAccount\Interfaces\Rpc\Client\MallCenter\OfficialAccountsRpc
      */
     protected OfficialAccountsRpc $officialAccountsRpc;
-
-    /**
-     * 转消息转到到node服务(外部)
-     *
-     * @\Swoft\Bean\Annotation\Mapping\Inject()
-     *
-     * @var \App\OfficialAccount\Domain\SendToNodeDomain
-     */
-    protected SendToNodeDomain $sendToNodeDomain;
 
     /**
      * 记录消息记录
