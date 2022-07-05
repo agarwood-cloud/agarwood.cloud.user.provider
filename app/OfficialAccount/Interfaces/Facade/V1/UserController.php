@@ -7,7 +7,6 @@
  * @contact  676786620@qq.com
  * @author   agarwood
  */
-
 namespace App\OfficialAccount\Interfaces\Facade\V1;
 
 use Agarwood\Core\Support\Impl\AbstractBaseController;

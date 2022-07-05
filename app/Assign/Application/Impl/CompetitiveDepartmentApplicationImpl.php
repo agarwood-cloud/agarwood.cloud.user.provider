@@ -37,7 +37,7 @@ class CompetitiveDepartmentApplicationImpl implements CompetitiveDepartmentAppli
      */
     public function indexProvider(int $platformId, IndexDTO $DTO, bool $isPagination = true): array
     {
-        return $this->domain->index($platformId, $DTO->toArrayNotEmpty([], true), $isPagination);
+        return $this->domain->index($platformId, $DTO->toArrayNotEmpty([], true));
     }
 
     /**

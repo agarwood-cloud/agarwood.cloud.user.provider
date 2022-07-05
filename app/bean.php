@@ -98,6 +98,9 @@ return [
             // static handle
             // 'enable_static_handler'    => true,
             // 'document_root'            => dirname(__DIR__) . '/public',
+            // GRPC setting
+            // 'open_http2_protocol'   => true,
+            // 'http_compression'      => false,
         ]
     ],
     'httpDispatcher'       => [
@@ -179,8 +182,8 @@ return [
         'port'     => env('MASTER_REDIS_PORT', 6379),
         'database' => env('MASTER_REDIS_DATABASE', 1),
         'option'   => [
-            'prefix'                => env('MASTER_REDIS_PREFIX'),
-            'serializer'            => Redis::SERIALIZER_NONE,
+            'prefix'     => env('MASTER_REDIS_PREFIX'),
+            'serializer' => Redis::SERIALIZER_NONE,
             // set socket timeout
             // Redis::OPT_READ_TIMEOUT => -1
         ],

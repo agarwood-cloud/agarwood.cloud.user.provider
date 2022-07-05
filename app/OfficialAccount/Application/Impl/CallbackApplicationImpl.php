@@ -16,7 +16,6 @@ use App\OfficialAccount\Domain\EventMessageHandlerDomain;
 use App\OfficialAccount\Domain\ImageMessageHandlerDomain;
 use App\OfficialAccount\Domain\LinkMessageHandlerDomain;
 use App\OfficialAccount\Domain\LocationMessageHandlerDomain;
-use App\OfficialAccount\Domain\SendToNodeDomain;
 use App\OfficialAccount\Domain\TextMessageHandlerDomain;
 use App\OfficialAccount\Domain\VideoMessageHandlerDomain;
 use App\OfficialAccount\Domain\VoiceMessageHandlerDomain;
@@ -77,13 +76,6 @@ class CallbackApplicationImpl implements CallbackApplication
      * @var \App\OfficialAccount\Domain\ImageMessageHandlerDomain
      */
     public ImageMessageHandlerDomain $imageMessageHandlerDomain;
-
-    /**
-     * @\Swoft\Bean\Annotation\Mapping\Inject()
-     *
-     * @var \App\OfficialAccount\Domain\SendToNodeDomain
-     */
-    public SendToNodeDomain $sendToNodeDomain;
 
     /**
      * @\Swoft\Bean\Annotation\Mapping\Inject()
